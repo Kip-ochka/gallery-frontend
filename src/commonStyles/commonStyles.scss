@@ -1,0 +1,28 @@
+$bgcolorwhite: #fff;
+$bgcolorblack: #222222;
+$textwhite: #ffffff;
+$textblack: #000000;
+$greenaccent: #2be080;
+$redaccent: #ff3055;
+$blueaccent: #3456f3;
+
+@mixin clickable {
+  transition: opacity 0.5s ease;
+  cursor: pointer;
+  &:hover {
+    opacity: 70%;
+  }
+}
+
+@mixin section {
+  @media screen and (max-width: 1440px) {
+  }
+  @media screen and (max-width: 1280px) {
+  }
+  @media screen and (max-width: 1024px) {
+  }
+  @media screen and (max-width: 768px) {
+  }
+  @media screen and (max-width: 450px) {
+  }
+}

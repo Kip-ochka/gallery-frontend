@@ -1,0 +1,49 @@
+@import '../../commonStyles/commonStyles.scss';
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  max-height: 62px;
+  &__headen-element {
+    display: flex;
+  }
+  &__logo {
+    @include clickable;
+    height: 44px;
+    width: 44px;
+  }
+
+  &__button {
+    background-image: url(../../img/burgerButton.svg);
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    border: none;
+    display: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  @media screen and (max-width: 1024px) {
+    &__headen-element {
+      display: none;
+    }
+    &__button {
+      display: flex;
+      &_opened {
+        background-image: url(../../img/burgerCloseButton.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 44px;
+        width: 44px;
+        height: 44px;
+        position: fixed;
+        z-index: 15;
+        top: 10px;
+        right: 12px;
+      }
+    }
+  }
+}
