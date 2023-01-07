@@ -13,17 +13,14 @@ export default function Header() {
       setBurgerIsOpen(true)
     }
   }
-
   const closeBurger = () => {
     setBurgerIsOpen(false)
   }
-
   return (
     <header className="header">
       <Link to="/">
         <img src={logo} alt={'лого'} className="header__logo" />
       </Link>
-
       <button
         onClick={toggleBurgerButton}
         className={`header__button ${burgerIsOpen && 'header__button_opened'}`}

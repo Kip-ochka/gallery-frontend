@@ -8,6 +8,7 @@ import './Main.scss'
 export default function Main() {
   return (
     <main className="main">
+      <NavBar categories={['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']} />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
         <Route path="/about" element={<About />} />
