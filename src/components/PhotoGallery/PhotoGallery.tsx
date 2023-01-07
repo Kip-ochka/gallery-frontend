@@ -1,37 +1,40 @@
 import { useEffect, useState } from 'react'
 import testApi from '../../testapi/testapi'
+import PhotoCard from '../PhotoCard/PhotoCard'
 import './PhotoGallery.scss'
 interface Photo {
-  author: string
-  download_url: string
-  height: number
-  id: string
-  url: string
-  width: string
+  image: string
+  imageId: string
+  sections: []
+  tags: []
 }
 
 function PhotoGallery() {
   const [photos, setPhotos] = useState<Photo[]>([])
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
-    testApi.getPhotos().then((photos) => {
-      setPhotos(photos)
-    })
+    testApi
+      .getPhotos()
+      .then((photos) => {
+        setPhotos(photos)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
+
   return (
     <section className="photos">
-      <ul className="photos__wrapper">
-        {photos.map((photo) => {
-          return (
-            <li key={photo.id} className="photo">
-              <img
-                src={photo.download_url}
-                alt={photo.author}
-                className="photo__image"
-              />
-            </li>
-          )
-        })}
-      </ul>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <ul className="photos__wrapper">
+          {photos.map((photo) => {
+            return <PhotoCard {...photo} key={photo.imageId} />
+          })}
+        </ul>
+      )}
     </section>
   )
 }

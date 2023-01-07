@@ -1,4 +1,6 @@
 import React from 'react'
+import { Route, Routes } from 'react-router'
+import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import './App.scss'
@@ -6,8 +8,18 @@ import './App.scss'
 function App() {
   return (
     <div className="page">
-      <Header />
-      <Main />
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/*"
+          element={
+            <>
+              <Header />
+              <Main />
+            </>
+          }
+        />
+      </Routes>
     </div>
   )
 }

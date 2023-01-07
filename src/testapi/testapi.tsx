@@ -1,7 +1,7 @@
 export {}
 class TestApi {
   async getPhotos() {
-    const res = await fetch(`https://picsum.photos/v2/list`)
+    const res = await fetch(`http://localhost:5000/images`)
     return this._getResponse(res)
   }
   _getResponse(res: { ok: any; json: () => any }) {

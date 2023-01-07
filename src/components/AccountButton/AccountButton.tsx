@@ -1,11 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './AccountButton.scss'
 function AccountButton() {
   return (
-    <div className="account">
-      <p className="account__text">Аккаунт</p>
-      <div className="account__logo" />
-    </div>
+    <Link to="/auth">
+      <div className="account">
+        <p className="account__text">Аккаунт</p>
+        <div className="account__logo" />
+      </div>
+    </Link>
   )
 }
 

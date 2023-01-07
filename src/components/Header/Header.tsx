@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../../img/logo.svg'
 import AccountButton from '../AccountButton/AccountButton'
 import NavBar from '../NavBar/NavBar'
@@ -18,8 +19,11 @@ export default function Header() {
   }
 
   return (
-    <header className='header'>
-      <img src={logo} alt={'лого'} className='header__logo' />
+    <header className="header">
+      <Link to="/">
+        <img src={logo} alt={'лого'} className="header__logo" />
+      </Link>
+
       <button
         onClick={toggleBurgerButton}
         className={`header__button ${burgerIsOpen && 'header__button_opened'}`}
@@ -31,7 +35,7 @@ export default function Header() {
           categories={['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']}
         />
       )}
-      <div className='header__headen-element'>
+      <div className="header__headen-element">
         <AccountButton />
       </div>
     </header>
