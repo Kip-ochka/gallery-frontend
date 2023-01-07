@@ -1,33 +1,60 @@
 @import '../../commonStyles/commonStyles.scss';
 
 .navbar {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: start;
   &__hidden-element {
     display: none;
   }
   &__content {
-    width: 80%;
+    position: sticky;
+    top: 30vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 20px;
   }
   &__main-section {
-    font-size: 24px;
-    text-align: center;
+    @include clickable;
+    width: 100%;
+    font-size: 18px;
+    text-align: left;
     font-weight: 500;
-    font-family: 'Inter';
-    color: #3f3f3f;
+    font-family: 'Lato';
+    // color: #3f3f3f;
+    color: rgb(108, 111, 112);
+    cursor: pointer;
+  }
+  &__main-section.active {
+    text-decoration: underline;
+    color: rgb(52, 194, 199);
   }
   &__section {
-    font-size: 20px;
-    text-align: center;
+    @include clickable;
+    margin: 10px 0 0 15px;
+    width: 100%;
+    font-size: 16px;
+    text-align: left;
     font-weight: 400;
-    font-family: 'Inter';
-    color: #3f3f3f;
+    font-family: 'Lato';
+    .active {
+      text-decoration: underline;
+      color: rgb(52, 194, 199);
+    }
+    // color: #3f3f3f;
+    color: rgb(108, 111, 112);
+  }
+  &__section.active {
+    text-decoration: underline;
+    color: rgb(52, 194, 199);
+  }
+  &__section_state_hidden {
+    display: none;
   }
   &__account-wrapper {
     @include clickable;
@@ -59,6 +86,10 @@
     padding: 6px;
     border-radius: 50%;
     background-color: #f5f5f5;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
   }
   @media screen and (max-width: 1024px) {
     width: 100%;
