@@ -6,4 +6,10 @@
   padding: 0 60px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 800px) {
+    padding: 0 30px;
+  }
+  @media (max-width: 600px) {
+    padding: 0 15px;
+  }
 }
