@@ -13,13 +13,13 @@ function NavBar({ isOpen, onClose, categories }: NavBarProps) {
   const [extended, setExtended] = useState(false)
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className='navbar__content'>
-        <NavLink to='/' className='navbar__main-section' onClick={onClose}>
+      <div className="navbar__content">
+        <NavLink to="/" className="navbar__main-section" onClick={onClose}>
           Все фотографии
         </NavLink>
-        <div className='navbar__container'>
+        <div className="navbar__container">
           <p
-            className='navbar__main-section'
+            className="navbar__main-section"
             onClick={() => setExtended(!extended)}
           >
             Фото по категориям
@@ -37,17 +37,17 @@ function NavBar({ isOpen, onClose, categories }: NavBarProps) {
             </NavLink>
           ))}
         </div>
-        <NavLink to='/about' onClick={onClose} className='navbar__main-section'>
+        <NavLink to="/about" onClick={onClose} className="navbar__main-section">
           Об Авторе
         </NavLink>
         <NavLink
-          to='/contacts'
+          to="/contacts"
           onClick={onClose}
-          className='navbar__main-section'
+          className="navbar__main-section"
         >
           Контакты
         </NavLink>
-        <div className='navbar__hidden-element'>
+        <div className="navbar__hidden-element">
           <AccountButton />
         </div>
       </div>
