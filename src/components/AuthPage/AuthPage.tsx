@@ -1,10 +1,27 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import './AuthPage.scss'
 import logo from '../../img/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import { adminAuth, setToken } from '../../store/adminSlice'
 
 function AuthPage() {
+  const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const handleSubmit = (evt: any) => {
+    evt.preventDefault()
+    dispatch(adminAuth(password))
+      .then((data) => {
+        const toSetToken = data.payload
+        dispatch(setToken(toSetToken))
+        localStorage.setItem('token', toSetToken.token)
+      })
+      .then(() => {
+        navigate('/')
+      })
+  }
+
   return (
     <main className="auth">
       <div className="auth__content">
@@ -23,10 +40,12 @@ function AuthPage() {
                 className="auth__input"
                 id="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </label>
           </fieldset>
-          <button className="auth__button" type="submit">
+          <button className="auth__button" type="submit" onClick={handleSubmit}>
             Войти
           </button>
         </form>

@@ -1,0 +1,66 @@
+@import '../../commonStyles/commonStyles.scss';
+
+.form {
+  height: 50%;
+  width: 80%;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+  &__input {
+    display: none;
+  }
+  &__label {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+    border-radius: 1rem;
+    border-style: dashed;
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+  }
+  &__label_active {
+    background-color: #b3b3b3;
+    border-color: $greenaccent;
+  }
+  &__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  &__button {
+    cursor: pointer;
+    padding: 0.25rem;
+    font-size: 16px;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    background-color: transparent;
+    &:hover {
+      text-decoration-line: underline;
+      @include clickable;
+    }
+  }
+  &__description {
+    font-size: 20px;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+  }
+  &__drag-zone {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+}
