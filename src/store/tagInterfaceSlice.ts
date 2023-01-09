@@ -22,7 +22,12 @@ interface TagsState {
 const tagSlice = createSlice({
   name: 'tag',
   initialState: {
-    tags: [],
+    tags: [
+      { tagId: 1, tag: 'облака' },
+      { tagId: 2, tag: 'куча' },
+      { tagId: 3, tag: 'река' },
+      { tagId: 4, tag: 'собака' },
+    ],
     addedTags: [],
     status: '',
     error: null,

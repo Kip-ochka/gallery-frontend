@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router'
+import ProtectedRoute from '../../hok/ProtectedRoute'
 import { checkAuth, setToken } from '../../store/adminSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import AuthPage from '../AuthPage/AuthPage'
@@ -16,14 +17,19 @@ function App() {
     dispatch(checkAuth(token)).then((data) => {})
   }, [])
   return (
-    <div className="page">
+    <div className='page'>
       {loading ? (
         <p>loading...</p>
       ) : (
         <Routes>
-          <Route path="/auth" element={<AuthPage />} />
           <Route
-            path="/*"
+            path='/auth'
+            element={
+              <ProtectedRoute component={AuthPage} condition={!isLogged} />
+            }
+          />
+          <Route
+            path='/*'
             element={
               <>
                 <Header />
