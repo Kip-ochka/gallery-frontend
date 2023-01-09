@@ -15,7 +15,6 @@ export const adminAuth = createAsyncThunk(
     return data
   }
 )
-
 const adminSlice = createSlice({
   name: 'admin',
   initialState: {
