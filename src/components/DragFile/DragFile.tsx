@@ -18,6 +18,7 @@ function DragFile({ setFile, setFileUrl }: DragFileProps) {
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const handleDrag = function (e: any) {
+    console.log(e)
     e.preventDefault()
     e.stopPropagation()
     if (e.type === 'dragenter' || e.type === 'dragover') {
@@ -28,6 +29,7 @@ function DragFile({ setFile, setFileUrl }: DragFileProps) {
   }
 
   const handleDrop = function (e: any) {
+    console.log(e)
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
@@ -40,6 +42,7 @@ function DragFile({ setFile, setFileUrl }: DragFileProps) {
   }
 
   const handleChange = function (e: any) {
+    console.log(e)
     e.preventDefault()
     if (e.target.files && e.target.files[0]) {
       // handleFiles(e.target.files);
