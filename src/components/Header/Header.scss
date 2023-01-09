@@ -5,8 +5,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  max-height: 62px;
+  padding: 0;
+  height: 70px;
   &__headen-element {
     display: flex;
   }
@@ -39,10 +39,10 @@
         background-size: 44px;
         width: 44px;
         height: 44px;
-        position: fixed;
         z-index: 15;
-        top: 10px;
-        right: 12px;
+        // position: fixed;
+        // top: 10px;
+        // right: 12px;
       }
     }
   }
