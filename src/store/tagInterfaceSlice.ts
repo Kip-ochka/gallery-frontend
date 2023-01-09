@@ -9,7 +9,7 @@ export const fetchPostTag = createAsyncThunk('tag/postTag', async () => {})
 
 interface Tag {
   tag: string
-  tagId?: number
+  tagId: number
 }
 
 interface TagsState {
@@ -22,12 +22,7 @@ interface TagsState {
 const tagSlice = createSlice({
   name: 'tag',
   initialState: {
-    tags: [
-      { tagId: 1, tag: 'облака' },
-      { tagId: 2, tag: 'куча' },
-      { tagId: 3, tag: 'река' },
-      { tagId: 4, tag: 'собака' },
-    ],
+    tags: [],
     addedTags: [],
     status: '',
     error: null,

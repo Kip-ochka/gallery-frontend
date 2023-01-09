@@ -6,6 +6,8 @@ import NavBar from '../NavBar/NavBar'
 import PhotoGallery from '../PhotoGallery/PhotoGallery'
 import './Main.scss'
 import ProtectedRoute from '../../hok/ProtectedRoute'
+import EditTagsPage from '../EditPage/EditTagsPage'
+import EditSectionsPage from '../EditPage/EditSectionsPage'
 
 export default function Main() {
   const dispatch = useAppDispatch()
@@ -13,7 +15,7 @@ export default function Main() {
 
   return (
     <main className='main'>
-      <NavBar categories={['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']} />
+      <NavBar />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
         <Route path='/about' element={<About />} />
@@ -27,13 +29,16 @@ export default function Main() {
         <Route
           path='/sections'
           element={
-            <ProtectedRoute component={AddImage} condition={!!adminData} />
+            <ProtectedRoute component={EditTagsPage} condition={!!adminData} />
           }
         />
         <Route
           path='/tags'
           element={
-            <ProtectedRoute component={AddImage} condition={!!adminData} />
+            <ProtectedRoute
+              component={EditSectionsPage}
+              condition={!!adminData}
+            />
           }
         />
       </Routes>

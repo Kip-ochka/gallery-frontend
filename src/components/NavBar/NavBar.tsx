@@ -7,16 +7,16 @@ import { useAppSelector } from '../../utils/hooks/reduxHooks'
 interface NavBarProps {
   isOpen?: boolean
   onClose?: () => void
-  categories: string[]
 }
 
 enum EXTENDABLE_BLOCKS {
   PHOTOS_BY_CATEGORIES = 'photos-per-categories',
 }
 
-function NavBar({ isOpen, onClose, categories }: NavBarProps) {
+function NavBar({ isOpen, onClose }: NavBarProps) {
   const { isLogged } = useAppSelector((state) => state.admin)
   const [extended, setExtended] = useState<EXTENDABLE_BLOCKS | null>(null)
+  const categories = ['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']
 
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
