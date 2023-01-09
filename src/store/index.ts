@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import adminRedusers from './adminSlice'
+import tagSlice from './tagInterfaceSlice'
 
 const store = configureStore({
-  reducer: { adminSlice: adminRedusers },
+  reducer: { admin: adminRedusers, tag: tagSlice },
 })
 
 export default store

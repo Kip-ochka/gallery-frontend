@@ -10,6 +10,10 @@ class TestApi {
     }
     return res.json()
   }
+  async getTags() {
+    const res = await fetch(`http://localhost:5000/tags`)
+    return this._getResponse(res)
+  }
 }
 
 const testApi = new TestApi()

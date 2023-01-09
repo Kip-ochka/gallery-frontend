@@ -1,1 +1,110 @@
 @import '../../commonStyles/commonStyles.scss';
+
+.about {
+  padding: 0 12px 0 60px;
+
+  &__author-name {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 30px;
+  }
+
+  &__container {
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__photo {
+    margin-right: 10px;
+    max-width: 500px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__wrapper {
+    max-width: 600px;
+  }
+
+  &__title {
+    margin-bottom: 6px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 21px;
+  }
+
+  &__description {
+    margin-bottom: 24px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__subtitle {
+    margin-bottom: 6px;
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__clients-descriptiob {
+    margin-bottom: 24px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__contacts-list {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__contacts-title {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__company {
+    padding-left: 10px;
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #5a5555;
+  }
+
+  &__contacts-email-adress {
+    padding-left: 10px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__contacts-telephone-number {
+    padding-left: 10px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.social-network {
+  display: flex;
+  gap: 12px;
+
+  &__icon {
+    max-width: 42px;
+    max-height: 42px;
+  }
+}

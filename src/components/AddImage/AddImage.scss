@@ -1,1 +1,8 @@
 @import '../../commonStyles/commonStyles.scss';
+
+.add-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
