@@ -4,6 +4,7 @@ import {
   AnyAction,
   PayloadAction,
 } from '@reduxjs/toolkit'
+import { ErrorResponse } from '@remix-run/router'
 
 interface AdminStateInterface {
   token: string | null
@@ -14,48 +15,44 @@ interface AdminStateInterface {
   loading: boolean
 }
 
-export const adminAuth = createAsyncThunk<
-  string,
-  string,
-  { rejectValue: string }
->('admin/auth', async (payload, { rejectWithValue }) => {
-  const response = await fetch('http://localhost:5000/admin/auth', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password: payload }),
-  })
-  if (response.ok) {
-    const data = await response.json()
-    const result = data.token
-    return result
-  } else {
-    return rejectWithValue('Ошибка во время авторизации.')
-  }
-})
-
-export const checkAuth = createAsyncThunk<
-  null | string,
-  string | null,
-  { rejectValue: string }
->('admin/check', async (arg, { rejectWithValue }) => {
-  console.log(arg)
-  if (typeof arg === 'string') {
-    const response = await fetch('http://localhost:5000/admin/token', {
+export const adminAuth = createAsyncThunk<string, string>(
+  'admin/auth',
+  async (payload) => {
+    const response = await fetch('http://localhost:5000/admin/auth', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: arg }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password: payload }),
     })
     if (response.ok) {
-      return arg
+      const data = await response.json()
+      return data.token
     } else {
-      return rejectWithValue('Авторизация не удалась')
+      throw new Error(response.statusText)
     }
-  } else {
-    return rejectWithValue('Нет токена')
   }
-})
+)
+
+export const checkAuth = createAsyncThunk<string, string | null>(
+  'admin/check',
+  async (arg) => {
+    if (typeof arg === 'string') {
+      const response = await fetch('http://localhost:5000/admin/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: arg }),
+      })
+      if (response.ok) {
+        return arg
+      } else {
+        throw new Error(response.statusText)
+      }
+    } else {
+      throw new Error('Нет токена в локальном хранилище')
+    }
+  }
+)
 
 const adminSlice = createSlice({
   name: 'admin',
@@ -91,10 +88,10 @@ const adminSlice = createSlice({
         state.isLogged = true
         state.token = action.payload
       })
-      .addCase(adminAuth.rejected, (state, action) => {
+      .addCase(adminAuth.rejected, (state, { error }) => {
         state.loading = false
         state.isLogged = false
-        state.authError = action.payload!
+        state.authError = `${error.name}: ${error.message}`
       })
       .addCase(checkAuth.pending, (state) => {
         state.loading = true
@@ -105,10 +102,10 @@ const adminSlice = createSlice({
         state.isLogged = true
         state.token = action.payload
       })
-      .addCase(checkAuth.rejected, (state, action) => {
+      .addCase(checkAuth.rejected, (state, { error }) => {
         state.loading = false
         state.isLogged = false
-        state.error = action.payload!
+        state.error = `${error.name}: ${error.message}`
       })
   },
 })
