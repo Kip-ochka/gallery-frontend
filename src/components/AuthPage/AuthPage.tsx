@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './AuthPage.scss'
 import logo from '../../img/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
@@ -12,12 +12,13 @@ function AuthPage() {
   const dispatch = useAppDispatch()
   const handleSubmit = async (evt: any) => {
     evt.preventDefault()
-    const response = await dispatch(adminAuth(password))
-    if (response.type === 'admin/auth/fulfilled') {
+    try {
+      const response = await dispatch(adminAuth(password)).unwrap()
       console.log(response)
-      localStorage.setItem('token', response.payload!)
+      localStorage.setItem('token', response)
       navigate('/')
-      return
+    } catch (err) {
+      return err
     }
   }
 

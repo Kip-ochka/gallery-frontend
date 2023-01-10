@@ -1,3 +1,4 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router'
 import ProtectedRoute from '../../hok/ProtectedRoute'
@@ -16,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token')
-    dispatch(checkAuth(token)).then((data) => {})
+    dispatch(checkAuth(token))
   }, [])
   // useEffect(() => {
   //   testApi
