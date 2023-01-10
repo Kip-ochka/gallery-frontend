@@ -83,7 +83,6 @@ export const setAboutMe = createAsyncThunk<IsetAboutMe, IsetAboutMe>(
         info: { info: toResponse.textValue },
       }),
     })
-    console.log(response.json())
     return toResponse
   }
 )

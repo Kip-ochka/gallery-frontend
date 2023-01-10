@@ -34,17 +34,18 @@ function About() {
       dispatch(setAboutMe({ textValue, token }))
         .then(unwrapResult)
         .then((data) => {
+          setTextValue(data.textValue)
           setRedacted(false)
         })
     }
   }
   useEffect(() => {
-    dispatch(getAbout()).then(() => {
-      if (aboutMe) {
-        setTextValue(aboutMe)
-      }
-    })
+    dispatch(getAbout())
   }, [])
+
+  useEffect(() => {
+    setTextValue(aboutMe!)
+  }, [aboutMe])
 
   return (
     <section className="about">
