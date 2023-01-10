@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../img/logo.svg'
+import { useAppSelector } from '../../utils/hooks/reduxHooks'
 import AccountButton from '../AccountButton/AccountButton'
 import NavBar from '../NavBar/NavBar'
 import './Header.scss'
 export default function Header() {
+  const { isLogged, token } = useAppSelector((state) => state.admin)
   const [burgerIsOpen, setBurgerIsOpen] = useState(false)
   const toggleBurgerButton = () => {
     if (burgerIsOpen) {
@@ -16,6 +18,7 @@ export default function Header() {
   const closeBurger = () => {
     setBurgerIsOpen(false)
   }
+
   return (
     <header className="header">
       <Link to="/">
@@ -33,7 +36,7 @@ export default function Header() {
         />
       )}
       <div className="header__headen-element">
-        <AccountButton />
+        {isLogged ? null : <AccountButton />}
       </div>
     </header>
   )

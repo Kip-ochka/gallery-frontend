@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './NavBar.scss'
 import { NavLink } from 'react-router-dom'
 import AccountButton from '../AccountButton/AccountButton'
+import { useAppSelector } from '../../utils/hooks/reduxHooks'
 
 interface NavBarProps {
   isOpen?: boolean
@@ -10,6 +11,7 @@ interface NavBarProps {
 }
 
 function NavBar({ isOpen, onClose, categories }: NavBarProps) {
+  const { isLogged } = useAppSelector((state) => state.admin)
   const [extended, setExtended] = useState(false)
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
@@ -48,7 +50,7 @@ function NavBar({ isOpen, onClose, categories }: NavBarProps) {
           Контакты
         </NavLink>
         <div className="navbar__hidden-element">
-          <AccountButton />
+          {isLogged ? null : <AccountButton />}
         </div>
       </div>
     </aside>

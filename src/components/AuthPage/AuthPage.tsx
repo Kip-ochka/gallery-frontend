@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './AuthPage.scss'
 import logo from '../../img/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import { adminAuth, setToken } from '../../store/adminSlice'
+import { adminAuth } from '../../store/adminSlice'
 
 function AuthPage() {
   const [password, setPassword] = useState('')
+  const { authError } = useAppSelector((state) => state.admin)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const handleSubmit = (evt: any) => {
+  const handleSubmit = async (evt: any) => {
     evt.preventDefault()
-    dispatch(adminAuth(password))
-      .then((data) => {
-        const toSetToken = data.payload
-        dispatch(setToken(toSetToken))
-        localStorage.setItem('token', toSetToken.token)
-      })
-      .then(() => {
-        navigate('/')
-      })
+    try {
+      const response = await dispatch(adminAuth(password)).unwrap()
+      localStorage.setItem('token', response)
+      navigate('/')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -45,6 +44,7 @@ function AuthPage() {
               />
             </label>
           </fieldset>
+          <span className="auth__error">{authError}</span>
           <button className="auth__button" type="submit" onClick={handleSubmit}>
             Войти
           </button>
