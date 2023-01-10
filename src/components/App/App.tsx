@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { Route, Routes } from 'react-router'
 import ProtectedRoute from '../../hok/ProtectedRoute'
 import { checkAuth, setToken } from '../../store/adminSlice'
+import { addTag } from '../../store/tagInterfaceSlice'
+import testApi from '../../testapi/testapi'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
@@ -16,6 +18,11 @@ function App() {
     const token = localStorage.getItem('token')
     dispatch(checkAuth(token)).then((data) => {})
   }, [])
+  // useEffect(() => {
+  //   testApi
+  //     .getTags()
+  //     .then((res) => res.forEach((e) => dispatch(addTag(e)).then((data) => {})))
+  // }, [])
   return (
     <div className='page'>
       {loading ? (
