@@ -14,11 +14,10 @@ function AuthPage() {
     evt.preventDefault()
     try {
       const response = await dispatch(adminAuth(password)).unwrap()
-      console.log(response)
       localStorage.setItem('token', response)
       navigate('/')
     } catch (err) {
-      return err
+      console.log(err)
     }
   }
 

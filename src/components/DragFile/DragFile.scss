@@ -32,16 +32,15 @@
     gap: 12px;
   }
   &__button {
-    cursor: pointer;
     padding: 0.25rem;
     font-size: 16px;
     border: none;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     background-color: transparent;
+    @include clickable;
     &:hover {
       text-decoration-line: underline;
-      @include clickable;
     }
   }
   &__description {
@@ -61,6 +60,8 @@
     left: 0px;
   }
   @media screen and (max-width: 1024px) {
+    margin-top: 30px;
     width: 100%;
+    min-height: 450px;
   }
 }
