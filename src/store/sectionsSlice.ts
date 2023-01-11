@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { Action } from '@remix-run/router'
-import { Tag } from './tagInterfaceSlice'
+import { Tag } from './tagInterface'
 
 export type Section = {
   sectionId: number

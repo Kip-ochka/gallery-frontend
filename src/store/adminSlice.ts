@@ -1,10 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  AnyAction,
-  PayloadAction,
-} from '@reduxjs/toolkit'
-import { ErrorResponse } from '@remix-run/router'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 interface AdminStateInterface {
   token: string | null
@@ -13,11 +7,18 @@ interface AdminStateInterface {
   error: null | string
   authError: null | string
   loading: boolean
+  aboutLoading: boolean
+  aboutError: null | string
+}
+
+interface IsetAboutMe {
+  textValue: string
+  token: string
 }
 
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
-  async (payload) => {
+  async (payload: string) => {
     const response = await fetch('http://localhost:5000/admin/auth', {
       method: 'POST',
       headers: {
@@ -54,6 +55,34 @@ export const checkAuth = createAsyncThunk<string, string | null>(
   }
 )
 
+export const getAbout = createAsyncThunk('admin/about', async () => {
+  const response = await fetch('http://localhost:5000/about', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (response.ok) {
+    const data = response.json()
+    return data
+  } else {
+    throw new Error(response.statusText)
+  }
+})
+
+export const setAboutMe = createAsyncThunk<IsetAboutMe, IsetAboutMe>(
+  'admin/set-about',
+  async (toResponse: IsetAboutMe) => {
+    await fetch('http://localhost:5000/about', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user: { token: toResponse.token },
+        info: { info: toResponse.textValue },
+      }),
+    })
+    return toResponse
+  }
+)
+
 const adminSlice = createSlice({
   name: 'admin',
   initialState: {
@@ -63,6 +92,8 @@ const adminSlice = createSlice({
     error: null,
     authError: null,
     loading: true,
+    aboutLoading: false,
+    aboutError: null,
   } as AdminStateInterface,
   reducers: {
     setToken: (state, action) => {
@@ -76,7 +107,7 @@ const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(adminAuth.pending, (state, action) => {
+      .addCase(adminAuth.pending, (state) => {
         state.error = null
         state.authError = null
         state.loading = true
@@ -107,11 +138,31 @@ const adminSlice = createSlice({
         state.isLogged = false
         state.error = `${error.name}: ${error.message}`
       })
+      .addCase(getAbout.pending, (state) => {
+        state.aboutLoading = true
+        state.aboutError = null
+      })
+      .addCase(getAbout.fulfilled, (state, action) => {
+        state.aboutLoading = false
+        state.aboutError = null
+        state.aboutMe = action.payload.Admin.aboutMe
+      })
+      .addCase(getAbout.rejected, (state, { error }) => {
+        state.aboutError = `${error.name}: ${error.message}`
+      })
+      .addCase(setAboutMe.pending, (state, action) => {
+        state.aboutLoading = true
+        state.aboutError = null
+      })
+      .addCase(setAboutMe.fulfilled, (state, action) => {
+        state.aboutLoading = false
+        state.aboutMe = action.payload.textValue
+      })
+      .addCase(setAboutMe.rejected, (state, action) => {
+        state.aboutLoading = false
+        state.aboutError = `${action.error.name}: ${action.error.message}`
+      })
   },
 })
 export const { setToken, checkToken } = adminSlice.actions
 export default adminSlice.reducer
-
-function isError(action: AnyAction) {
-  return action.type.endsWith('rejected')
-}

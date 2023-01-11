@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import TagInterface from '../TagInterface/TagInterface'
 import './PreviewImage.scss'
 
@@ -22,11 +22,19 @@ function PreviewImage({ url, getFileName, setFile }: PreviewImageProps) {
       <div className="preview__img-wrapper">
         <img src={url} alt="asd" className="preview__image" />
         <p className="preview__image-name">{getFileName()}</p>
+        <div className="preview__button-wrapper">
+          <button
+            className="preview__button preview__button_save"
+            onClick={() => setFile(null)}
+          >
+            Сохранить
+          </button>
+          <button className="preview__button" onClick={() => setFile(null)}>
+            Отмена
+          </button>
+        </div>
       </div>
       <TagInterface />
-      <button className="preview__button" onClick={() => setFile(null)}>
-        Отмена
-      </button>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { deleteTag, changeTagName } from '../../store/tagInterfaceSlice'
+import { deleteTag, changeTagName } from '../../store/tagInterface'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagItem.scss'
 import testApi from '../../testapi/testapi'
