@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { deleteTag, changeTagName } from '../../store/tagInterfaceSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagSectionItem.scss'
+import testApi from '../../testapi/testapi'
+import removeButtonIcon from '../../img/remove-icon.png'
 
 interface TagItemProps {
   tag: string
@@ -12,7 +14,7 @@ export default function TagItem(props: TagItemProps) {
   const { tag, tagId } = props
   const [currentTagText, setCurrentTagText] = useState<string>(tag)
   const [editMode, setEditMode] = useState(false)
-
+  const { token } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
 
   return (
@@ -25,8 +27,16 @@ export default function TagItem(props: TagItemProps) {
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
-            dispatch(changeTagName({ tag, tagId }))
+            console.log(currentTagText)
+
+            testApi.renameTag(tagId, currentTagText, token).then((res) => {
+              if (res === null) {
+                dispatch(changeTagName({ tag: currentTagText, tagId }))
+              }
+            })
+
             setEditMode(false)
+            console.log(currentTagText)
           }}
         />
       ) : (
@@ -34,6 +44,20 @@ export default function TagItem(props: TagItemProps) {
           {tag}
         </span>
       )}
+      <button
+        className='item__remove-button'
+        onClick={() =>
+          testApi
+            .removeTag(tagId, token)
+            .then((res) => dispatch(deleteTag({ tag, tagId })))
+        }
+      >
+        <img
+          src={removeButtonIcon}
+          alt='удалить тег. Автор Andrean Prabowo'
+          className='item__remove-button-icon'
+        />
+      </button>
     </li>
   )
 }

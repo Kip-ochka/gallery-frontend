@@ -10,20 +10,27 @@ import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import './App.scss'
+import { Tag } from '../../store/tagInterfaceSlice'
 
 function App() {
   const { loading, isLogged } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
+  const tagToAdd = {
+    tagId: 1,
+    tag: 'Закат',
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     dispatch(checkAuth(token))
   }, [])
-  // useEffect(() => {
-  //   testApi
-  //     .getTags()
-  //     .then((res) => res.forEach((e) => dispatch(addTag(e)).then((data) => {})))
-  // }, [])
+
+  useEffect(() => {
+    testApi
+      .getTags()
+      .then((res) => res.forEach((e: Tag) => dispatch(addTag(e))))
+  }, [])
+
   return (
     <div className='page'>
       {loading ? (
