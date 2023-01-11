@@ -14,6 +14,7 @@ interface PhotoFile {
 interface FileUrl {
   url?: string
 }
+
 function AddImage() {
   const [file, setFile] = useState<null | PhotoFile[]>(null)
   const [fileUrl, setFileUrl] = useState<FileUrl>({})

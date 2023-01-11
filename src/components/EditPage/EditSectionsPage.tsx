@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../utils/hooks/reduxHooks'
 
 export default function EditSectionsPage() {
-  const { tags } = useAppSelector((state) => state.tag)
+  const { tags } = useAppSelector((state) => state.tagInterface)
 
-  return <div className='edit-page'></div>
+  return <div className="edit-page"></div>
 }

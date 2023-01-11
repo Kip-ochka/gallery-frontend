@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
 interface AdminStateInterface {
   token: string | null
@@ -166,7 +166,3 @@ const adminSlice = createSlice({
 })
 export const { setToken, checkToken } = adminSlice.actions
 export default adminSlice.reducer
-
-function isError(action: AnyAction) {
-  return action.type.endsWith('rejected')
-}

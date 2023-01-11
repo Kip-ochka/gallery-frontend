@@ -1,1 +1,80 @@
 @import '../../commonStyles/commonStyles.scss';
+
+.tags {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  &__new-tag-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  &__new-tag-button {
+    width: 100%;
+    min-height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $greenaccent;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    color: #fff;
+    font-family: 'Lato';
+    @include clickable;
+  }
+  &__buttons-wrapper {
+    display: flex;
+    gap: 4px;
+  }
+  &__button-icon {
+    @include clickable;
+    border-radius: 4px;
+    width: 35px;
+    height: 35px;
+    &_save {
+      background-color: $greenaccent;
+    }
+    &_cancel {
+      background-color: $redaccent;
+    }
+  }
+  &__input-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+  }
+  &__new-tag-input {
+    width: 100%;
+    border: 1px solid rgb(90, 89, 89);
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Lato';
+    &_error {
+      border-color: $redaccent;
+    }
+  }
+  &__list {
+    width: 100%;
+    min-height: 100px;
+  }
+  @media screen and (max-width: 1280px) {
+    align-items: center;
+    &__new-tag-wrapper {
+      flex-direction: column;
+    }
+  }
+}

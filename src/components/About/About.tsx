@@ -44,7 +44,7 @@ function About() {
   }
   useEffect(() => {
     dispatch(getAbout())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     setTextValue(aboutMe!)

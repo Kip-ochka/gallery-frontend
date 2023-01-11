@@ -1,4 +1,4 @@
-import {} from 'react'
+import { useState } from 'react'
 import './PhotoCard.scss'
 import { SMALL_SIZE } from '../../utils/imageSizesLink'
 interface PhotoCardProps {
