@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { addTag, deleteTag, changeTagName } from '../../store/tagInterfaceSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+
 interface TagProps {
   tag: string
   tagId?: number
 
   type: string
 }
+
 function Tag({ tagId, tag, type }: TagProps) {
   const [redactable, setRedactable] = useState(false)
   const [textContent, setTextContent] = useState(tag)

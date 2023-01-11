@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './NavBar.scss'
 import { NavLink } from 'react-router-dom'
 import AccountButton from '../AccountButton/AccountButton'

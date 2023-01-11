@@ -47,12 +47,10 @@ const tagSlice = createSlice({
     },
     changeTagName: (state, action) => {
       const changed = state.tags.map((tag) => {
-        console.log(tag)
         if (tag.tagId === action.payload.tagId) {
           tag.tag = action.payload.tag
         }
       })
-      console.log(changed)
     },
   },
   extraReducers: (builder) => {

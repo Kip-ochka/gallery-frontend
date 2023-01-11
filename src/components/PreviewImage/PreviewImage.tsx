@@ -1,4 +1,4 @@
-import React from 'react'
+import {} from 'react'
 import TagInterface from '../TagInterface/TagInterface'
 import './PreviewImage.scss'
 

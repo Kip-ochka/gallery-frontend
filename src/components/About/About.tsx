@@ -1,29 +1,106 @@
-import iconBehance from '../../img/social-icon/icon-behance.svg';
-import iconFacebook from '../../img/social-icon/icon-facebook.svg';
-import iconInsta from '../../img/social-icon/icon-instagram.svg';
-import iconLinked from '../../img/social-icon/icon-linkedin.svg';
-import userPhoto from '../../img/user-photo.png';
-import './About.scss';
+import { unwrapResult } from '@reduxjs/toolkit'
+import { useEffect, useState } from 'react'
+import iconBehance from '../../img/social-icon/icon-behance.svg'
+import iconFacebook from '../../img/social-icon/icon-facebook.svg'
+import iconInsta from '../../img/social-icon/icon-instagram.svg'
+import iconLinked from '../../img/social-icon/icon-linkedin.svg'
+import userPhoto from '../../img/user-photo.png'
+import { getAbout, setAboutMe } from '../../store/adminSlice'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import './About.scss'
+//  <p className="about__description">
+//We are a creative duo based in Noida, India - who work as a team and
+//individually, across a range of creative disciplines including
+//photography, styling, illustration and design.
+//</p>
+//<h3 className="about__subtitle">CLIENTS</h3>
+//<p className="about__clients-descriptiob">
+//{
+//  'Argentor / Acquaviva / Aqua Plus Global / Bathline Sensations / Bikano / Apollomedics Super Speciality Hospital, Lucknow / Ashirwad Hospital, Varanasi / Government Institute Of Medical Sciences, Noida / HCG NCHRI, Nagpur / HCG Regency Oncology Hospital, Kanpur / Nayati Medicity, Mathura / Paras HMRI Hospital, Patna / Paras Hospital, Gurgaon'
+//}
+//</p>
+interface IsetAboutMe {
+  textValue: string
+  token: string
+}
 
 function About() {
+  const { aboutMe, isLogged, aboutLoading } = useAppSelector(
+    (state) => state.admin
+  )
+
+  const dispatch = useAppDispatch()
+  const [redacted, setRedacted] = useState(false)
+  const [textValue, setTextValue] = useState('')
+  const handleAboutMeUpdate = (textValue: string, token: string) => {
+    if (token) {
+      dispatch(setAboutMe({ textValue, token }))
+        .then(unwrapResult)
+        .then((data: IsetAboutMe) => {
+          setTextValue(data.textValue)
+          setRedacted(false)
+        })
+    }
+  }
+  useEffect(() => {
+    dispatch(getAbout())
+  }, [])
+
+  useEffect(() => {
+    setTextValue(aboutMe!)
+  }, [aboutMe])
+
   return (
     <section className="about">
       <h1 className="about__author-name">Виталик</h1>
       <div className="about__container">
         <img src={userPhoto} alt="Фотография автора" className="about__photo" />
         <div className="about__wrapper">
-          <h2 className="about__title">About</h2>
-          <p className="about__description">
-            We are a creative duo based in Noida, India - who work as a team and
-            individually, across a range of creative disciplines including
-            photography, styling, illustration and design.
-          </p>
-          <h3 className="about__subtitle">CLIENTS</h3>
-          <p className="about__clients-descriptiob">
-            {
-              'Argentor / Acquaviva / Aqua Plus Global / Bathline Sensations / Bikano / Apollomedics Super Speciality Hospital, Lucknow / Ashirwad Hospital, Varanasi / Government Institute Of Medical Sciences, Noida / HCG NCHRI, Nagpur / HCG Regency Oncology Hospital, Kanpur / Nayati Medicity, Mathura / Paras HMRI Hospital, Patna / Paras Hospital, Gurgaon'
-            }
-          </p>
+          <div className="about__title-wrapper">
+            <h2 className="about__title">About</h2>
+            {isLogged ? (
+              <button
+                className="about__redact-button"
+                onClick={() => {
+                  setRedacted((v) => !v)
+                }}
+              />
+            ) : null}
+          </div>
+          {redacted ? (
+            <form className="about__form">
+              <textarea
+                className="about__textarea"
+                value={textValue}
+                onChange={(e) => {
+                  setTextValue(e.target.value)
+                }}
+              />
+              <div className="about__buttons">
+                <button
+                  className="about__form-button about__form-button_cancel"
+                  onClick={() => {
+                    setRedacted((v) => !v)
+                  }}
+                >
+                  Отмена
+                </button>
+                <button
+                  className="about__form-button about__form-button_save"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const token = localStorage.getItem('token')
+                    handleAboutMeUpdate(textValue, token!)
+                  }}
+                >
+                  Сохранить
+                </button>
+              </div>
+            </form>
+          ) : aboutLoading ? null : (
+            <p className="about__description">{aboutMe}</p>
+          )}
+
           <ul className="about__contacts-list">
             <li className="about__contacts-item">
               <p className="about__contacts-title">
@@ -101,7 +178,7 @@ function About() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default About;
+export default About

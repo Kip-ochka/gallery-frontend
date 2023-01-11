@@ -1,4 +1,3 @@
-import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router'
 import ProtectedRoute from '../../hok/ProtectedRoute'
@@ -13,7 +12,7 @@ import './App.scss'
 import { Tag } from '../../store/tagInterfaceSlice'
 
 function App() {
-  const { loading, isLogged } = useAppSelector((state) => state.admin)
+  const { loading } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
   const tagToAdd = {
     tagId: 1,

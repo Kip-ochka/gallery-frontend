@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import DragFile from '../DragFile/DragFile'
 import PreviewImage from '../PreviewImage/PreviewImage'
 import './AddImage.scss'
@@ -15,8 +15,8 @@ interface FileUrl {
   url?: string
 }
 function AddImage() {
-  const [file, setFile] = React.useState<null | PhotoFile[]>(null)
-  const [fileUrl, setFileUrl] = React.useState<FileUrl>({})
+  const [file, setFile] = useState<null | PhotoFile[]>(null)
+  const [fileUrl, setFileUrl] = useState<FileUrl>({})
   const getFileName = () => {
     if (file) {
       return file[0].name
