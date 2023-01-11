@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchGetTags } from '../../store/tagInterfaceSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import Tag from '../Tag/Tag'
@@ -11,9 +11,7 @@ interface Tag {
 
 function TagInterface() {
   const dispatch = useAppDispatch()
-  const { tags, addedTags, status, error } = useAppSelector(
-    (state) => state.tag
-  )
+  const { tags, addedTags, status } = useAppSelector((state) => state.tag)
 
   useEffect(() => {
     dispatch(fetchGetTags())

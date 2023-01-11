@@ -1,6 +1,5 @@
-import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect } from 'react'
-import { Route, Routes } from 'react-router'
+import { Route, Routes } from 'react-router-dom'
 import { checkAuth, setToken } from '../../store/adminSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import AuthPage from '../AuthPage/AuthPage'
@@ -9,7 +8,7 @@ import Main from '../Main/Main'
 import './App.scss'
 
 function App() {
-  const { loading, isLogged } = useAppSelector((state) => state.admin)
+  const { loading } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
 
   useEffect(() => {

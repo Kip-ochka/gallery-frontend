@@ -1,6 +1,5 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
-import { setTextRange } from 'typescript'
 import iconBehance from '../../img/social-icon/icon-behance.svg'
 import iconFacebook from '../../img/social-icon/icon-facebook.svg'
 import iconInsta from '../../img/social-icon/icon-instagram.svg'
@@ -20,6 +19,10 @@ import './About.scss'
 //  'Argentor / Acquaviva / Aqua Plus Global / Bathline Sensations / Bikano / Apollomedics Super Speciality Hospital, Lucknow / Ashirwad Hospital, Varanasi / Government Institute Of Medical Sciences, Noida / HCG NCHRI, Nagpur / HCG Regency Oncology Hospital, Kanpur / Nayati Medicity, Mathura / Paras HMRI Hospital, Patna / Paras Hospital, Gurgaon'
 //}
 //</p>
+interface IsetAboutMe {
+  textValue: string
+  token: string
+}
 
 function About() {
   const { aboutMe, isLogged, aboutLoading } = useAppSelector(
@@ -33,7 +36,7 @@ function About() {
     if (token) {
       dispatch(setAboutMe({ textValue, token }))
         .then(unwrapResult)
-        .then((data) => {
+        .then((data: IsetAboutMe) => {
           setTextValue(data.textValue)
           setRedacted(false)
         })

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useRef } from 'react'
 import './DragFile.scss'
 
 interface PhotoFile {
@@ -14,8 +14,8 @@ interface DragFileProps {
   setFileUrl: ({}) => void
 }
 function DragFile({ setFile, setFileUrl }: DragFileProps) {
-  const [dragActive, setDragActive] = React.useState(false)
-  const inputRef = React.useRef<HTMLInputElement>(null)
+  const [dragActive, setDragActive] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDrag = function (e: any) {
     e.preventDefault()

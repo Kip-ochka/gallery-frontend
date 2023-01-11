@@ -1,6 +1,5 @@
-import { useEffect } from 'react'
-import { Route, Routes } from 'react-router'
-import { checkAuth } from '../../store/adminSlice'
+import {} from 'react'
+import { Route, Routes } from 'react-router-dom'
 import { useAppSelector, useAppDispatch } from '../../utils/hooks/reduxHooks'
 import About from '../About/About'
 import AddImage from '../AddImage/AddImage'

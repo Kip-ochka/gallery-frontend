@@ -1,10 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  AnyAction,
-  PayloadAction,
-} from '@reduxjs/toolkit'
-import { ErrorResponse } from '@remix-run/router'
+import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit'
 
 interface AdminStateInterface {
   token: string | null
@@ -17,9 +11,14 @@ interface AdminStateInterface {
   aboutError: null | string
 }
 
+interface IsetAboutMe {
+  textValue: string
+  token: string
+}
+
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
-  async (payload) => {
+  async (payload: string) => {
     const response = await fetch('http://localhost:5000/admin/auth', {
       method: 'POST',
       headers: {
@@ -68,14 +67,11 @@ export const getAbout = createAsyncThunk('admin/about', async () => {
     throw new Error(response.statusText)
   }
 })
-interface IsetAboutMe {
-  textValue: string
-  token: string
-}
+
 export const setAboutMe = createAsyncThunk<IsetAboutMe, IsetAboutMe>(
   'admin/set-about',
-  async (toResponse) => {
-    const response = await fetch('http://localhost:5000/about', {
+  async (toResponse: IsetAboutMe) => {
+    await fetch('http://localhost:5000/about', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

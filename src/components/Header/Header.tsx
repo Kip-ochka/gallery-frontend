@@ -6,7 +6,7 @@ import AccountButton from '../AccountButton/AccountButton'
 import NavBar from '../NavBar/NavBar'
 import './Header.scss'
 export default function Header() {
-  const { isLogged, token } = useAppSelector((state) => state.admin)
+  const { isLogged } = useAppSelector((state) => state.admin)
   const [burgerIsOpen, setBurgerIsOpen] = useState(false)
   const toggleBurgerButton = () => {
     if (burgerIsOpen) {
