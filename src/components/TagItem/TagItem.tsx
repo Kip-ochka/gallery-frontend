@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { deleteTag, changeTagName } from '../../store/tagInterfaceSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import './TagSectionItem.scss'
+import './TagItem.scss'
 import testApi from '../../testapi/testapi'
 import removeButtonIcon from '../../img/remove-icon.png'
 
@@ -18,12 +18,12 @@ export default function TagItem(props: TagItemProps) {
   const dispatch = useAppDispatch()
 
   return (
-    <li className='item'>
+    <li className='tag-item'>
       {editMode ? (
         <input
           autoFocus
           type='text'
-          className='item__input'
+          className='tag-item__input'
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
@@ -40,12 +40,15 @@ export default function TagItem(props: TagItemProps) {
           }}
         />
       ) : (
-        <span className='item__text' onDoubleClick={() => setEditMode(true)}>
+        <span
+          className='tag-item__text'
+          onDoubleClick={() => setEditMode(true)}
+        >
           {tag}
         </span>
       )}
       <button
-        className='item__remove-button'
+        className='tag-item__remove-button'
         onClick={() =>
           testApi
             .removeTag(tagId, token)
@@ -55,7 +58,7 @@ export default function TagItem(props: TagItemProps) {
         <img
           src={removeButtonIcon}
           alt='удалить тег. Автор Andrean Prabowo'
-          className='item__remove-button-icon'
+          className='tag-item__remove-button-icon'
         />
       </button>
     </li>

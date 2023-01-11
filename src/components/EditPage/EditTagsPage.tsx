@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../utils/hooks/reduxHooks'
-import TagItem from '../TagSectionItem/TagItem'
+import TagItem from '../TagItem/TagItem'
 import './EditPage.scss'
 
 export default function EditTagsPage() {

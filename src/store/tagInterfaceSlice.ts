@@ -12,7 +12,7 @@ export interface Tag {
   tagId: number
 }
 
-interface TagsState {
+export interface TagsState {
   tags: Array<Tag>
   addedTags: Array<Tag>
   status: string
