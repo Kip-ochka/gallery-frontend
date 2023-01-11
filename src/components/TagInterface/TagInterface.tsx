@@ -52,7 +52,11 @@ function TagInterface() {
                 onClick={async (e) => {
                   e.preventDefault()
                   const obj = { token: token, name: textValue }
-                  await dispatch(fetchPostTag(obj)).then(unwrapResult)
+                  await dispatch(fetchPostTag(obj))
+                    .then(unwrapResult)
+                    .then(() => {
+                      setTextValue('')
+                    })
                 }}
               >
                 <img src={saveIcon} />
@@ -72,6 +76,7 @@ function TagInterface() {
       </div>
 
       <ul className="tags__list">
+        <p>Все теги</p>
         {loading ? (
           <p>Preloader</p>
         ) : (
@@ -80,7 +85,8 @@ function TagInterface() {
           })
         )}
       </ul>
-      <ul className="tags__added-list">
+      <ul className="tags__list">
+        <p>Добавленные теги</p>
         {addedTags.map((item: Tag) => {
           return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
         })}
