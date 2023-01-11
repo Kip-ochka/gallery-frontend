@@ -1,0 +1,30 @@
+@import '../../commonStyles/commonStyles.scss';
+
+.item {
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid black;
+  display: flex;
+  max-height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.item__input {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  border: 1px solid $blueaccent;
+}
+.item__text {
+}
+.item__remove-button {
+  border: none;
+  background-color: transparent;
+  size: 20px;
+}
+.item__remove-button-icon {
+  width: 20px;
+  height: 20px;
+}

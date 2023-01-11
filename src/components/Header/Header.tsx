@@ -20,22 +20,16 @@ export default function Header() {
   }
 
   return (
-    <header className="header">
-      <Link to="/">
-        <img src={logo} alt={'лого'} className="header__logo" />
+    <header className='header'>
+      <Link to='/'>
+        <img src={logo} alt={'лого'} className='header__logo' />
       </Link>
       <button
         onClick={toggleBurgerButton}
         className={`header__button ${burgerIsOpen && 'header__button_opened'}`}
       />
-      {burgerIsOpen && (
-        <NavBar
-          isOpen={burgerIsOpen}
-          onClose={closeBurger}
-          categories={['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']}
-        />
-      )}
-      <div className="header__headen-element">
+      {burgerIsOpen && <NavBar isOpen={burgerIsOpen} onClose={closeBurger} />}
+      <div className='header__headen-element'>
         {isLogged ? null : <AccountButton />}
       </div>
     </header>

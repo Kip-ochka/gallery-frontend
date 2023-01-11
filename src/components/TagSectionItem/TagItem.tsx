@@ -1,0 +1,63 @@
+import { useState } from 'react'
+import { deleteTag, changeTagName } from '../../store/tagInterfaceSlice'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import './TagSectionItem.scss'
+import testApi from '../../testapi/testapi'
+import removeButtonIcon from '../../img/remove-icon.png'
+
+interface TagItemProps {
+  tag: string
+  tagId: number
+}
+
+export default function TagItem(props: TagItemProps) {
+  const { tag, tagId } = props
+  const [currentTagText, setCurrentTagText] = useState<string>(tag)
+  const [editMode, setEditMode] = useState(false)
+  const { token } = useAppSelector((state) => state.admin)
+  const dispatch = useAppDispatch()
+
+  return (
+    <li className='item'>
+      {editMode ? (
+        <input
+          autoFocus
+          type='text'
+          className='item__input'
+          value={currentTagText}
+          onChange={(e) => setCurrentTagText(e.target.value)}
+          onBlur={() => {
+            console.log(currentTagText)
+
+            testApi.renameTag(tagId, currentTagText, token).then((res) => {
+              if (res === null) {
+                dispatch(changeTagName({ tag: currentTagText, tagId }))
+              }
+            })
+
+            setEditMode(false)
+            console.log(currentTagText)
+          }}
+        />
+      ) : (
+        <span className='item__text' onDoubleClick={() => setEditMode(true)}>
+          {tag}
+        </span>
+      )}
+      <button
+        className='item__remove-button'
+        onClick={() =>
+          testApi
+            .removeTag(tagId, token)
+            .then((res) => dispatch(deleteTag({ tag, tagId })))
+        }
+      >
+        <img
+          src={removeButtonIcon}
+          alt='удалить тег. Автор Andrean Prabowo'
+          className='item__remove-button-icon'
+        />
+      </button>
+    </li>
+  )
+}

@@ -17,7 +17,7 @@ function Tag({ tagId, tag, type }: TagProps) {
   return (
     <li key={tagId}>
       <input
-        type="text"
+        type='text'
         value={textContent}
         onChange={(e) => {
           setTextContent(e.currentTarget.value)

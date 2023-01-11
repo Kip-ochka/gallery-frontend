@@ -7,9 +7,9 @@ export const fetchGetTags = createAsyncThunk('tag/getTags', async () => {
 
 export const fetchPostTag = createAsyncThunk('tag/postTag', async () => {})
 
-interface Tag {
+export interface Tag {
   tag: string
-  tagId?: number
+  tagId: number
 }
 
 interface TagsState {
