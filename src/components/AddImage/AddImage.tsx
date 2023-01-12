@@ -1,7 +1,8 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useState } from 'react'
 import { addImage } from '../../store/imageSlice'
-import { IFileUrl, IPhotoFile } from '../../types/models'
+import { attachTag } from '../../store/tagInterface'
+import { IFileUrl, IPhotoFile, ITag, IToAttacth } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import DragFile from '../DragFile/DragFile'
 import PreviewImage from '../PreviewImage/PreviewImage'
@@ -10,6 +11,7 @@ import './AddImage.scss'
 function AddImage() {
   const [file, setFile] = useState<File[]>()
   const [fileUrl, setFileUrl] = useState<IFileUrl>({})
+  const [error, setError] = useState('')
   const dispatch = useAppDispatch()
   const { addedTags } = useAppSelector((state) => state.tagInterface)
   const { token } = useAppSelector((state) => state.admin)
@@ -24,16 +26,44 @@ function AddImage() {
   const addImageToServer = () => {
     const toSend = file![0]
     if (typeof token === 'string') {
-      dispatch(addImage({ path: 'images', toSend, addedTags, token }))
+      dispatch(addImage({ toSend }))
         .then(unwrapResult)
-        .then((data) => {
-          console.log(data)
-          setFile(undefined)
+        .then(async (data) => {
+          const allPromices = await returnTagsPromise(data.imageId)
+          const checkPromices = allPromices?.filter((promice) => {
+            return promice === 'Тег успешно добавлен!'
+          })
+          if (checkPromices?.length !== allPromices?.length) {
+            console.log(
+              'Один из тегов не добавился автоматически, проверьте в режиме просмотра фотографии!'
+            )
+          } else {
+            setFile(undefined)
+          }
         })
         .catch((err) => console.log(err))
     }
   }
 
+  const returnTagsPromise = (imageId: number) => {
+    if (typeof token === 'string') {
+      const allTags = addedTags.map(async (tag: ITag) => {
+        const toAttacth = {
+          path: 'images',
+          itemId: imageId,
+          tagId: tag.tagId,
+          token,
+        } as IToAttacth
+        const added = await dispatch(attachTag(toAttacth)).unwrap()
+        if (added) {
+          return added
+        } else {
+          return new Error(`Не получилось добавить тег`)
+        }
+      })
+      return Promise.all(allTags)
+    }
+  }
   return (
     <div className="add-image">
       {file ? (

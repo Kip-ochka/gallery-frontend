@@ -111,3 +111,10 @@ export interface IToAttacth {
   tagId: number
   token: string
 }
+
+export interface IToAttacth {
+  path: string
+  toSend: File
+  addedTags: ITag[]
+  token: string
+}
