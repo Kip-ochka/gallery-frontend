@@ -3,7 +3,12 @@ import { IPreviewImageProps } from '../../types/models'
 import TagInterface from '../TagInterface/TagInterface'
 import './PreviewImage.scss'
 
-function PreviewImage({ url, getFileName, setFile }: IPreviewImageProps) {
+function PreviewImage({
+  url,
+  getFileName,
+  setFile,
+  onSubmit,
+}: IPreviewImageProps) {
   return (
     <div className="preview">
       <div className="preview__img-wrapper">
@@ -12,7 +17,10 @@ function PreviewImage({ url, getFileName, setFile }: IPreviewImageProps) {
         <div className="preview__button-wrapper">
           <button
             className="preview__button preview__button_save"
-            onClick={() => setFile(null)}
+            onClick={(e) => {
+              e.preventDefault()
+              onSubmit()
+            }}
           >
             Сохранить
           </button>

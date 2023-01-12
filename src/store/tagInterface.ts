@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { IPostTag, ITag, ITagsState } from '../types/models'
+import { createSlice, createAsyncThunk, unwrapResult } from '@reduxjs/toolkit'
+import { IPostTag, ITag, ITagsState, IToAttacth } from '../types/models'
 
 export const fetchGetTags = createAsyncThunk('tag/getTags', async () => {
   const res = await fetch(`http://localhost:5000/tags`)
@@ -27,6 +27,29 @@ export const fetchPostTag = createAsyncThunk<ITag, IPostTag>(
   }
 )
 
+export const attachTag = createAsyncThunk(
+  'tag/attachTag',
+  ({ path, itemId, tagId, token }: IToAttacth, { rejectWithValue }) => {
+    const pathItem = path.slice(0, -1)
+    return fetch(
+      `http://localhost:5000/${path}/${itemId}/tags/${tagId}?${pathItem}Id=${itemId}&tagId=${tagId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: token }),
+      }
+    ).then((data) => {
+      if (data.ok) {
+        return data.json()
+      } else {
+        rejectWithValue(data.statusText)
+      }
+    })
+  }
+)
+
 const tagInterface = createSlice({
   name: 'tag',
   initialState: {
@@ -37,7 +60,6 @@ const tagInterface = createSlice({
   } as ITagsState,
   reducers: {
     addTag: (state, action) => {
-      console.log(action)
       const newTag = action.payload
       state.addedTags.push(newTag)
       const filtered = state.tags.filter((tag) => tag.tagId !== newTag.tagId)
@@ -60,6 +82,9 @@ const tagInterface = createSlice({
           tag.tag = action.payload.tag
         }
       })
+    },
+    deleteAfterAttach: (state) => {
+      state.addedTags = []
     },
   },
   extraReducers: (builder) => {
@@ -91,8 +116,16 @@ const tagInterface = createSlice({
         state.error = `${action.error.name}: ${action.error.message}`
         state.loading = false
       })
+      .addCase(attachTag.pending, (state, action) => {})
+      .addCase(attachTag.fulfilled, (state, action) => {})
+      .addCase(attachTag.rejected, (state, action) => {})
   },
 })
-export const { addTag, deleteTag, createNewTag, changeTagName } =
-  tagInterface.actions
+export const {
+  addTag,
+  deleteTag,
+  createNewTag,
+  changeTagName,
+  deleteAfterAttach,
+} = tagInterface.actions
 export default tagInterface.reducer

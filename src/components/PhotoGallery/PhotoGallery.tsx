@@ -1,32 +1,27 @@
+import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
-import testApi from '../../testapi/testapi'
-import { IPhoto } from '../../types/models'
+import { getImages } from '../../store/imageSlice'
+import { IImage, IPhoto } from '../../types/models'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import PhotoCard from '../PhotoCard/PhotoCard'
 import './PhotoGallery.scss'
 
 function PhotoGallery() {
-  const [photos, setPhotos] = useState<IPhoto[]>([])
-  const [loading, setLoading] = useState(true)
+  const dispatch = useAppDispatch()
+  const { images } = useAppSelector((state) => state.images)
 
   useEffect(() => {
-    testApi
-      .getPhotos()
-      .then((photos) => {
-        setPhotos(photos)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
+    dispatch(getImages()).then(unwrapResult)
   }, [])
 
   return (
     <section className="photos">
-      {loading ? (
+      {false ? (
         <div>Loading...</div>
       ) : (
         <ul className="photos__wrapper">
-          {photos.map((photo) => {
-            return <PhotoCard {...photo} key={photo.imageId} />
+          {images.map((image: IPhoto) => {
+            return <PhotoCard key={image.imageId} image={image.image} />
           })}
         </ul>
       )}

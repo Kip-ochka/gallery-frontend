@@ -1,23 +1,20 @@
 import { useState } from 'react'
 import './Tag.scss'
-import { addTag, deleteTag, changeTagName } from '../../store/tagInterface'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import { ITag } from '../../types/models'
+import { ITagProps } from '../../types/models'
 
-function Tag({ tagId, tag }: ITag) {
+function Tag({ tagId, tag, onClick }: ITagProps) {
   const [redactable, setRedactable] = useState(false)
   const [textContent, setTextContent] = useState(tag)
-  const dispatch = useAppDispatch()
-  const tagState = useAppSelector((state) => state.tagInterface)
   return (
-    <li
-      key={tagId}
-      className="tag"
-      onClick={() => {
-        dispatch(addTag({ tagId: tagId, tag: textContent }))
-      }}
-    >
-      <p>{textContent}</p>
+    <li key={tagId} className="tag">
+      <p
+        className="tag__name"
+        onClick={() => {
+          onClick({ tagId: tagId, tag: tag })
+        }}
+      >
+        {textContent}
+      </p>
     </li>
   )
 }

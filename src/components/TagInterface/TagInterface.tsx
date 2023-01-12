@@ -7,6 +7,8 @@ import cancelIcon from '../../img/cancel.svg'
 import { useState } from 'react'
 import { fetchPostTag } from '../../store/tagInterface'
 import { unwrapResult } from '@reduxjs/toolkit'
+import { addTag, deleteTag } from '../../store/tagInterface'
+import { ITag } from '../../types/models'
 
 function TagInterface() {
   const [isCreateNewTag, setIsCreateNewTag] = useState(false)
@@ -16,6 +18,13 @@ function TagInterface() {
     (state) => state.tagInterface
   )
   const { token } = useAppSelector((state) => state.admin)
+
+  const addTagToAdded = (tag: ITag) => {
+    dispatch(addTag(tag))
+  }
+  const deleteTagFromAdded = (tag: ITag) => {
+    dispatch(deleteTag(tag))
+  }
 
   return (
     <div className="tags">
@@ -77,7 +86,14 @@ function TagInterface() {
             <p>Preloader</p>
           ) : (
             tags.map((item) => {
-              return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
+              return (
+                <Tag
+                  key={item.tagId}
+                  tag={item.tag}
+                  tagId={item.tagId}
+                  onClick={addTagToAdded}
+                />
+              )
             })
           )}
         </ul>
@@ -86,7 +102,14 @@ function TagInterface() {
         <p className="tags__list-title">Добавленные теги</p>
         <ul className="tags__list">
           {addedTags.map((item) => {
-            return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
+            return (
+              <Tag
+                key={item.tagId}
+                tag={item.tag}
+                tagId={item.tagId}
+                onClick={deleteTagFromAdded}
+              />
+            )
           })}
         </ul>
       </div>

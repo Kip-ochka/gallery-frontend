@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import './PhotoCard.scss'
 import { SMALL_SIZE } from '../../utils/imageSizesLink'
-import { PhotoCardProps } from '../../types/models'
+import { IImage } from '../../types/models'
 
-function PhotoCard({ imageId, image }: PhotoCardProps) {
+function PhotoCard({ image }: { image: string }) {
   return (
-    <li key={imageId} className="photo">
+    <li className="photo">
       <img
         src={`${SMALL_SIZE + image}`}
         alt={'Фотография не загрузилась.:('}

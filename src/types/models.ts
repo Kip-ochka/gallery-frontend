@@ -5,6 +5,12 @@ export interface IPhoto {
   tags: []
 }
 
+export interface IImage {
+  key: string
+  image: string
+  imageId: string
+}
+
 export interface IPhotoFile {
   lastModified: number
   name: string
@@ -13,14 +19,12 @@ export interface IPhotoFile {
   webkitRelativePath: string
 }
 
-export interface PhotoCardProps {
-  imageId: string
-  image: string
-}
-
 export interface ITag {
   tag: string
   tagId: number
+}
+export interface ITagProps extends ITag {
+  onClick: (arg: ITag) => void
 }
 
 export interface ITagsState {
@@ -44,14 +48,15 @@ export interface IFileUrl {
 }
 
 export interface IDragFileProps {
-  setFile: (arg: IPhotoFile[]) => void
+  setFile: any
   setFileUrl: ({}) => void
 }
 
 export interface IPreviewImageProps {
   url: string | undefined
   getFileName: () => string
-  setFile: (arg: IPhotoFile[] | null) => void
+  setFile: any
+  onSubmit: () => void
 }
 
 export interface INavBarProps {
@@ -90,4 +95,19 @@ export type SectionsSliceState = {
 export type ActionPayload = {
   section: Section
   tag: ITag
+}
+
+export interface IImages {
+  images: []
+  loading: boolean
+  getImagesError: null | string
+  file: File | undefined
+  fileUrl: string
+}
+
+export interface IToAttacth {
+  path: string
+  itemId: number
+  tagId: number
+  token: string
 }
