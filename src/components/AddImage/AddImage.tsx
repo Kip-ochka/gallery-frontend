@@ -1,23 +1,12 @@
 import { useState } from 'react'
+import { IFileUrl, IPhotoFile } from '../../types/models'
 import DragFile from '../DragFile/DragFile'
 import PreviewImage from '../PreviewImage/PreviewImage'
 import './AddImage.scss'
 
-interface PhotoFile {
-  lastModified: number
-  name: string
-  size: string
-  type: string
-  webkitRelativePath: string
-}
-
-interface FileUrl {
-  url?: string
-}
-
 function AddImage() {
-  const [file, setFile] = useState<null | PhotoFile[]>(null)
-  const [fileUrl, setFileUrl] = useState<FileUrl>({})
+  const [file, setFile] = useState<null | IPhotoFile[]>(null)
+  const [fileUrl, setFileUrl] = useState<IFileUrl>({})
   const getFileName = () => {
     if (file) {
       return file[0].name

@@ -67,6 +67,24 @@
       border-color: $redaccent;
     }
   }
+  &__list-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border: 2px solid rgb(90, 89, 89);
+    border-radius: 4px;
+    padding: 16px;
+    background-color: rgba(108, 111, 112, 0.1);
+  }
+  &__list-title {
+    width: 100%;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 500;
+    font-family: 'Lato';
+    color: rgb(108, 111, 112);
+  }
   &__list {
     width: 100%;
     display: flex;

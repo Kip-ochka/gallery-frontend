@@ -7,10 +7,6 @@ import cancelIcon from '../../img/cancel.svg'
 import { useState } from 'react'
 import { fetchPostTag } from '../../store/tagInterface'
 import { unwrapResult } from '@reduxjs/toolkit'
-interface Tag {
-  tag: string
-  tagId: number
-}
 
 function TagInterface() {
   const [isCreateNewTag, setIsCreateNewTag] = useState(false)
@@ -74,23 +70,26 @@ function TagInterface() {
           </div>
         ) : null}
       </div>
-
-      <ul className="tags__list">
-        <p>Все теги</p>
-        {loading ? (
-          <p>Preloader</p>
-        ) : (
-          tags.map((item: Tag) => {
+      <div className="tags__list-wrapper">
+        <p className="tags__list-title">Все теги</p>
+        <ul className="tags__list">
+          {loading ? (
+            <p>Preloader</p>
+          ) : (
+            tags.map((item) => {
+              return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
+            })
+          )}
+        </ul>
+      </div>
+      <div className="tags__list-wrapper">
+        <p className="tags__list-title">Добавленные теги</p>
+        <ul className="tags__list">
+          {addedTags.map((item) => {
             return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
-          })
-        )}
-      </ul>
-      <ul className="tags__list">
-        <p>Добавленные теги</p>
-        {addedTags.map((item: Tag) => {
-          return <Tag key={item.tagId} tag={item.tag} tagId={item.tagId} />
-        })}
-      </ul>
+          })}
+        </ul>
+      </div>
     </div>
   )
 }

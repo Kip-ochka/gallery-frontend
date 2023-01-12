@@ -1,5 +1,10 @@
 @import '../../commonStyles/commonStyles.scss';
 
 .tag {
-  background-color: rgb(122, 117, 117);
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid rgba(100, 100, 100, 0.2);
+  border-radius: 4px;
+  width: fit-content;
+  cursor: pointer;
 }

@@ -1,22 +1,9 @@
 import { useState } from 'react'
+import { IPreviewImageProps } from '../../types/models'
 import TagInterface from '../TagInterface/TagInterface'
 import './PreviewImage.scss'
 
-interface PhotoFile {
-  lastModified: number
-  name: string
-  size: string
-  type: string
-  webkitRelativePath: string
-}
-
-interface PreviewImageProps {
-  url: string | undefined
-  getFileName: () => string
-  setFile: (arg: PhotoFile[] | null) => void
-}
-
-function PreviewImage({ url, getFileName, setFile }: PreviewImageProps) {
+function PreviewImage({ url, getFileName, setFile }: IPreviewImageProps) {
   return (
     <div className="preview">
       <div className="preview__img-wrapper">

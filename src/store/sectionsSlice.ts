@@ -1,16 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { Action } from '@remix-run/router'
-import { Tag } from './tagInterface'
-
-export type Section = {
-  sectionId: number
-  section: string
-  tags: Array<Tag>
-}
-
-type SectionsSliceState = {
-  sections: Array<Section>
-}
+import { ISection, ISectionsSliceState } from '../types/models'
 
 const sectionsSlice = createSlice({
   name: 'sections',
@@ -47,7 +37,7 @@ const sectionsSlice = createSlice({
         ],
       },
     ],
-  } as SectionsSliceState,
+  } as ISectionsSliceState,
   reducers: {
     createNewSection: (state, action) => {
       state.sections.push(action.payload)
@@ -60,13 +50,13 @@ const sectionsSlice = createSlice({
     addTag: (state, action) => {
       const sectionToEdit = state.sections.find(
         (e) => e.sectionId === action.payload.section.sectionId
-      ) as Section
+      ) as ISection
       sectionToEdit.tags.push(action.payload.tag)
     },
     deleteTag: (state, action) => {
       const sectionToEdit = state.sections.find(
         (e) => e.sectionId === action.payload.section.sectionId
-      ) as Section
+      ) as ISection
       sectionToEdit.tags = sectionToEdit.tags.filter(
         (e) => e.tagId !== action.payload.tag.tagId
       )
