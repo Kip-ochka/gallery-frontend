@@ -42,9 +42,9 @@ _Описывать роуты я буду в формате method(/route/route
   "tags": []
   }
   ]
-- delete('/sections/{SectionId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /1?sectionId=1 в квери параметрах
+- delete('/sections/{SectionId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /1 в квери параметрах
 
-- put('/sections/{sectionId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /1?sectionId=1&section=Новое имя в квери параметрах
+- put('/sections/{sectionId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /1?section=Новое имя в квери параметрах
 
 - post('/sections/{sectionId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /sections/1/tags/1?sectionId=1&tagId=1 в квери параметрах
 
