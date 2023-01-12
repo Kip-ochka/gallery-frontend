@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { Action } from '@remix-run/router'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
+import { BASE_URL } from '../utils/constants'
 import { Tag } from './tagInterface'
 
 export type Section = {
@@ -10,60 +10,62 @@ export type Section = {
 
 type SectionsSliceState = {
   sections: Array<Section>
+  isLoading: boolean
+  error: null | string
 }
+
+type ActionPayload = {
+  section: Section
+  tag: Tag
+}
+
+// {
+//   method: 'GET',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({ token }),
+// }
+
+export const getSections = createAsyncThunk<
+  Section[],
+  void,
+  { rejectValue: string }
+>('section/segSection', async function (_, { rejectWithValue }) {
+  try {
+    const res = await fetch(`${BASE_URL}sections`)
+    if (!res.ok) {
+      throw new Error('Ошибка при получении списка секций с сервера')
+    }
+    return res.json()
+  } catch (err: any) {
+    return rejectWithValue(err.message)
+  }
+})
 
 const sectionsSlice = createSlice({
   name: 'sections',
   initialState: {
-    sections: [
-      {
-        sectionId: 1,
-        section: 'Пейзажи',
-        tags: [
-          {
-            tagId: 1,
-            tag: 'Закат',
-          },
-        ],
-      },
-      {
-        sectionId: 2,
-        section: 'Животные',
-        tags: [
-          {
-            tagId: 2,
-            tag: 'Белка',
-          },
-        ],
-      },
-      {
-        sectionId: 3,
-        section: 'Растения',
-        tags: [
-          {
-            tagId: 3,
-            tag: 'Цветы',
-          },
-        ],
-      },
-    ],
+    sections: [],
+    isLoading: false,
+    error: null,
   } as SectionsSliceState,
   reducers: {
-    createNewSection: (state, action) => {
+    createSection: (state, action: PayloadAction<Section>) => {
       state.sections.push(action.payload)
     },
-    removeSection: (state, action) => {
+    removeSection: (state, action: PayloadAction<Section>) => {
       state.sections = state.sections.filter(
         (e) => e.sectionId !== action.payload.sectionId
       )
     },
-    addTag: (state, action) => {
+    addTag: (state, action: PayloadAction<ActionPayload>) => {
       const sectionToEdit = state.sections.find(
         (e) => e.sectionId === action.payload.section.sectionId
       ) as Section
       sectionToEdit.tags.push(action.payload.tag)
     },
-    deleteTag: (state, action) => {
+    deleteTag: (state, action: PayloadAction<ActionPayload>) => {
       const sectionToEdit = state.sections.find(
         (e) => e.sectionId === action.payload.section.sectionId
       ) as Section
@@ -72,8 +74,25 @@ const sectionsSlice = createSlice({
       )
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getSections.pending, (state) => {
+        state.error = null
+        state.isLoading = true
+      })
+      .addCase(getSections.fulfilled, (state, action) => {
+        state.error = null
+        state.isLoading = false
+        state.sections = action.payload
+      })
+      .addCase(getSections.rejected, (state, action) => {
+        state.error = null
+        state.isLoading = false
+        state.error = action.payload ? action.payload : null
+      })
+  },
 })
-export const { addTag, deleteTag, createNewSection, removeSection } =
+export const { addTag, deleteTag, createSection, removeSection } =
   sectionsSlice.actions
 
 export default sectionsSlice.reducer

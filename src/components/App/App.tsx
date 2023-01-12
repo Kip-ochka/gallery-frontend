@@ -11,34 +11,34 @@ import Main from '../Main/Main'
 import './App.scss'
 import { Tag } from '../../store/tagInterface'
 import { unwrapResult } from '@reduxjs/toolkit'
-
+import { getSections } from '../../store/sectionsSlice'
 function App() {
   const { loading, isLogged } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     dispatch(checkAuth(token))
   }, [])
 
   useEffect(() => {
+    dispatch(getSections())
     dispatch(fetchGetTags()).then(unwrapResult)
   }, [dispatch])
 
   return (
-    <div className="page">
+    <div className='page'>
       {loading ? (
         <p>loading...</p>
       ) : (
         <Routes>
           <Route
-            path="/auth"
+            path='/auth'
             element={
               <ProtectedRoute component={AuthPage} condition={!isLogged} />
             }
           />
           <Route
-            path="/*"
+            path='/*'
             element={
               <>
                 <Header />
