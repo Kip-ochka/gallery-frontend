@@ -71,14 +71,14 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
-          Редактировать секции
+          Редактировать теги
         </NavLink>
         <NavLink
           to='/sections'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
-          Редактировать теги
+          Редактировать секции
         </NavLink>
       </div>
     </aside>

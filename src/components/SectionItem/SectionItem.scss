@@ -5,8 +5,9 @@
   border-radius: 3px;
   border: 1px solid black;
   display: flex;
-  max-height: 35px;
+  // max-height: 35px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
@@ -16,6 +17,10 @@
   padding: 0;
   width: auto;
   border: 1px solid $blueaccent;
+  width: unset;
+  max-width: unset;
+  min-width: unset;
+  max-width: unset;
 }
 .section-item__text {
 }

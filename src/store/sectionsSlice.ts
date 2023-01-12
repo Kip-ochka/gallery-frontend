@@ -7,6 +7,7 @@ import {
   ITag,
 } from '../types/models'
 
+// *** Common helpers for extra reducers ***
 const setFulfilled = (state: SectionsSliceState) => {
   state.isLoading = false
   state.error = null
@@ -23,6 +24,7 @@ const setRejected = (
   state.error = action.payload ? action.payload : null
 }
 
+// *** Async thunks ***
 export const getSections = createAsyncThunk<
   Section[],
   void,
@@ -41,20 +43,17 @@ export const getSections = createAsyncThunk<
 
 export const createNewSection = createAsyncThunk<
   void,
-  { section: Section; token: string },
+  { newSectionName: string; token: string },
   { rejectValue: string }
 >(
   'sections/createSection',
-  async function ({ section, token }, { dispatch, rejectWithValue }) {
+  async function ({ newSectionName, token }, { dispatch, rejectWithValue }) {
     try {
-      const res = await fetch(
-        `${BASE_URL}sections?section=${section.section}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
-        }
-      )
+      const res = await fetch(`${BASE_URL}sections?section=${newSectionName}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      })
       if (!res.ok) {
         throw new Error('Ошибка при создании новой секции на сервере')
       } else dispatch(getSections())

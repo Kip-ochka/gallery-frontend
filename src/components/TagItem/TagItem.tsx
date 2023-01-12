@@ -14,12 +14,12 @@ export default function TagItem(props: ITag) {
   const dispatch = useAppDispatch()
 
   return (
-    <li className="tag-item">
+    <li className='tag-item'>
       {editMode ? (
         <input
           autoFocus
-          type="text"
-          className="tag-item__input"
+          type='text'
+          className='tag-item__input'
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
@@ -37,14 +37,14 @@ export default function TagItem(props: ITag) {
         />
       ) : (
         <span
-          className="tag-item__text"
+          className='tag-item__text'
           onDoubleClick={() => setEditMode(true)}
         >
           {tag}
         </span>
       )}
       <button
-        className="tag-item__remove-button"
+        className='tag-item__remove-button'
         onClick={() =>
           testApi
             .removeTag(tagId, token)
@@ -53,8 +53,8 @@ export default function TagItem(props: ITag) {
       >
         <img
           src={removeButtonIcon}
-          alt="удалить тег. Автор Andrean Prabowo"
-          className="tag-item__remove-button-icon"
+          alt='удалить тег. Автор Andrean Prabowo'
+          className='tag-item__remove-button-icon'
         />
       </button>
     </li>
