@@ -9,7 +9,6 @@ import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import './App.scss'
-import { Tag } from '../../store/tagInterface'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getSections } from '../../store/sectionsSlice'
 function App() {

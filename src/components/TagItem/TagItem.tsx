@@ -4,13 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagItem.scss'
 import testApi from '../../testapi/testapi'
 import removeButtonIcon from '../../img/remove-icon.png'
+import { ITag } from '../../types/models'
 
-interface TagItemProps {
-  tag: string
-  tagId: number
-}
-
-export default function TagItem(props: TagItemProps) {
+export default function TagItem(props: ITag) {
   const { tag, tagId } = props
   const [currentTagText, setCurrentTagText] = useState<string>(tag)
   const [editMode, setEditMode] = useState(false)
@@ -18,12 +14,12 @@ export default function TagItem(props: TagItemProps) {
   const dispatch = useAppDispatch()
 
   return (
-    <li className='tag-item'>
+    <li className="tag-item">
       {editMode ? (
         <input
           autoFocus
-          type='text'
-          className='tag-item__input'
+          type="text"
+          className="tag-item__input"
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
@@ -41,14 +37,14 @@ export default function TagItem(props: TagItemProps) {
         />
       ) : (
         <span
-          className='tag-item__text'
+          className="tag-item__text"
           onDoubleClick={() => setEditMode(true)}
         >
           {tag}
         </span>
       )}
       <button
-        className='tag-item__remove-button'
+        className="tag-item__remove-button"
         onClick={() =>
           testApi
             .removeTag(tagId, token)
@@ -57,8 +53,8 @@ export default function TagItem(props: TagItemProps) {
       >
         <img
           src={removeButtonIcon}
-          alt='удалить тег. Автор Andrean Prabowo'
-          className='tag-item__remove-button-icon'
+          alt="удалить тег. Автор Andrean Prabowo"
+          className="tag-item__remove-button-icon"
         />
       </button>
     </li>

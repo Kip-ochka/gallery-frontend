@@ -10,6 +10,7 @@ function AuthPage() {
   const { authError } = useAppSelector((state) => state.admin)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+
   const handleSubmit = async (evt: any) => {
     evt.preventDefault()
     try {

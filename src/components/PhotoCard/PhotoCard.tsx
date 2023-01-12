@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import './PhotoCard.scss'
 import { SMALL_SIZE } from '../../utils/imageSizesLink'
-interface PhotoCardProps {
-  imageId: string
-  image: string
-}
+import { PhotoCardProps } from '../../types/models'
 
 function PhotoCard({ imageId, image }: PhotoCardProps) {
   return (

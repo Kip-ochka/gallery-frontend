@@ -6,6 +6,7 @@ import iconInsta from '../../img/social-icon/icon-instagram.svg'
 import iconLinked from '../../img/social-icon/icon-linkedin.svg'
 import userPhoto from '../../img/user-photo.png'
 import { getAbout, setAboutMe } from '../../store/adminSlice'
+import { IsetAboutMe } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './About.scss'
 //  <p className="about__description">
@@ -19,11 +20,6 @@ import './About.scss'
 //  'Argentor / Acquaviva / Aqua Plus Global / Bathline Sensations / Bikano / Apollomedics Super Speciality Hospital, Lucknow / Ashirwad Hospital, Varanasi / Government Institute Of Medical Sciences, Noida / HCG NCHRI, Nagpur / HCG Regency Oncology Hospital, Kanpur / Nayati Medicity, Mathura / Paras HMRI Hospital, Patna / Paras Hospital, Gurgaon'
 //}
 //</p>
-interface IsetAboutMe {
-  textValue: string
-  token: string
-}
-
 function About() {
   const { aboutMe, isLogged, aboutLoading } = useAppSelector(
     (state) => state.admin

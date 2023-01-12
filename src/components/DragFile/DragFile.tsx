@@ -1,19 +1,8 @@
 import { useState, useRef } from 'react'
+import { IDragFileProps } from '../../types/models'
 import './DragFile.scss'
 
-interface PhotoFile {
-  lastModified: number
-  name: string
-  size: string
-  type: string
-  webkitRelativePath: string
-}
-
-interface DragFileProps {
-  setFile: (arg: PhotoFile[]) => void
-  setFileUrl: ({}) => void
-}
-function DragFile({ setFile, setFileUrl }: DragFileProps) {
+function DragFile({ setFile, setFileUrl }: IDragFileProps) {
   const [dragActive, setDragActive] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 

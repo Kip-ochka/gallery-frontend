@@ -1,20 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-
-interface AdminStateInterface {
-  token: string | null
-  aboutMe: string | null
-  isLogged: boolean
-  error: null | string
-  authError: null | string
-  loading: boolean
-  aboutLoading: boolean
-  aboutError: null | string
-}
-
-interface IsetAboutMe {
-  textValue: string
-  token: string
-}
+import { IAdminStateInterface, IsetAboutMe } from '../types/models'
 
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
@@ -94,7 +79,7 @@ const adminSlice = createSlice({
     loading: true,
     aboutLoading: false,
     aboutError: null,
-  } as AdminStateInterface,
+  } as IAdminStateInterface,
   reducers: {
     setToken: (state, action) => {
       state.token = action.payload.token

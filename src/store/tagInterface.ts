@@ -1,28 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-
-export interface Tag {
-  tag: string
-  tagId: number
-}
-
-export interface TagsState {
-  tags: Array<Tag>
-  addedTags: Array<Tag>
-  loading: boolean
-  error: string | null
-}
-
-interface PostTagI {
-  token: string | null
-  name: string
-}
+import { IPostTag, ITag, ITagsState } from '../types/models'
 
 export const fetchGetTags = createAsyncThunk('tag/getTags', async () => {
   const res = await fetch(`http://localhost:5000/tags`)
   return res.json()
 })
 
-export const fetchPostTag = createAsyncThunk<Tag, PostTagI>(
+export const fetchPostTag = createAsyncThunk<ITag, IPostTag>(
   'tag/postTag',
   async ({ token, name }) => {
     if (typeof token === 'string') {
@@ -50,9 +34,10 @@ const tagInterface = createSlice({
     addedTags: [],
     loading: false,
     error: null,
-  } as TagsState,
+  } as ITagsState,
   reducers: {
     addTag: (state, action) => {
+      console.log(action)
       const newTag = action.payload
       state.addedTags.push(newTag)
       const filtered = state.tags.filter((tag) => tag.tagId !== newTag.tagId)

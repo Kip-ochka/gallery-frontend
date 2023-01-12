@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react'
 import testApi from '../../testapi/testapi'
+import { IPhoto } from '../../types/models'
 import PhotoCard from '../PhotoCard/PhotoCard'
 import './PhotoGallery.scss'
-interface Photo {
-  image: string
-  imageId: string
-  sections: []
-  tags: []
-}
 
 function PhotoGallery() {
-  const [photos, setPhotos] = useState<Photo[]>([])
+  const [photos, setPhotos] = useState<IPhoto[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

@@ -1,31 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { BASE_URL } from '../utils/constants'
-import { Tag } from './tagInterface'
-
-export type Section = {
-  sectionId: number
-  section: string
-  tags: Array<Tag>
-}
-
-type SectionsSliceState = {
-  sections: Array<Section>
-  isLoading: boolean
-  error: null | string
-}
-
-type ActionPayload = {
-  section: Section
-  tag: Tag
-}
-
-// {
-//   method: 'GET',
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({ token }),
-// }
+import {
+  ITag,
+  Section,
+  SectionsSliceState,
+  ActionPayload,
+} from '../types/models'
 
 export const getSections = createAsyncThunk<
   Section[],
