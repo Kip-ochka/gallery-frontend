@@ -1,11 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { BASE_URL } from '../utils/constants'
-import {
-  ITag,
-  Section,
-  SectionsSliceState,
-  ActionPayload,
-} from '../types/models'
+import { Section, SectionsSliceState, ActionPayload } from '../types/models'
 
 export const getSections = createAsyncThunk<
   Section[],

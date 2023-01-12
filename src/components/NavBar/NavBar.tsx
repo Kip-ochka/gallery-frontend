@@ -11,18 +11,18 @@ enum EXTENDABLE_BLOCKS {
 
 function NavBar({ isOpen, onClose }: INavBarProps) {
   const { isLogged } = useAppSelector((state) => state.admin)
+  const { sections } = useAppSelector((state) => state.sections)
   const [extended, setExtended] = useState<EXTENDABLE_BLOCKS | null>(null)
-  const categories = ['Пейзажи', 'Портреты', 'Автомобили', 'Спорт']
 
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className="navbar__content">
-        <NavLink to="/" className="navbar__main-section" onClick={onClose}>
+      <div className='navbar__content'>
+        <NavLink to='/' className='navbar__main-section' onClick={onClose}>
           Все фотографии
         </NavLink>
-        <div className="navbar__container">
+        <div className='navbar__container'>
           <p
-            className="navbar__main-section"
+            className='navbar__main-section'
             onClick={() =>
               extended === EXTENDABLE_BLOCKS.PHOTOS_BY_CATEGORIES
                 ? setExtended(null)
@@ -31,50 +31,50 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
           >
             Фото по категориям
           </p>
-          {categories.map((e) => (
+          {sections.map((e) => (
             <NavLink
               to={`/`}
               onClick={onClose}
-              key={e}
+              key={e.sectionId}
               className={`navbar__section ${
                 extended !== EXTENDABLE_BLOCKS.PHOTOS_BY_CATEGORIES &&
                 'navbar__section_state_hidden'
               }`}
             >
-              {e}
+              {e.section}
             </NavLink>
           ))}
         </div>
-        <NavLink to="/about" onClick={onClose} className="navbar__main-section">
+        <NavLink to='/about' onClick={onClose} className='navbar__main-section'>
           Об Авторе
         </NavLink>
         <NavLink
-          to="/contacts"
+          to='/contacts'
           onClick={onClose}
-          className="navbar__main-section"
+          className='navbar__main-section'
         >
           Контакты
         </NavLink>
-        <div className="navbar__hidden-element">
+        <div className='navbar__hidden-element'>
           {isLogged ? null : <AccountButton />}
         </div>
 
         <NavLink
-          to="/add-image"
+          to='/add-image'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
           Добавить фото
         </NavLink>
         <NavLink
-          to="/tags"
+          to='/tags'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
           Редактировать секции
         </NavLink>
         <NavLink
-          to="/sections"
+          to='/sections'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
