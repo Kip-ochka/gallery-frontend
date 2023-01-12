@@ -29,9 +29,9 @@ export const fetchPostTag = createAsyncThunk<ITag, IPostTag>(
 
 export const attachTag = createAsyncThunk(
   'tag/attachTag',
-  ({ path, itemId, tagId, token }: IToAttacth, { rejectWithValue }) => {
+  async ({ path, itemId, tagId, token }: IToAttacth) => {
     const pathItem = path.slice(0, -1)
-    return fetch(
+    const response = await fetch(
       `http://localhost:5000/${path}/${itemId}/tags/${tagId}?${pathItem}Id=${itemId}&tagId=${tagId}`,
       {
         method: 'POST',
@@ -40,13 +40,12 @@ export const attachTag = createAsyncThunk(
         },
         body: JSON.stringify({ token: token }),
       }
-    ).then((data) => {
-      if (data.ok) {
-        return data.json()
-      } else {
-        rejectWithValue(data.statusText)
-      }
-    })
+    )
+    if (response.ok) {
+      return 'Тег успешно добавлен!'
+    } else {
+      throw new Error(response.statusText)
+    }
   }
 )
 

@@ -1,7 +1,5 @@
-import { createSlice, createAsyncThunk, unwrapResult } from '@reduxjs/toolkit'
-import { upload } from '@testing-library/user-event/dist/upload'
-import { IImages, IPhotoFile, ITag, IToAttacth } from '../types/models'
-import { attachTag, deleteAfterAttach } from './tagInterface'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { IImages, ITag } from '../types/models'
 
 export const getImages = createAsyncThunk('images/get-images', async () => {
   const res = await fetch(`http://localhost:5000/images`)
@@ -11,20 +9,7 @@ export const getImages = createAsyncThunk('images/get-images', async () => {
 
 export const addImage = createAsyncThunk(
   'images/addImage',
-  async (
-    {
-      path,
-      toSend,
-      addedTags,
-      token,
-    }: {
-      path: string
-      toSend: File
-      addedTags: ITag[]
-      token: string
-    },
-    { dispatch, rejectWithValue }
-  ) => {
+  async ({ toSend }: { toSend: File }, { rejectWithValue }) => {
     const fd = new FormData()
     fd.append('upload_image', toSend)
     const response = await fetch(`http://localhost:5000/images`, {
@@ -33,20 +18,6 @@ export const addImage = createAsyncThunk(
     })
     if (response.ok) {
       const res = await response.json()
-      const allTags = addedTags.map(async (tag: ITag) => {
-        const toAttacth = {
-          path,
-          itemId: res.imageId,
-          tagId: tag.tagId,
-          token,
-        }
-        const added = await dispatch(attachTag(toAttacth))
-        if (added) {
-          return added
-        } else {
-          rejectWithValue(`Could not attach`)
-        }
-      })
       return res
     } else {
       rejectWithValue(response.statusText)
