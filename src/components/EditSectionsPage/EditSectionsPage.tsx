@@ -23,9 +23,9 @@ export default function EditSectionsPage() {
         <button
           className='edit-sections-page__add-section-btn'
           onClick={() => {
-            if (token) {
-              dispatch(createNewSection({ newSectionName, token }))
-            }
+            if (!token) return
+            dispatch(createNewSection({ newSectionName, token }))
+            setNewSectionName('')
           }}
         >
           Добавить секцию
