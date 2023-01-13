@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { deleteTag, changeTagName } from '../../store/tagInterface'
+import { changeTagName } from '../../store/tagInterface'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagItem.scss'
 import removeButtonIcon from '../../img/remove-tag.png'

@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from '../../hok/ProtectedRoute'
-import { checkAuth, setToken } from '../../store/adminSlice'
-import { addTag, fetchGetTags } from '../../store/tagInterface'
-import testApi from '../../testapi/testapi'
+import { checkAuth } from '../../store/adminSlice'
+import { fetchGetTags } from '../../store/tagInterface'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
@@ -25,19 +24,19 @@ function App() {
   }, [dispatch])
 
   return (
-    <div className='page'>
+    <div className="page">
       {loading ? (
         <p>loading...</p>
       ) : (
         <Routes>
           <Route
-            path='/auth'
+            path="/auth"
             element={
               <ProtectedRoute component={AuthPage} condition={!isLogged} />
             }
           />
           <Route
-            path='/*'
+            path="/*"
             element={
               <>
                 <Header />
