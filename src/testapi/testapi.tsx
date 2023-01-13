@@ -15,6 +15,8 @@ class TestApi {
     return this._getResponse(res)
   }
   async renameTag(tagId: number, newName: string, token: string | null) {
+    console.log('test')
+
     const res = await fetch(
       `http://localhost:5000/tags/${tagId}?edited_name=${newName}`,
       {

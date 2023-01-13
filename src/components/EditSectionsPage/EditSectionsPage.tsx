@@ -3,6 +3,8 @@ import SectionItem from '../SectionItem/SectionItem'
 import './EditSectionsPage.scss'
 import { createNewSection } from '../../store/sectionsSlice'
 import { useState } from 'react'
+import { fetchPostTag } from '../../store/tagInterface'
+
 export default function EditSectionsPage() {
   const { sections } = useAppSelector((state) => state.sections)
   const { token } = useAppSelector((state) => state.admin)
@@ -46,7 +48,11 @@ export default function EditSectionsPage() {
           />
           <button
             className='edit-sections-page__add-item-btn'
-            onClick={() => {}}
+            onClick={() => {
+              if (!token) return
+              dispatch(fetchPostTag({ token, name: newTagName }))
+              setNewTagName('')
+            }}
           >
             Добавить тег
           </button>

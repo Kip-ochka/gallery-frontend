@@ -182,11 +182,26 @@ const tagInterface = createSlice({
         state.error = null
         state.loading = true
       })
-      .addCase(fetchDeleteTag.fulfilled, (state) => {
+      .addCase(fetchDeleteTag.fulfilled, (state, action) => {
         state.error = null
         state.loading = false
+        state.tags = state.tags.filter((e) => e.tagId !== action.payload.tagId)
       })
       .addCase(fetchDeleteTag.rejected, (state) => {
+        state.loading = false
+      })
+      .addCase(fetchChangeTag.pending, (state) => {
+        state.error = null
+        state.loading = true
+      })
+      .addCase(fetchChangeTag.fulfilled, (state, action) => {
+        state.error = null
+        state.loading = false
+        state.tags = state.tags.map((e) =>
+          e.tagId === action.payload.tagId ? (e = action.payload) : e
+        )
+      })
+      .addCase(fetchChangeTag.rejected, (state) => {
         state.loading = false
       })
   },

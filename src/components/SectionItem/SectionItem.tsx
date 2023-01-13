@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './SectionItem.scss'
 import removeButtonIcon from '../../img/remove-icon.png'
 import { ITag, Section } from '../../types/models'
-import closeIcon from '../../img/cross-symbol_icon.png'
 import {
   renameSection,
   deleteSection,
   addTagToSection,
   removeTagFromSection,
+  getSections,
 } from '../../store/sectionsSlice'
 import TagItem from '../TagItem/TagItem'
 
@@ -20,6 +20,11 @@ export default function SectionItem(props: { sectionItem: Section }) {
   const { token } = useAppSelector((state) => state.admin)
   const { tags } = useAppSelector((state) => state.tagInterface)
   const dispatch = useAppDispatch()
+  const [rerender, setRerender] = useState(false)
+
+  useEffect(() => {
+    dispatch(getSections())
+  }, [tags])
 
   const availiableTags = tags.filter(
     (a) => !sectionItem.tags.some((b) => b.tagId === a.tagId)

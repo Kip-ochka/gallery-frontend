@@ -14,9 +14,15 @@
 .tag-item__input {
   margin: 0;
   padding: 0;
-  border: 1px solid $blueaccent;
+  width: 70%;
+  font-weight: bold;
 }
 .tag-item__text {
+  @include clickable;
+  font-size: 16px;
+  // @media (max-width: 500px) {
+  //   font-size: 12px;
+  // }
 }
 .tag-item__remove-button {
   border: none;

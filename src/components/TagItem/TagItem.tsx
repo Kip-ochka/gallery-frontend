@@ -5,6 +5,7 @@ import './TagItem.scss'
 import removeButtonIcon from '../../img/remove-tag.png'
 import detachTagIcon from '../../img/detach-tag.png'
 import { ITag } from '../../types/models'
+import { fetchChangeTag, fetchDeleteTag } from '../../store/tagInterface'
 
 type TagItemProps = {
   tagItem: ITag
@@ -30,6 +31,8 @@ export default function TagItem(props: TagItemProps) {
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
+            if (!token) return
+            dispatch(fetchChangeTag({ token, tagId, tag: currentTagText }))
             setEditMode(false)
           }}
         />
@@ -54,7 +57,13 @@ export default function TagItem(props: TagItemProps) {
             className='tag-item__detach-button-icon'
           />
         </button>
-        <button className='tag-item__remove-button' onClick={() => {}}>
+        <button
+          className='tag-item__remove-button'
+          onClick={() => {
+            if (!token) return
+            dispatch(fetchDeleteTag({ token, tagId, tag }))
+          }}
+        >
           <img
             src={removeButtonIcon}
             alt='удалить тег. Автор Andrean Prabowo'
