@@ -11,28 +11,31 @@ export default function EditSectionsPage() {
 
   return (
     <div>
-      <ul className='edit-page'>
+      <div className='edit-sections-page__add-section-block'>
+        <input
+          className='edit-sections-page__input'
+          type='text'
+          name='newSectionName'
+          id='newSectionName'
+          value={newSectionName}
+          onChange={(e) => setNewSectionName(e.target.value)}
+        />
+        <button
+          className='edit-sections-page__add-section-btn'
+          onClick={() => {
+            if (token) {
+              dispatch(createNewSection({ newSectionName, token }))
+            }
+          }}
+        >
+          Добавить секцию
+        </button>
+      </div>
+      <ul className='edit-sections-page'>
         {sections.map((e) => (
           <SectionItem sectionItem={e} key={e.sectionId} />
         ))}
       </ul>
-      <input
-        style={{ border: '1px solid black', margin: '20px' }}
-        type='text'
-        name='newSectionName'
-        id='newSectionName'
-        value={newSectionName}
-        onChange={(e) => setNewSectionName(e.target.value)}
-      />
-      <button
-        onClick={() => {
-          if (token) {
-            dispatch(createNewSection({ newSectionName, token }))
-          }
-        }}
-      >
-        Добавить секцию
-      </button>
     </div>
   )
 }
