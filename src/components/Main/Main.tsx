@@ -28,12 +28,12 @@ export default function Main() {
             <ProtectedRoute component={AddImage} condition={!!adminData} />
           }
         />
-        <Route
+        {/* <Route
           path='/tags'
           element={
             <ProtectedRoute component={EditTagsPage} condition={!!adminData} />
           }
-        />
+        /> */}
         <Route
           path='/sections'
           element={

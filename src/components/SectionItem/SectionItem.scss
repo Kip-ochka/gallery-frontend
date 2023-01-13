@@ -2,11 +2,9 @@
 
 .section-item {
   padding: 0;
-  border-radius: 5px;
   border: 1px solid black;
   display: flex;
   // max-height: 35px;
-  gap: 10px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 40px 1fr 30px;
@@ -31,12 +29,13 @@
   }
 }
 .section-item__tag-list {
-  padding: 0 10px;
-  box-sizing: content-box;
-  width: 60%;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-self: center;
+  background-color: rgb(249, 244, 244);
 }
 .section-item__title {
   margin: 0;

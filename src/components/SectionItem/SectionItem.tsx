@@ -10,6 +10,7 @@ import {
   addTagToSection,
   removeTagFromSection,
 } from '../../store/sectionsSlice'
+import TagItem from '../TagItem/TagItem'
 
 export default function SectionItem(props: { sectionItem: Section }) {
   const { sectionItem } = props
@@ -80,23 +81,16 @@ export default function SectionItem(props: { sectionItem: Section }) {
           />
         </button>
       </div>
-      <div className='section-item__tag-list'>
-        {sectionItem.tags.map((t) => (
-          <div className='section-item__container' key={t.tagId}>
-            <p className='section-item__text'>{t.tag}</p>
-            <button
-              className='section-item__remove-tag-btn'
-              onClick={() => submitRemoveTag(t)}
-            >
-              <img
-                src={closeIcon}
-                className='section-item__remove-tag-icon'
-                alt='Удалить тег с секции.'
-              />
-            </button>
-          </div>
+      <ul className='section-item__tag-list'>
+        {sectionItem.tags.map((t, i) => (
+          <TagItem
+            tagItem={t}
+            onremoveTagFromSection={submitRemoveTag}
+            odd={!!(i % 2)}
+            key={t.tagId}
+          />
         ))}
-      </div>
+      </ul>
       <div className='section-item__container section-item__container_type_bottom'>
         {availiableTags.length > 0 ? (
           <select className='section-item__select' onChange={submitAddTag}>

@@ -7,10 +7,11 @@
   gap: 20px;
 }
 
-.edit-sections-page__add-section-block {
-  padding: 10px 0;
-  display: flex;
-  gap: 20px;
+.edit-sections-page__add-item-block {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  padding: 15px 0;
 }
 .edit-sections-page__input {
   margin: 0;
@@ -19,12 +20,17 @@
   border: 1px solid black;
   border-radius: 5px;
 }
-.edit-sections-page__add-section-btn {
+.edit-sections-page__add-item-btn {
   margin: 0;
   padding: 7px 10px;
   border-radius: 5px;
   background-color: rgb(0, 0, 0);
   color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
+}
+.edit-sections-page__add-item-container {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(2, 1fr);
 }

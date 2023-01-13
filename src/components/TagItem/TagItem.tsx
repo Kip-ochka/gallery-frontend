@@ -2,19 +2,26 @@ import { useState } from 'react'
 import { deleteTag, changeTagName } from '../../store/tagInterface'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagItem.scss'
-import testApi from '../../testapi/testapi'
-import removeButtonIcon from '../../img/remove-icon.png'
+import removeButtonIcon from '../../img/remove-tag.png'
+import detachTagIcon from '../../img/detach-tag.png'
 import { ITag } from '../../types/models'
 
-export default function TagItem(props: ITag) {
-  const { tag, tagId } = props
+type TagItemProps = {
+  tagItem: ITag
+  onremoveTagFromSection: (tagItem: ITag) => void
+  odd?: boolean
+}
+
+export default function TagItem(props: TagItemProps) {
+  const { tagItem, onremoveTagFromSection, odd } = props
+  const { tag, tagId } = tagItem
   const [currentTagText, setCurrentTagText] = useState<string>(tag)
   const [editMode, setEditMode] = useState(false)
   const { token } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
 
   return (
-    <li className='tag-item'>
+    <li className={`tag-item ${odd && 'tag-item_type_odd'}`}>
       {editMode ? (
         <input
           autoFocus
@@ -23,16 +30,7 @@ export default function TagItem(props: ITag) {
           value={currentTagText}
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
-            console.log(currentTagText)
-
-            testApi.renameTag(tagId, currentTagText, token).then((res) => {
-              if (res === null) {
-                dispatch(changeTagName({ tag: currentTagText, tagId }))
-              }
-            })
-
             setEditMode(false)
-            console.log(currentTagText)
           }}
         />
       ) : (
@@ -43,20 +41,27 @@ export default function TagItem(props: ITag) {
           {tag}
         </span>
       )}
-      <button
-        className='tag-item__remove-button'
-        onClick={() =>
-          testApi
-            .removeTag(tagId, token)
-            .then((res) => dispatch(deleteTag({ tag, tagId })))
-        }
-      >
-        <img
-          src={removeButtonIcon}
-          alt='удалить тег. Автор Andrean Prabowo'
-          className='tag-item__remove-button-icon'
-        />
-      </button>
+      <div className='tag-item__btn-block'>
+        <button
+          className='tag-item__remove-button'
+          onClick={() => {
+            onremoveTagFromSection(tagItem)
+          }}
+        >
+          <img
+            src={detachTagIcon}
+            alt='удалить тег. Автор Andrean Prabowo'
+            className='tag-item__detach-button-icon'
+          />
+        </button>
+        <button className='tag-item__remove-button' onClick={() => {}}>
+          <img
+            src={removeButtonIcon}
+            alt='удалить тег. Автор Andrean Prabowo'
+            className='tag-item__remove-button-icon'
+          />
+        </button>
+      </div>
     </li>
   )
 }

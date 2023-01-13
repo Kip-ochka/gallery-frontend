@@ -66,13 +66,13 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
         >
           Добавить фото
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to='/tags'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
           Редактировать теги
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to='/sections'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}

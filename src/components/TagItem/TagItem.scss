@@ -1,20 +1,19 @@
 @import '../../commonStyles/commonStyles.scss';
 
 .tag-item {
-  padding: 5px 10px;
+  padding: 5px 10%;
   border-radius: 3px;
-  border: 1px solid black;
   display: flex;
-  max-height: 35px;
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 5px;
+  background-color: lightgrey;
+}
+.tag-item_type_odd {
+  background-color: #fff;
 }
 .tag-item__input {
   margin: 0;
   padding: 0;
-  width: auto;
   border: 1px solid $blueaccent;
 }
 .tag-item__text {
@@ -27,4 +26,13 @@
 .tag-item__remove-button-icon {
   width: 20px;
   height: 20px;
+}
+.tag-item__detach-button-icon {
+  width: 20px;
+  height: 20px;
+  color: yellow;
+}
+.tag-item__btn-block {
+  display: flex;
+  gap: 5px;
 }
