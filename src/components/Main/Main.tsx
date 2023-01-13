@@ -19,6 +19,7 @@ export default function Main() {
       <NavBar />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
+        <Route path={'/:chosenSection'} element={<PhotoGallery />} />
         <Route path='/about' element={<About />} />
 
         <Route

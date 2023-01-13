@@ -33,7 +33,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
           </p>
           {sections.map((e) => (
             <NavLink
-              to={`/`}
+              to={`/${e.section}`}
               onClick={onClose}
               key={e.sectionId}
               className={`navbar__section ${

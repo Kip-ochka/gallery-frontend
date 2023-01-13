@@ -9,7 +9,7 @@
   gap: 10px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 40px 1fr 20px;
+  grid-template-rows: 40px 1fr 30px;
   justify-content: center;
 }
 .section-item__container {
@@ -23,6 +23,11 @@
     border-radius: 5px 5px 0 0;
     background-color: $greenaccent;
     padding: 10px;
+  }
+  &_type_bottom {
+    border-radius: 0 0 5px 5px;
+    background-color: $greenaccent;
+    padding: 10px 5px;
   }
 }
 .section-item__tag-list {
@@ -64,6 +69,9 @@
   height: 20px;
 }
 .section-item__select {
+  // background-color: $greenaccent;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .section-item__remove-tag-btn {

@@ -1,5 +1,6 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
 import { getImages } from '../../store/imageSlice'
 import { IImage, IPhoto } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
@@ -9,17 +10,18 @@ import './PhotoGallery.scss'
 function PhotoGallery() {
   const dispatch = useAppDispatch()
   const { images } = useAppSelector((state) => state.images)
+  const { chosenSection } = useParams()
 
   useEffect(() => {
     dispatch(getImages()).then(unwrapResult)
   }, [])
 
   return (
-    <section className="photos">
+    <section className='photos'>
       {false ? (
         <div>Loading...</div>
       ) : (
-        <ul className="photos__wrapper">
+        <ul className='photos__wrapper'>
           {images.map((image: IPhoto) => {
             return <PhotoCard key={image.imageId} image={image.image} />
           })}
