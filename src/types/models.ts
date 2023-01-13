@@ -23,12 +23,19 @@ export interface ITag {
   tag: string
   tagId: number
 }
+
+export interface ITagWithType extends ITag {
+  type: string
+}
+
 export interface ITagProps extends ITag {
   onClick: (arg: ITag) => void
+  type: string
 }
 
 export interface ITagsState {
   tags: Array<ITag>
+  tagsToAdd: Array<ITag>
   addedTags: Array<ITag>
   loading: boolean
   error: string | null

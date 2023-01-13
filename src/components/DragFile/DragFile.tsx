@@ -21,8 +21,6 @@ function DragFile({ setFile, setFileUrl }: IDragFileProps) {
     e.stopPropagation()
     setDragActive(false)
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // handleFiles(e.dataTransfer.files);
-      console.log(e.dataTransfer.files)
       setFile(e.dataTransfer.files)
       setFileUrl({ url: URL.createObjectURL(e.dataTransfer.files[0]) })
     }
@@ -31,8 +29,6 @@ function DragFile({ setFile, setFileUrl }: IDragFileProps) {
   const handleChange = function (e: any) {
     e.preventDefault()
     if (e.target.files && e.target.files[0]) {
-      // handleFiles(e.target.files);
-      console.log(e.target.files)
       setFile(e.target.files)
       setFileUrl({ url: URL.createObjectURL(e.target.files[0]) })
     }

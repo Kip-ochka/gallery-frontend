@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { IImages, ITag } from '../types/models'
+import { IImages } from '../types/models'
 
 export const getImages = createAsyncThunk('images/get-images', async () => {
   const res = await fetch(`http://localhost:5000/images`)

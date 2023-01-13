@@ -7,23 +7,23 @@ import cancelIcon from '../../img/cancel.svg'
 import { useState } from 'react'
 import { fetchPostTag } from '../../store/tagInterface'
 import { unwrapResult } from '@reduxjs/toolkit'
-import { addTag, deleteTag } from '../../store/tagInterface'
+import { addTagToAdded, removeTagFromAdded } from '../../store/tagInterface'
 import { ITag } from '../../types/models'
 
 function TagInterface() {
   const [isCreateNewTag, setIsCreateNewTag] = useState(false)
   const [textValue, setTextValue] = useState('')
   const dispatch = useAppDispatch()
-  const { tags, addedTags, loading, error } = useAppSelector(
+  const { tagsToAdd, addedTags, loading, error } = useAppSelector(
     (state) => state.tagInterface
   )
   const { token } = useAppSelector((state) => state.admin)
 
-  const addTagToAdded = (tag: ITag) => {
-    dispatch(addTag(tag))
+  const moveTagToAdded = (tag: ITag) => {
+    dispatch(addTagToAdded(tag))
   }
   const deleteTagFromAdded = (tag: ITag) => {
-    dispatch(deleteTag(tag))
+    dispatch(removeTagFromAdded(tag))
   }
 
   return (
@@ -42,6 +42,8 @@ function TagInterface() {
           <div className="tags__input-wrapper">
             <input
               type="text"
+              minLength={1}
+              maxLength={30}
               className={`tags__new-tag-input ${
                 error ? 'tags__new-tag-input_error' : ''
               }`}
@@ -56,12 +58,18 @@ function TagInterface() {
                 className="tags__button-icon tags__button-icon_save"
                 onClick={async (e) => {
                   e.preventDefault()
-                  const obj = { token: token, name: textValue }
-                  await dispatch(fetchPostTag(obj))
-                    .then(unwrapResult)
-                    .then(() => {
-                      setTextValue('')
-                    })
+                  const matched = tagsToAdd.filter((tag) => {
+                    return tag.tag === textValue
+                  })
+                  console.log(matched)
+                  if (matched.length !== 1 && textValue.length > 0) {
+                    const obj = { token: token, name: textValue }
+                    await dispatch(fetchPostTag(obj))
+                      .then(unwrapResult)
+                      .then(() => {
+                        setTextValue('')
+                      })
+                  }
                 }}
               >
                 <img src={saveIcon} />
@@ -85,13 +93,14 @@ function TagInterface() {
           {loading ? (
             <p>Preloader</p>
           ) : (
-            tags.map((item) => {
+            tagsToAdd.map((item) => {
               return (
                 <Tag
                   key={item.tagId}
                   tag={item.tag}
                   tagId={item.tagId}
-                  onClick={addTagToAdded}
+                  onClick={moveTagToAdded}
+                  type={'toAdd'}
                 />
               )
             })
@@ -108,6 +117,7 @@ function TagInterface() {
                 tag={item.tag}
                 tagId={item.tagId}
                 onClick={deleteTagFromAdded}
+                type={'toDeleteFromAdded'}
               />
             )
           })}

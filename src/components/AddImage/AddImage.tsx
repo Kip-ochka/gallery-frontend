@@ -1,8 +1,8 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useState } from 'react'
 import { addImage } from '../../store/imageSlice'
-import { attachTag } from '../../store/tagInterface'
-import { IFileUrl, IPhotoFile, ITag, IToAttacth } from '../../types/models'
+import { attachTag, refreshTagsAfterAdding } from '../../store/tagInterface'
+import { IFileUrl, ITag, IToAttacth } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import DragFile from '../DragFile/DragFile'
 import PreviewImage from '../PreviewImage/PreviewImage'
@@ -38,6 +38,7 @@ function AddImage() {
               'Один из тегов не добавился автоматически, проверьте в режиме просмотра фотографии!'
             )
           } else {
+            dispatch(refreshTagsAfterAdding())
             setFile(undefined)
           }
         })
