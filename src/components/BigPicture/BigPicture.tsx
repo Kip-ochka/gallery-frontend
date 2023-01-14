@@ -1,7 +1,12 @@
 import { IPhoto } from '../../types/models'
 import { BIG_SIZE } from '../../utils/imageSizesLink'
 import './BigPicture.scss'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import editIcon from '../../img/edit_icon.svg'
+import removeIcon from '../../img/remove-icon.svg'
+import { deleteImage } from '../../store/imageSlice'
+import { AppDispatch } from '../../store'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 
 type bigPictureProps = {
   image: IPhoto
@@ -12,6 +17,10 @@ type bigPictureProps = {
 
 export default function BigPicture(props: bigPictureProps) {
   const { image, onClose, onDecrement, onIncrement } = props
+  const [editMode, seEditMode] = useState(false)
+  const { token } = useAppSelector((state) => state.admin)
+
+  const dispatch = useAppDispatch()
 
   const keyNavigation = (e: KeyboardEvent) => {
     if (e.key === 'ArrowRight') {
@@ -19,6 +28,12 @@ export default function BigPicture(props: bigPictureProps) {
     } else if (e.key === 'ArrowLeft') {
       onDecrement()
     }
+  }
+
+  const submitDelete = () => {
+    if (!token) return
+    dispatch(deleteImage({ image, token }))
+    onClose()
   }
 
   useEffect(() => {
@@ -35,6 +50,25 @@ export default function BigPicture(props: bigPictureProps) {
         className='big-picture__button big-picture__button_left'
       ></button>
       <div className='big-picture__photo-container'>
+        <div className='big-picture__edit-container'>
+          <button className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'>
+            <img
+              src={editIcon}
+              alt='Редактировать фотокарточку'
+              className='big-picture__edit-block-icon'
+            />
+          </button>
+          <button
+            className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
+            onClick={submitDelete}
+          >
+            <img
+              src={removeIcon}
+              alt='Удалить фотокарточку'
+              className='big-picture__edit-block-icon'
+            />
+          </button>
+        </div>
         <img
           src={BIG_SIZE + image.image}
           alt='Фото.'

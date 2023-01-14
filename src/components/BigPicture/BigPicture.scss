@@ -15,6 +15,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .big-picture__photo {
   // @include clickable;
@@ -35,4 +36,24 @@
 .big-picture__button-icon {
   width: 40px;
   height: 40px;
+}
+.big-picture__edit-container {
+  padding: 10px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  gap: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+.big-picture__edit-block-button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+}
+.big-picture__edit-block-icon {
+  width: 30px;
+  height: 30px;
 }
