@@ -15,15 +15,15 @@ function PhotoGallery() {
   const [previewIndex, setPreviewIndex] = useState<null | number>(null)
 
   useEffect(() => {
-    dispatch(getImages()).then(unwrapResult)
-  }, [])
+    dispatch(getImages({ sectionId: chosenSectionId }))
+  }, [chosenSectionId])
 
   return !previewIndex ? (
-    <section className='photos'>
+    <section className="photos">
       {false ? (
         <div>Loading...</div>
       ) : (
-        <ul className='photos__wrapper'>
+        <ul className="photos__wrapper">
           {images.map((image: IPhoto) => {
             return (
               <PhotoCard

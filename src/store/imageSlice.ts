@@ -1,11 +1,32 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IImages } from '../types/models'
 
-export const getImages = createAsyncThunk('images/get-images', async () => {
-  const res = await fetch(`http://localhost:5000/images`)
-  const data = await res.json()
-  return data
-})
+export const getImages = createAsyncThunk(
+  'images/get-images',
+  async (sectionId: { sectionId: undefined | string }, { rejectWithValue }) => {
+    if (typeof sectionId.sectionId === 'string') {
+      const res = await fetch(
+        `http://localhost:5000/sections/${sectionId.sectionId}`,
+        {
+          method: 'GET',
+        }
+      )
+      if (res.ok) {
+        const data = await res.json()
+        return data
+      }
+      return rejectWithValue(res.statusText)
+    }
+    const res = await fetch(`http://localhost:5000/images`, {
+      method: 'GET',
+    })
+    if (res.ok) {
+      const data = await res.json()
+      return data
+    }
+    return rejectWithValue(res.statusText)
+  }
+)
 
 export const addImage = createAsyncThunk(
   'images/addImage',
