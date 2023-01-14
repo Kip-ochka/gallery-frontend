@@ -1,8 +1,6 @@
 import { IPhoto } from '../../types/models'
 import { BIG_SIZE } from '../../utils/imageSizesLink'
 import './BigPicture.scss'
-import navLeft from '../../img/nav_left.svg'
-import navRight from '../../img/nav_right.svg'
 import { useEffect } from 'react'
 
 type bigPictureProps = {
@@ -32,13 +30,10 @@ export default function BigPicture(props: bigPictureProps) {
 
   return (
     <div className='big-picture'>
-      <button onClick={onDecrement} className='big-picture__button'>
-        <img
-          className='big-picture__button-icon'
-          src={navLeft}
-          alt='Кнопка пролистывания влево.'
-        />
-      </button>
+      <button
+        onClick={onDecrement}
+        className='big-picture__button big-picture__button_left'
+      ></button>
       <div className='big-picture__photo-container'>
         <img
           src={BIG_SIZE + image.image}
@@ -47,13 +42,10 @@ export default function BigPicture(props: bigPictureProps) {
           onClick={onClose}
         />
       </div>
-      <button onClick={onIncrement} className='big-picture__button'>
-        <img
-          className='big-picture__button-icon'
-          src={navRight}
-          alt='Кнопка пролистывания вправо.'
-        />
-      </button>
+      <button
+        onClick={onIncrement}
+        className='big-picture__button big-picture__button_right'
+      ></button>
     </div>
   )
 }

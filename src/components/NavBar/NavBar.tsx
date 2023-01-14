@@ -34,7 +34,9 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             <img
               src={expandIcon}
               alt='Кнопка открытия выпадающего меню.'
-              className='navbar__expand-icon'
+              className={`navbar__expand-icon ${
+                extended && 'navbar__expand-icon_rotated'
+              }`}
             />
           </p>
           {sections.map((e) => (

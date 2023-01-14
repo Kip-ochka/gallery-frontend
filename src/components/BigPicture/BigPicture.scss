@@ -1,12 +1,14 @@
 @import '../../commonStyles/commonStyles.scss';
 .big-picture {
+  padding: 30px 0;
   width: 100%;
   max-height: 90vh;
   display: grid;
-  grid-template-columns: 40px 1fr 40px;
+  grid-template-columns: 1fr fit-content(80%) 1fr;
+  grid-template-rows: minmax(200px, 1fr);
   justify-content: center;
   align-content: center;
-  overflow: hidden;
+  // overflow: hidden;
 }
 .big-picture__photo-container {
   width: 100%;
@@ -17,13 +19,18 @@
 .big-picture__photo {
   // @include clickable;
   // width: 100%;
-  object-fit: scale-down;
-  justify-self: center;
-  align-self: center;
+  max-height: 100%;
+  flex: 1 1;
   cursor: url('../../img/Reduce.svg'), pointer;
 }
 .big-picture__button {
   @include clickable;
+  &_left {
+    cursor: url('../../img/nav_left.svg'), pointer;
+  }
+  &_right {
+    cursor: url('../../img/nav_right.svg'), pointer;
+  }
 }
 .big-picture__button-icon {
   width: 40px;
