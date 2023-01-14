@@ -1,33 +1,54 @@
 import { unwrapResult } from '@reduxjs/toolkit'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { getImages } from '../../store/imageSlice'
-import { IImage, IPhoto } from '../../types/models'
+import { IPhoto } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import BigPicture from '../BigPicture/BigPicture'
 import PhotoCard from '../PhotoCard/PhotoCard'
 import './PhotoGallery.scss'
 
 function PhotoGallery() {
   const dispatch = useAppDispatch()
   const { images } = useAppSelector((state) => state.images)
-  const { chosenSection } = useParams()
+  const { chosenSectionId } = useParams()
+  const [previewIndex, setPreviewIndex] = useState<null | number>(null)
 
   useEffect(() => {
     dispatch(getImages()).then(unwrapResult)
   }, [])
 
-  return (
-    <section className="photos">
+  return !previewIndex ? (
+    <section className='photos'>
       {false ? (
         <div>Loading...</div>
       ) : (
-        <ul className="photos__wrapper">
+        <ul className='photos__wrapper'>
           {images.map((image: IPhoto) => {
-            return <PhotoCard key={image.imageId} image={image.image} />
+            return (
+              <PhotoCard
+                key={image.imageId}
+                image={image.image}
+                onClick={() => {
+                  setPreviewIndex(images.indexOf(image) + 1)
+                }}
+              />
+            )
           })}
         </ul>
       )}
     </section>
+  ) : (
+    <BigPicture
+      image={images[previewIndex - 1]}
+      onDecrement={() =>
+        previewIndex > 1 ? setPreviewIndex(previewIndex - 1) : null
+      }
+      onIncrement={() =>
+        previewIndex < images.length ? setPreviewIndex(previewIndex + 1) : null
+      }
+      onClose={() => setPreviewIndex(null)}
+    />
   )
 }
 

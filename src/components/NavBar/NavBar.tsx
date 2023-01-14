@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import AccountButton from '../AccountButton/AccountButton'
 import { useAppSelector } from '../../utils/hooks/reduxHooks'
 import { INavBarProps } from '../../types/models'
+import expandIcon from '../../img/expand-icon.svg'
 
 enum EXTENDABLE_BLOCKS {
   PHOTOS_BY_CATEGORIES = 'photos-per-categories',
@@ -30,10 +31,15 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             }
           >
             Фото по категориям
+            <img
+              src={expandIcon}
+              alt='Кнопка открытия выпадающего меню.'
+              className='navbar__expand-icon'
+            />
           </p>
           {sections.map((e) => (
             <NavLink
-              to={`/${e.section}`}
+              to={`/sections/${e.sectionId}`}
               onClick={onClose}
               key={e.sectionId}
               className={`navbar__section ${
@@ -74,7 +80,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
           Редактировать теги
         </NavLink> */}
         <NavLink
-          to='/sections'
+          to='/edit-sections'
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >

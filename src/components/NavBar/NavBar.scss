@@ -28,7 +28,8 @@
     font-family: 'Lato';
     // color: #3f3f3f;
     color: rgb(108, 111, 112);
-    cursor: pointer;
+    display: flex;
+    align-items: center;
   }
   &__main-section.active {
     text-decoration: underline;
@@ -132,4 +133,10 @@
       width: 200px;
     }
   }
+}
+
+.navbar__expand-icon {
+  margin-left: 5px;
+  width: 15px;
+  height: 15px;
 }

@@ -19,7 +19,7 @@ export default function Main() {
       <NavBar />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
-        <Route path={'/:chosenSection'} element={<PhotoGallery />} />
+        <Route path={'/sections/:chosenSectionId'} element={<PhotoGallery />} />
         <Route path='/about' element={<About />} />
 
         <Route
@@ -35,7 +35,7 @@ export default function Main() {
           }
         /> */}
         <Route
-          path='/sections'
+          path='/edit-sections'
           element={
             <ProtectedRoute
               component={EditSectionsPage}

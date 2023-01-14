@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import './PhotoCard.scss'
-import { SMALL_SIZE } from '../../utils/imageSizesLink'
+import { BIG_SIZE, SMALL_SIZE } from '../../utils/imageSizesLink'
 import { IImage } from '../../types/models'
 
-function PhotoCard({ image }: { image: string }) {
+function PhotoCard({ image, onClick }: { image: string; onClick: () => void }) {
   return (
-    <li className="photo">
+    <li className='photo'>
       <img
-        src={`${SMALL_SIZE + image}`}
+        src={`${BIG_SIZE + image}`}
         alt={'Фотография не загрузилась.:('}
-        className="photo__image"
+        className='photo__image'
+        onClick={onClick}
       />
     </li>
   )

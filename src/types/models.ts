@@ -105,7 +105,7 @@ export type ActionPayload = {
 }
 
 export interface IImages {
-  images: []
+  images: IPhoto[]
   loading: boolean
   getImagesError: null | string
   file: File | undefined

@@ -1,0 +1,31 @@
+@import '../../commonStyles/commonStyles.scss';
+.big-picture {
+  width: 100%;
+  max-height: 90vh;
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  justify-content: center;
+  align-content: center;
+  overflow: hidden;
+}
+.big-picture__photo-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.big-picture__photo {
+  // @include clickable;
+  // width: 100%;
+  object-fit: scale-down;
+  justify-self: center;
+  align-self: center;
+  cursor: url('../../img/Reduce.svg'), pointer;
+}
+.big-picture__button {
+  @include clickable;
+}
+.big-picture__button-icon {
+  width: 40px;
+  height: 40px;
+}
