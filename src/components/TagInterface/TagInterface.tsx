@@ -14,7 +14,7 @@ function TagInterface() {
   const [isCreateNewTag, setIsCreateNewTag] = useState(false)
   const [textValue, setTextValue] = useState('')
   const dispatch = useAppDispatch()
-  const { tagsToAdd, addedTags, loading, error } = useAppSelector(
+  const { tagsToAdd, addedTags, loading, error, tags } = useAppSelector(
     (state) => state.tagInterface
   )
   const { token } = useAppSelector((state) => state.admin)
@@ -25,7 +25,6 @@ function TagInterface() {
   const deleteTagFromAdded = (tag: ITag) => {
     dispatch(removeTagFromAdded(tag))
   }
-
   return (
     <div className="tags">
       <div className="tags__new-tag-wrapper">
@@ -58,7 +57,7 @@ function TagInterface() {
                 className="tags__button-icon tags__button-icon_save"
                 onClick={async (e) => {
                   e.preventDefault()
-                  const matched = tagsToAdd.filter((tag) => {
+                  const matched = tags.filter((tag) => {
                     return tag.tag === textValue
                   })
                   console.log(matched)

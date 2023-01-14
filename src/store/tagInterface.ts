@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, unwrapResult } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IPostTag, ITag, ITagsState, IToAttacth } from '../types/models'
 
 export const fetchGetTags = createAsyncThunk('tag/getTags', async () => {
@@ -110,20 +110,12 @@ const tagInterface = createSlice({
       state.tagsToAdd.push(action.payload)
     },
     refreshTagsAfterAdding: (state) => {
+      state.tagsToAdd = state.tags
       state.addedTags = []
     },
     createNewTag: (state, action) => {
       const newTag = action.payload
       state.addedTags.push(newTag)
-    },
-    changeTagName: (state, action) => {
-      const changedTag = action.payload
-      const filtered = state.tags.filter((tag) => {
-        return tag.tagId !== changedTag.tagId
-      })
-      filtered.push(changedTag)
-      state.tags = filtered
-      state.tagsToAdd = filtered
     },
     deleteAfterAttach: (state) => {
       state.addedTags = []
@@ -133,8 +125,11 @@ const tagInterface = createSlice({
       const filtered = state.tags.filter((tag) => {
         return tag.tagId !== removeTag.tagId
       })
+      const filteredTagsToAdd = state.tagsToAdd.filter((tag) => {
+        return tag.tagId !== removeTag.tagId
+      })
       state.tags = filtered
-      state.tagsToAdd = filtered
+      state.tagsToAdd = filteredTagsToAdd
     },
   },
   extraReducers: (builder) => {
@@ -200,6 +195,9 @@ const tagInterface = createSlice({
         state.tags = state.tags.map((e) =>
           e.tagId === action.payload.tagId ? (e = action.payload) : e
         )
+        state.tagsToAdd = state.tagsToAdd.map((e) =>
+          e.tagId === action.payload.tagId ? (e = action.payload) : e
+        )
       })
       .addCase(fetchChangeTag.rejected, (state) => {
         state.loading = false
@@ -210,7 +208,6 @@ export const {
   addTagToAdded,
   removeTagFromAdded,
   createNewTag,
-  changeTagName,
   deleteAfterAttach,
   refreshTagsAfterAdding,
   removeTagAfterFetchDelete,

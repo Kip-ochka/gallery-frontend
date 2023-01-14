@@ -8,11 +8,11 @@ import backIcon from '../../img/back.svg'
 import acceptIcon from '../../img/accept.svg'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import {
-  changeTagName,
   fetchChangeTag,
   fetchDeleteTag,
   removeTagAfterFetchDelete,
 } from '../../store/tagInterface'
+import { unwrapResult } from '@reduxjs/toolkit'
 function Tag({ tagId, tag, onClick, type }: ITagProps) {
   const [redactable, setRedactable] = useState(false)
   const [textContent, setTextContent] = useState(tag)
@@ -57,8 +57,8 @@ function Tag({ tagId, tag, onClick, type }: ITagProps) {
                         tagId: tagId,
                       }
                       const res = await dispatch(fetchChangeTag(arg)).unwrap()
-                      dispatch(changeTagName(res))
                       setRedactable(false)
+                      return res
                     }
                   } catch (err) {
                     console.log(err)
