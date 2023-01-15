@@ -7,6 +7,7 @@ import removeIcon from '../../img/remove-icon.svg'
 import { deleteImage } from '../../store/imageSlice'
 import { AppDispatch } from '../../store'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 
 type bigPictureProps = {
   image: IPhoto
@@ -18,6 +19,7 @@ type bigPictureProps = {
 export default function BigPicture(props: bigPictureProps) {
   const { image, onClose, onDecrement, onIncrement } = props
   const [editMode, seEditMode] = useState(false)
+  const [removeMode, setRemoveMode] = useState(false)
   const { token } = useAppSelector((state) => state.admin)
 
   const dispatch = useAppDispatch()
@@ -45,6 +47,12 @@ export default function BigPicture(props: bigPictureProps) {
 
   return (
     <div className='big-picture'>
+      {removeMode && (
+        <ConfirmPopup
+          onSubmit={submitDelete}
+          onCancel={() => setRemoveMode(false)}
+        />
+      )}
       <button
         onClick={onDecrement}
         className='big-picture__button big-picture__button_left'
@@ -60,7 +68,7 @@ export default function BigPicture(props: bigPictureProps) {
           </button>
           <button
             className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
-            onClick={submitDelete}
+            onClick={() => setRemoveMode(true)}
           >
             <img
               src={removeIcon}
