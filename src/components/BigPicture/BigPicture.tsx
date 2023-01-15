@@ -7,6 +7,7 @@ import removeIcon from '../../img/remove-icon.svg'
 import {
   addTagToImage,
   deleteImage,
+  getImages,
   removeTagFromImage,
 } from '../../store/imageSlice'
 import { AppDispatch } from '../../store'
@@ -17,6 +18,7 @@ import AddTag from '../AddTag/AddTag'
 import backIcon from '../../img/back_icon.svg'
 import { fetchPostTag } from '../../store/tagInterface'
 import addIcon from '../../img/add-icon.svg'
+import { useParams } from 'react-router'
 
 type bigPictureProps = {
   onClose: () => void
@@ -34,6 +36,7 @@ export default function BigPicture(props: bigPictureProps) {
   const [currentIndex, setCurrentIndex] = useState(previewIndex)
   const photoToRender = images.images[currentIndex - 1]
   const [newTagName, setNewTagName] = useState('')
+  const { chosenSectionId } = useParams()
 
   const dispatch = useAppDispatch()
 
@@ -58,6 +61,9 @@ export default function BigPicture(props: bigPictureProps) {
       document.removeEventListener('keyup', keyNavigation)
     }
   }, [])
+  useEffect(() => {
+    dispatch(getImages({ sectionId: chosenSectionId }))
+  }, [tags])
 
   useEffect(() => {
     setEditMode(false)
