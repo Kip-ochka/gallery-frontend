@@ -41,13 +41,7 @@ function PhotoGallery() {
     </section>
   ) : (
     <BigPicture
-      image={images[previewIndex - 1]}
-      onDecrement={() =>
-        previewIndex > 1 ? setPreviewIndex(previewIndex - 1) : null
-      }
-      onIncrement={() =>
-        previewIndex < images.length ? setPreviewIndex(previewIndex + 1) : null
-      }
+      previewIndex={previewIndex}
       onClose={() => setPreviewIndex(null)}
     />
   )

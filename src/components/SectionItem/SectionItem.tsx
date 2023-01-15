@@ -91,7 +91,7 @@ export default function SectionItem(props: { sectionItem: Section }) {
         {sectionItem.tags.map((t, i) => (
           <TagItem
             tagItem={t}
-            onremoveTag={submitRemoveTag}
+            onRemoveTag={submitRemoveTag}
             odd={!!(i % 2)}
             key={t.tagId}
           />

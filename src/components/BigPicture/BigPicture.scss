@@ -37,7 +37,7 @@
   width: 40px;
   height: 40px;
 }
-.big-picture__edit-container {
+.big-picture__buttons-container {
   padding: 10px;
   position: absolute;
   top: 30px;
@@ -45,7 +45,7 @@
   display: flex;
   gap: 10px;
   background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 5px;
+  border-radius: 30px;
 }
 .big-picture__edit-block-button {
   width: 40px;
@@ -56,4 +56,22 @@
 .big-picture__edit-block-icon {
   width: 30px;
   height: 30px;
+}
+
+.big-picture__edit-container {
+  padding: 10px;
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 30px;
+  top: 30px;
+  max-width: 30%;
+  background-color: rgb(237, 231, 231);
+  border-radius: 5px;
+  gap: 5px;
+}
+.big-picture__edit-heading {
+  color: #000;
+  font-size: 16px;
 }

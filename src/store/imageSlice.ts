@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { IImages, IPhoto } from '../types/models'
+import { IImages, IPhoto, ITag } from '../types/models'
 
 export const getImages = createAsyncThunk(
   'images/get-images',
@@ -71,6 +71,56 @@ export const deleteImage = createAsyncThunk<
     }
   }
 )
+export const addTagToImage = createAsyncThunk<
+  void,
+  { image: IPhoto; tag: ITag; token: string },
+  { rejectValue: string }
+>(
+  'images/addTagToImage',
+  async ({ image, tag, token }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/images/${image.imageId}/tags/${tag.tagId}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        }
+      )
+      if (!response.ok) {
+        throw new Error('Ошибка сервера при попытке добавления тега к фото')
+      }
+      dispatch(getImages({ sectionId: undefined }))
+    } catch (error: any) {
+      rejectWithValue(error.message)
+    }
+  }
+)
+export const removeTagFromImage = createAsyncThunk<
+  void,
+  { image: IPhoto; tag: ITag; token: string },
+  { rejectValue: string }
+>(
+  'images/removeTagFromImage',
+  async ({ image, tag, token }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/images/${image.imageId}/tags/${tag.tagId}`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        }
+      )
+      if (!response.ok) {
+        throw new Error('Ошибка сервера при попытке удаления тега с фото')
+      }
+      dispatch(getImages({ sectionId: undefined }))
+    } catch (error: any) {
+      rejectWithValue(error.message)
+    }
+  }
+)
 
 const imagesSlice = createSlice({
   name: 'images',
@@ -117,6 +167,30 @@ const imagesSlice = createSlice({
         state.getImagesError = null
       })
       .addCase(deleteImage.rejected, (state, action) => {
+        state.loading = false
+        state.getImagesError = `${action.error.name}: ${action.error.message}`
+      })
+      .addCase(addTagToImage.pending, (state) => {
+        state.loading = true
+        state.getImagesError = null
+      })
+      .addCase(addTagToImage.fulfilled, (state) => {
+        state.loading = false
+        state.getImagesError = null
+      })
+      .addCase(addTagToImage.rejected, (state, action) => {
+        state.loading = false
+        state.getImagesError = `${action.error.name}: ${action.error.message}`
+      })
+      .addCase(removeTagFromImage.pending, (state) => {
+        state.loading = true
+        state.getImagesError = null
+      })
+      .addCase(removeTagFromImage.fulfilled, (state) => {
+        state.loading = false
+        state.getImagesError = null
+      })
+      .addCase(removeTagFromImage.rejected, (state, action) => {
         state.loading = false
         state.getImagesError = `${action.error.name}: ${action.error.message}`
       })

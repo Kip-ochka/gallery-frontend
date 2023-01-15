@@ -8,12 +8,12 @@ import { fetchChangeTag, fetchDeleteTag } from '../../store/tagInterface'
 
 type TagItemProps = {
   tagItem: ITag
-  onremoveTag: (tagItem: ITag) => void
+  onRemoveTag: (tagItem: ITag) => void
   odd?: boolean
 }
 
 export default function TagItem(props: TagItemProps) {
-  const { tagItem, onremoveTag, odd } = props
+  const { tagItem, onRemoveTag, odd } = props
   const { tag, tagId } = tagItem
   const [currentTagText, setCurrentTagText] = useState<string>(tag)
   const [editMode, setEditMode] = useState(false)
@@ -47,7 +47,7 @@ export default function TagItem(props: TagItemProps) {
         <button
           className='tag-item__remove-button'
           onClick={() => {
-            onremoveTag(tagItem)
+            onRemoveTag(tagItem)
           }}
         >
           <img
