@@ -50,9 +50,9 @@ _Описывать роуты я буду в формате method(/route/route
 
 - delete('/sections/{sectionId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /sections/1/tags/1?sectionId=1&tagId=1 в квери параметрах
 
-- post('/images/{imageId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /images/1/tags/1?imageId=1&tagId=1 в квери параметрах
+- post('/images/{imageId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"}
 
-- delete('/images/{imageId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"} и /images/1/tags/1?imageId=1&tagId=1 в квери параметрах
+- delete('/images/{imageId}/tags/{tagId}') ожидает в body {"token":"zxlLOJ15tCULg"}
 
 - get('/sections/{SectionId}') - вернет список всех фотографий в секции
 

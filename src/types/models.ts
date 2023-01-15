@@ -1,8 +1,8 @@
 export interface IPhoto {
   image: string
   imageId: string
-  sections: []
-  tags: []
+  sections: Array<Section>
+  tags: Array<ITag>
 }
 
 export interface IImage {

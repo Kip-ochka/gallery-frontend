@@ -4,13 +4,19 @@ import './BigPicture.scss'
 import { useEffect, useState } from 'react'
 import editIcon from '../../img/edit_icon.svg'
 import removeIcon from '../../img/remove-icon.svg'
-import { deleteImage, removeTagFromImage } from '../../store/imageSlice'
+import {
+  addTagToImage,
+  deleteImage,
+  removeTagFromImage,
+} from '../../store/imageSlice'
 import { AppDispatch } from '../../store'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import TagItem from '../TagItem/TagItem'
 import AddTag from '../AddTag/AddTag'
 import backIcon from '../../img/back_icon.svg'
+import { fetchPostTag } from '../../store/tagInterface'
+import addIcon from '../../img/add-icon.svg'
 
 type bigPictureProps = {
   onClose: () => void
@@ -26,6 +32,7 @@ export default function BigPicture(props: bigPictureProps) {
   const tags = useAppSelector((state) => state.tagInterface.tags)
   const [currentIndex, setCurrentIndex] = useState(previewIndex)
   const photoToRender = images.images[currentIndex - 1]
+  const [newTagName, setNewTagName] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -51,6 +58,10 @@ export default function BigPicture(props: bigPictureProps) {
     }
   }, [])
 
+  useEffect(() => {
+    setEditMode(false)
+  }, [currentIndex])
+
   const submitDelete = () => {
     if (!token) return
     dispatch(deleteImage({ image: photoToRender, token }))
@@ -59,6 +70,12 @@ export default function BigPicture(props: bigPictureProps) {
   const submitDeleteTag = (tag: ITag) => {
     if (!token) return
     dispatch(removeTagFromImage({ image: photoToRender, token, tag }))
+  }
+  const submitAddTag = (e: { target: { value: string } }) => {
+    const tag = tags.find((t) => t.tag === e.target.value)
+    if (!tag || !token) return
+    dispatch(addTagToImage({ image: photoToRender, tag, token }))
+    e.target.value = ''
   }
 
   return (
@@ -76,9 +93,7 @@ export default function BigPicture(props: bigPictureProps) {
       <div className='big-picture__photo-container'>
         {editMode && (
           <div className='big-picture__edit-container'>
-            <p className='big-picture__edit-heading'>
-              Список тегов на фотографии
-            </p>
+            <p className='big-picture__edit-heading'>Добавленные теги</p>
             {photoToRender.tags.map((t: ITag) => (
               <TagItem
                 key={t.tagId}
@@ -87,15 +102,45 @@ export default function BigPicture(props: bigPictureProps) {
               />
             ))}
             <AddTag
-              availiableTags={tags ? tags : []}
-              onChange={() => console.log('changed')}
+              availiableTags={tags.filter(
+                (t) => !photoToRender.tags.some((tt) => tt.tagId === t.tagId)
+              )}
+              onChange={submitAddTag}
             />
+            <div className='big-picture__add-tag-container'>
+              <input
+                placeholder='Создать тег...'
+                className='big-picture__add-tag-input'
+                type='text'
+                name='newTagName'
+                id='newTagName'
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+              />
+              <button
+                className='big-picture__add-tag-btn'
+                onClick={() => {
+                  if (!token) return
+                  dispatch(fetchPostTag({ token, name: newTagName }))
+                  setNewTagName('')
+                }}
+              >
+                <img
+                  src={addIcon}
+                  alt='Добавить новый тег.'
+                  className='big-picture__add-tag-btn-icon'
+                />
+              </button>
+            </div>
           </div>
         )}
         <div className='big-picture__buttons-container'>
           <button
             className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'
-            onClick={() => setEditMode(!editMode)}
+            onClick={() => {
+              setEditMode(!editMode)
+              setRemoveMode(false)
+            }}
           >
             <img
               src={editMode ? backIcon : editIcon}
@@ -105,7 +150,10 @@ export default function BigPicture(props: bigPictureProps) {
           </button>
           <button
             className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
-            onClick={() => setRemoveMode(true)}
+            onClick={() => {
+              setRemoveMode(true)
+              setEditMode(false)
+            }}
           >
             <img
               src={removeIcon}
