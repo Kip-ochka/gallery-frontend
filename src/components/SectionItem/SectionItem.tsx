@@ -11,6 +11,7 @@ import {
   getSections,
 } from '../../store/sectionsSlice'
 import TagItem from '../TagItem/TagItem'
+import AddTag from '../AddTag/AddTag'
 
 export default function SectionItem(props: { sectionItem: Section }) {
   const { sectionItem } = props
@@ -97,24 +98,7 @@ export default function SectionItem(props: { sectionItem: Section }) {
         ))}
       </ul>
       <div className='section-item__container section-item__container_type_bottom'>
-        {availiableTags.length > 0 ? (
-          <select className='section-item__select' onChange={submitAddTag}>
-            <option value='' className='section-item__text'>
-              Выберите тег
-            </option>
-            {availiableTags.map((e) => (
-              <option
-                value={e.tag}
-                key={e.tagId}
-                className='section-item__text'
-              >
-                {e.tag}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <p className='section-item__text'>Нет доступных тегов</p>
-        )}
+        <AddTag availiableTags={availiableTags} onChange={submitAddTag} />
       </div>
     </li>
   )

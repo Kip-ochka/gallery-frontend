@@ -1,0 +1,19 @@
+@import '../../commonStyles/commonStyles.scss';
+
+.add-tag__text {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  @media (max-width: 500px) {
+    font-size: 12px;
+  }
+}
+.add-tag__select {
+  @include clickable;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 14px;
+  // @media (max-width: 500px) {
+  //   font-size: 12px;
+  // }
+}

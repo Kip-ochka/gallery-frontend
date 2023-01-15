@@ -18,7 +18,7 @@ type bigPictureProps = {
 
 export default function BigPicture(props: bigPictureProps) {
   const { image, onClose, onDecrement, onIncrement } = props
-  const [editMode, seEditMode] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const [removeMode, setRemoveMode] = useState(false)
   const { token } = useAppSelector((state) => state.admin)
 
@@ -59,7 +59,10 @@ export default function BigPicture(props: bigPictureProps) {
       ></button>
       <div className='big-picture__photo-container'>
         <div className='big-picture__edit-container'>
-          <button className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'>
+          <button
+            className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'
+            onClick={() => setEditMode(true)}
+          >
             <img
               src={editIcon}
               alt='Редактировать фотокарточку'
