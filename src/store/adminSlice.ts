@@ -40,22 +40,26 @@ export const checkAuth = createAsyncThunk<string, string | null>(
   }
 )
 
-export const getAbout = createAsyncThunk('admin/about', async () => {
-  const response = await fetch('http://localhost:5000/about', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-  if (response.ok) {
-    const data = response.json()
-    return data
-  } else {
-    throw new Error(response.statusText)
+export const getAbout = createAsyncThunk(
+  'admin/about',
+  async (_, { rejectWithValue }) => {
+    const response = await fetch('http://localhost:5000/about', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+    if (response.ok) {
+      const data = await response.json()
+      const admin = JSON.parse(data.Admin.aboutMe)
+      return admin
+    } else {
+      rejectWithValue(response.statusText)
+    }
   }
-})
+)
 
-export const setAboutMe = createAsyncThunk<IsetAboutMe, IsetAboutMe>(
+export const setAboutMe = createAsyncThunk(
   'admin/set-about',
-  async (toResponse: IsetAboutMe) => {
+  async (toResponse: { token: string; textValue: any }) => {
     await fetch('http://localhost:5000/about', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -71,8 +75,7 @@ export const setAboutMe = createAsyncThunk<IsetAboutMe, IsetAboutMe>(
 const adminSlice = createSlice({
   name: 'admin',
   initialState: {
-    token: '',
-    aboutMe: '',
+    aboutMe: {},
     isLogged: false,
     error: null,
     authError: null,
@@ -80,16 +83,7 @@ const adminSlice = createSlice({
     aboutLoading: false,
     aboutError: null,
   } as IAdminStateInterface,
-  reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload.token
-      state.isLogged = true
-    },
-    checkToken: (state, action) => {
-      state.isLogged = true
-      state.token = action.payload.token
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(adminAuth.pending, (state) => {
@@ -102,7 +96,6 @@ const adminSlice = createSlice({
         state.authError = null
         state.loading = false
         state.isLogged = true
-        state.token = action.payload
       })
       .addCase(adminAuth.rejected, (state, { error }) => {
         state.loading = false
@@ -116,7 +109,6 @@ const adminSlice = createSlice({
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.loading = false
         state.isLogged = true
-        state.token = action.payload
       })
       .addCase(checkAuth.rejected, (state, { error }) => {
         state.loading = false
@@ -130,7 +122,7 @@ const adminSlice = createSlice({
       .addCase(getAbout.fulfilled, (state, action) => {
         state.aboutLoading = false
         state.aboutError = null
-        state.aboutMe = action.payload.Admin.aboutMe
+        state.aboutMe = action.payload
       })
       .addCase(getAbout.rejected, (state, { error }) => {
         state.aboutError = `${error.name}: ${error.message}`
@@ -149,5 +141,4 @@ const adminSlice = createSlice({
       })
   },
 })
-export const { setToken, checkToken } = adminSlice.actions
 export default adminSlice.reducer

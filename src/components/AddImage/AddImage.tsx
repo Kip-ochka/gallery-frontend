@@ -11,10 +11,10 @@ import './AddImage.scss'
 function AddImage() {
   const [file, setFile] = useState<File[]>()
   const [fileUrl, setFileUrl] = useState<IFileUrl>({})
+  const token = localStorage.getItem('token')
   const [error, setError] = useState('')
   const dispatch = useAppDispatch()
   const { addedTags } = useAppSelector((state) => state.tagInterface)
-  const { token } = useAppSelector((state) => state.admin)
   const getFileName = () => {
     if (file) {
       return file[0].name
@@ -25,7 +25,7 @@ function AddImage() {
 
   const addImageToServer = () => {
     const toSend = file![0]
-    if (typeof token === 'string') {
+    if (typeof token === 'string' && token) {
       dispatch(addImage({ toSend }))
         .then(unwrapResult)
         .then(async (data) => {
@@ -47,7 +47,7 @@ function AddImage() {
   }
 
   const returnTagsPromise = (imageId: number) => {
-    if (typeof token === 'string') {
+    if (typeof token === 'string' && token) {
       const allTags = addedTags.map(async (tag: ITag) => {
         const toAttacth = {
           path: 'images',

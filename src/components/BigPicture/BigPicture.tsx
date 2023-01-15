@@ -46,7 +46,7 @@ export default function BigPicture(props: bigPictureProps) {
   }, [])
 
   return (
-    <div className='big-picture'>
+    <div className="big-picture">
       {removeMode && (
         <ConfirmPopup
           onSubmit={submitDelete}
@@ -55,41 +55,41 @@ export default function BigPicture(props: bigPictureProps) {
       )}
       <button
         onClick={onDecrement}
-        className='big-picture__button big-picture__button_left'
+        className="big-picture__button big-picture__button_left"
       ></button>
-      <div className='big-picture__photo-container'>
-        <div className='big-picture__edit-container'>
+      <div className="big-picture__photo-container">
+        <div className="big-picture__edit-container">
           <button
-            className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'
+            className="big-picture__edit-block-button big-picture__edit-block-button_type_edit"
             onClick={() => setEditMode(true)}
           >
             <img
               src={editIcon}
-              alt='Редактировать фотокарточку'
-              className='big-picture__edit-block-icon'
+              alt="Редактировать фотокарточку"
+              className="big-picture__edit-block-icon"
             />
           </button>
           <button
-            className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
+            className="big-picture__edit-block-button big-picture__edit-block-button_type_remove"
             onClick={() => setRemoveMode(true)}
           >
             <img
               src={removeIcon}
-              alt='Удалить фотокарточку'
-              className='big-picture__edit-block-icon'
+              alt="Удалить фотокарточку"
+              className="big-picture__edit-block-icon"
             />
           </button>
         </div>
         <img
           src={BIG_SIZE + image.image}
-          alt='Фото.'
-          className='big-picture__photo'
+          alt="Фото."
+          className="big-picture__photo"
           onClick={onClose}
         />
       </div>
       <button
         onClick={onIncrement}
-        className='big-picture__button big-picture__button_right'
+        className="big-picture__button big-picture__button_right"
       ></button>
     </div>
   )

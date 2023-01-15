@@ -17,7 +17,7 @@ function TagInterface() {
   const { tagsToAdd, addedTags, loading, error, tags } = useAppSelector(
     (state) => state.tagInterface
   )
-  const { token } = useAppSelector((state) => state.admin)
+  const token = localStorage.getItem('token')
 
   const moveTagToAdded = (tag: ITag) => {
     dispatch(addTagToAdded(tag))
