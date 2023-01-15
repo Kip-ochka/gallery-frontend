@@ -17,7 +17,7 @@ function Tag({ tagId, tag, onClick, type }: ITagProps) {
   const [redactable, setRedactable] = useState(false)
   const [textContent, setTextContent] = useState(tag)
   const dispatch = useAppDispatch()
-  const { token } = useAppSelector((state) => state.admin)
+  const token = localStorage.getItem('token')
   const handleFetchDelete = async () => {
     if (token) {
       try {

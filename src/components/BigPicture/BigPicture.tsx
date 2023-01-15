@@ -27,9 +27,10 @@ export default function BigPicture(props: bigPictureProps) {
   const { previewIndex, onClose } = props
   const [editMode, setEditMode] = useState(false)
   const [removeMode, setRemoveMode] = useState(false)
-  const { token } = useAppSelector((state) => state.admin)
+  const token = localStorage.getItem('token')
   const images = useAppSelector((state) => state.images)
   const tags = useAppSelector((state) => state.tagInterface.tags)
+  const { isLogged } = useAppSelector((state) => state.admin)
   const [currentIndex, setCurrentIndex] = useState(previewIndex)
   const photoToRender = images.images[currentIndex - 1]
   const [newTagName, setNewTagName] = useState('')
@@ -134,34 +135,36 @@ export default function BigPicture(props: bigPictureProps) {
             </div>
           </div>
         )}
-        <div className='big-picture__buttons-container'>
-          <button
-            className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'
-            onClick={() => {
-              setEditMode(!editMode)
-              setRemoveMode(false)
-            }}
-          >
-            <img
-              src={editMode ? backIcon : editIcon}
-              alt='Редактировать фотокарточку'
-              className='big-picture__edit-block-icon'
-            />
-          </button>
-          <button
-            className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
-            onClick={() => {
-              setRemoveMode(true)
-              setEditMode(false)
-            }}
-          >
-            <img
-              src={removeIcon}
-              alt='Удалить фотокарточку'
-              className='big-picture__edit-block-icon'
-            />
-          </button>
-        </div>
+        {isLogged && (
+          <div className='big-picture__buttons-container'>
+            <button
+              className='big-picture__edit-block-button big-picture__edit-block-button_type_edit'
+              onClick={() => {
+                setEditMode(!editMode)
+                setRemoveMode(false)
+              }}
+            >
+              <img
+                src={editMode ? backIcon : editIcon}
+                alt='Редактировать фотокарточку'
+                className='big-picture__edit-block-icon'
+              />
+            </button>
+            <button
+              className='big-picture__edit-block-button big-picture__edit-block-button_type_remove'
+              onClick={() => {
+                setRemoveMode(true)
+                setEditMode(false)
+              }}
+            >
+              <img
+                src={removeIcon}
+                alt='Удалить фотокарточку'
+                className='big-picture__edit-block-icon'
+              />
+            </button>
+          </div>
+        )}
         <img
           src={BIG_SIZE + photoToRender.image}
           alt='Фото.'

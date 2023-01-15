@@ -46,7 +46,7 @@ export interface IPostTag {
   name: string
 }
 export interface IsetAboutMe {
-  textValue: string
+  textValue: IFormTextValues
   token: string
 }
 
@@ -73,18 +73,13 @@ export interface INavBarProps {
 
 export interface IAdminStateInterface {
   token: string | null
-  aboutMe: string | null
+  aboutMe: IFormTextValues
   isLogged: boolean
   error: null | string
   authError: null | string
   loading: boolean
   aboutLoading: boolean
   aboutError: null | string
-}
-
-export interface IsetAboutMe {
-  textValue: string
-  token: string
 }
 
 export type Section = {
@@ -124,4 +119,20 @@ export interface IToAttacth {
   toSend: File
   addedTags: ITag[]
   token: string
+}
+
+export interface IFormTextValues {
+  name: string
+  about: string
+  clients: string
+  email: string
+  tel: string
+  fs: string
+  inst: string
+  linkedin: string
+  behance: string
+  vk: string
+  tg: string
+  pin: string
+  tw: string
 }

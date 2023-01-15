@@ -18,11 +18,10 @@ export default function SectionItem(props: { sectionItem: Section }) {
   const { section, sectionId } = sectionItem
   const [currentSectionName, setCurrentSectionName] = useState<string>(section)
   const [editMode, setEditMode] = useState(false)
-  const { token } = useAppSelector((state) => state.admin)
   const { tags } = useAppSelector((state) => state.tagInterface)
   const dispatch = useAppDispatch()
   const [rerender, setRerender] = useState(false)
-
+  const token = localStorage.getItem('token')
   useEffect(() => {
     dispatch(getSections())
   }, [tags])
@@ -44,13 +43,13 @@ export default function SectionItem(props: { sectionItem: Section }) {
   }
 
   return (
-    <li className='section-item'>
-      <div className='section-item__container section-item__container_type_heading'>
+    <li className="section-item">
+      <div className="section-item__container section-item__container_type_heading">
         {editMode ? (
           <input
             autoFocus
-            type='text'
-            className='section-item__input'
+            type="text"
+            className="section-item__input"
             value={currentSectionName}
             onChange={(e) => setCurrentSectionName(e.target.value)}
             onBlur={() => {
@@ -67,14 +66,14 @@ export default function SectionItem(props: { sectionItem: Section }) {
           />
         ) : (
           <span
-            className='section-item__title'
+            className="section-item__title"
             onDoubleClick={() => setEditMode(true)}
           >
             {section}
           </span>
         )}
         <button
-          className='section-item__remove-button'
+          className="section-item__remove-button"
           onClick={() => {
             if (!token) return
             dispatch(deleteSection({ section: sectionItem, token }))
@@ -82,12 +81,12 @@ export default function SectionItem(props: { sectionItem: Section }) {
         >
           <img
             src={removeButtonIcon}
-            alt='удалить тег. Автор Andrean Prabowo'
-            className='section-item__remove-button-icon'
+            alt="удалить тег. Автор Andrean Prabowo"
+            className="section-item__remove-button-icon"
           />
         </button>
       </div>
-      <ul className='section-item__tag-list'>
+      <ul className="section-item__tag-list">
         {sectionItem.tags.map((t, i) => (
           <TagItem
             tagItem={t}
@@ -97,7 +96,7 @@ export default function SectionItem(props: { sectionItem: Section }) {
           />
         ))}
       </ul>
-      <div className='section-item__container section-item__container_type_bottom'>
+      <div className="section-item__container section-item__container_type_bottom">
         <AddTag availiableTags={availiableTags} onChange={submitAddTag} />
       </div>
     </li>
