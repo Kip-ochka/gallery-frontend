@@ -136,7 +136,9 @@ function About() {
                             type="url"
                             className="about__input"
                             name={`${item.inputName}`}
-                            value={values[`${item.inputName}`]}
+                            value={
+                              values[`${item.inputName}` as keyof typeof values]
+                            }
                             onChange={handleChange}
                             placeholder={
                               'Если вы это видите, то ссылка-иконка этой соцсети отображаться не будет'
@@ -209,11 +211,11 @@ function About() {
             </ul>
             <ul className="social-network">
               {icons.map((item, index) => {
-                if (values[`${item.link}`] !== '') {
+                if (values[`${item.link}` as keyof typeof values] !== '') {
                   return (
                     <li className="social-newtwork__item" key={index}>
                       <a
-                        href={values[`${item.link}`]}
+                        href={values[`${item.link}` as keyof typeof values]}
                         className="social-network__link"
                         target="_blank"
                         rel="noreferrer"

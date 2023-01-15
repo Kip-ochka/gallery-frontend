@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { IFormTextValues } from '../../types/models'
 
-export function useForm(inputValues: any) {
+export function useForm(inputValues: IFormTextValues) {
   const [values, setValues] = useState(inputValues)
 
   const handleChange = (event: any) => {
