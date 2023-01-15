@@ -2,7 +2,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
 import userPhoto from '../../img/user-photo.png'
 import { getAbout, setAboutMe } from '../../store/adminSlice'
-import { IFormTextValues, IsetAboutMe } from '../../types/models'
+import { IFormTextValues } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './About.scss'
 import { useForm } from '../../utils/hooks/useForm'
@@ -56,7 +56,7 @@ function About() {
     dispatch(getAbout()).then((data) => {
       setValues(data.payload)
     })
-  }, [dispatch])
+  }, [dispatch, setValues])
 
   return (
     <section className="about">
@@ -216,6 +216,7 @@ function About() {
                         href={values[`${item.link}`]}
                         className="social-network__link"
                         target="_blank"
+                        rel="noreferrer"
                       >
                         <img
                           src={item.icon}

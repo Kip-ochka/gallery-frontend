@@ -1,11 +1,11 @@
-import iconBehance from '../../img/social-icon/behance.svg'
-import iconFacebook from '../../img/social-icon/facebook.svg'
-import iconInsta from '../../img/social-icon/instagram.svg'
-import iconLinked from '../../img/social-icon/linkedin.svg'
-import iconTelegram from '../../img/social-icon/telegram.svg'
-import iconVK from '../../img/social-icon/vk.svg'
-import iconTwitter from '../../img/social-icon/twitter.svg'
-import iconPinterest from '../../img/social-icon/pinterest.svg'
+import iconBehance from '../img/social-icon/behance.svg'
+import iconFacebook from '../img/social-icon/facebook.svg'
+import iconInsta from '../img/social-icon/instagram.svg'
+import iconLinked from '../img/social-icon/linkedin.svg'
+import iconTelegram from '../img/social-icon/telegram.svg'
+import iconVK from '../img/social-icon/vk.svg'
+import iconTwitter from '../img/social-icon/twitter.svg'
+import iconPinterest from '../img/social-icon/pinterest.svg'
 
 export const icons = [
   { icon: iconBehance, link: 'behance' },
