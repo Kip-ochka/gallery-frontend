@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { IPreviewImageProps } from '../../types/models'
 import TagInterface from '../TagInterface/TagInterface'
 import './PreviewImage.scss'

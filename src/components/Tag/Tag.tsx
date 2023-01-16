@@ -6,13 +6,13 @@ import addIcon from '../../img/addTag.svg'
 import redactIcon from '../../img/pen.svg'
 import backIcon from '../../img/back.svg'
 import acceptIcon from '../../img/accept.svg'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
+import { useAppDispatch } from '../../utils/hooks/reduxHooks'
 import {
   fetchChangeTag,
   fetchDeleteTag,
   removeTagAfterFetchDelete,
 } from '../../store/tagInterface'
-import { unwrapResult } from '@reduxjs/toolkit'
+
 function Tag({ tagId, tag, onClick, type }: ITagProps) {
   const [redactable, setRedactable] = useState(false)
   const [textContent, setTextContent] = useState(tag)

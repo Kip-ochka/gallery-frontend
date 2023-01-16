@@ -1,4 +1,3 @@
-import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { getImages } from '../../store/imageSlice'
@@ -17,14 +16,14 @@ function PhotoGallery() {
   useEffect(() => {
     dispatch(getImages({ sectionId: chosenSectionId }))
     setPreviewIndex(null)
-  }, [chosenSectionId])
+  }, [chosenSectionId, dispatch])
 
   return !previewIndex ? (
-    <section className='photos'>
+    <section className="photos">
       {false ? (
         <div>Loading...</div>
       ) : (
-        <ul className='photos__wrapper'>
+        <ul className="photos__wrapper">
           {images.map((image: IPhoto) => {
             return (
               <PhotoCard
