@@ -2,9 +2,10 @@ import { useState } from 'react'
 import './NavBar.scss'
 import { NavLink } from 'react-router-dom'
 import AccountButton from '../AccountButton/AccountButton'
-import { useAppSelector } from '../../utils/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import { INavBarProps } from '../../types/models'
 import expandIcon from '../../img/expand-icon.svg'
+import { logout } from '../../store/adminSlice'
 
 enum EXTENDABLE_BLOCKS {
   PHOTOS_BY_CATEGORIES = 'photos-per-categories',
@@ -13,17 +14,18 @@ enum EXTENDABLE_BLOCKS {
 function NavBar({ isOpen, onClose }: INavBarProps) {
   const { isLogged } = useAppSelector((state) => state.admin)
   const { sections } = useAppSelector((state) => state.sections)
+  const dispatch = useAppDispatch()
   const [extended, setExtended] = useState<EXTENDABLE_BLOCKS | null>(null)
 
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className='navbar__content'>
-        <NavLink to='/' className='navbar__main-section' onClick={onClose}>
+      <div className="navbar__content">
+        <NavLink to="/" className="navbar__main-section" onClick={onClose}>
           Все фотографии
         </NavLink>
-        <div className='navbar__container'>
+        <div className="navbar__container">
           <p
-            className='navbar__main-section'
+            className="navbar__main-section"
             onClick={() =>
               extended === EXTENDABLE_BLOCKS.PHOTOS_BY_CATEGORIES
                 ? setExtended(null)
@@ -33,7 +35,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             Фото по категориям
             <img
               src={expandIcon}
-              alt='Кнопка открытия выпадающего меню.'
+              alt="Кнопка открытия выпадающего меню."
               className={`navbar__expand-icon ${
                 extended && 'navbar__expand-icon_rotated'
               }`}
@@ -53,22 +55,18 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             </NavLink>
           ))}
         </div>
-        <NavLink to='/about' onClick={onClose} className='navbar__main-section'>
+        <NavLink to="/about" onClick={onClose} className="navbar__main-section">
           Об Авторе
         </NavLink>
-        <NavLink
-          to='/contacts'
+        {/*<NavLink
+          to="/contacts"
           onClick={onClose}
-          className='navbar__main-section'
+          className="navbar__main-section"
         >
           Контакты
-        </NavLink>
-        <div className='navbar__hidden-element'>
-          {isLogged ? null : <AccountButton />}
-        </div>
-
+            </NavLink>*/}
         <NavLink
-          to='/add-image'
+          to="/add-image"
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
@@ -82,12 +80,27 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
           Редактировать теги
         </NavLink> */}
         <NavLink
-          to='/edit-sections'
+          to="/edit-sections"
           className={`navbar__main-section ${!isLogged && 'hidden'}`}
           onClick={onClose}
         >
           Редактировать секции
         </NavLink>
+        <div className="navbar__hidden-element">
+          {isLogged ? (
+            <button
+              className="navbar__logout-button"
+              onClick={() => {
+                dispatch(logout())
+                localStorage.clear()
+              }}
+            >
+              Выйти
+            </button>
+          ) : (
+            <AccountButton />
+          )}
+        </div>
       </div>
     </aside>
   )

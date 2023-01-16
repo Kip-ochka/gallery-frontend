@@ -84,7 +84,11 @@ const adminSlice = createSlice({
     aboutLoading: false,
     aboutError: null,
   } as IAdminStateInterface,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.isLogged = false
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(adminAuth.pending, (state) => {
@@ -143,4 +147,5 @@ const adminSlice = createSlice({
       })
   },
 })
+export const { logout } = adminSlice.actions
 export default adminSlice.reducer

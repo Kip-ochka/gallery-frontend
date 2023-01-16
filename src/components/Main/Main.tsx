@@ -26,13 +26,16 @@ export default function Main() {
         <Route
           path="/add-image"
           element={
-            <ProtectedRoute component={AddImage} condition={!!adminData} />
+            <ProtectedRoute
+              component={AddImage}
+              condition={!!adminData.isLogged}
+            />
           }
         />
         {/* <Route
           path='/tags'
           element={
-            <ProtectedRoute component={EditTagsPage} condition={!!adminData} />
+            <ProtectedRoute component={EditTagsPage} condition={!!adminData.isLogged} />
           }
         /> */}
         <Route
@@ -40,7 +43,7 @@ export default function Main() {
           element={
             <ProtectedRoute
               component={EditSectionsPage}
-              condition={!!adminData}
+              condition={!!adminData.isLogged}
             />
           }
         />

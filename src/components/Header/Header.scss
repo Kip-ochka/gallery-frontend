@@ -26,6 +26,21 @@
     cursor: pointer;
     padding: 0;
   }
+  &__logout-button {
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    background-color: $redaccent;
+    padding: 8px;
+    border-radius: 4px;
+
+    @include clickable;
+  }
   @media screen and (max-width: 1024px) {
     &__headen-element {
       display: none;
