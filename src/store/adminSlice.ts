@@ -60,15 +60,16 @@ export const getAbout = createAsyncThunk(
 export const setAboutMe = createAsyncThunk(
   'admin/set-about',
   async (toResponse: { token: string; textValue: any }) => {
+    const json = JSON.stringify(toResponse.textValue)
     await fetch('http://localhost:5000/about', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user: { token: toResponse.token },
-        info: { info: toResponse.textValue },
+        info: { info: json },
       }),
     })
-    return toResponse
+    return toResponse.textValue
   }
 )
 
@@ -125,6 +126,7 @@ const adminSlice = createSlice({
         state.aboutMe = action.payload
       })
       .addCase(getAbout.rejected, (state, { error }) => {
+        state.aboutLoading = false
         state.aboutError = `${error.name}: ${error.message}`
       })
       .addCase(setAboutMe.pending, (state, action) => {
@@ -133,7 +135,7 @@ const adminSlice = createSlice({
       })
       .addCase(setAboutMe.fulfilled, (state, action) => {
         state.aboutLoading = false
-        state.aboutMe = action.payload.textValue
+        state.aboutMe = action.payload
       })
       .addCase(setAboutMe.rejected, (state, action) => {
         state.aboutLoading = false

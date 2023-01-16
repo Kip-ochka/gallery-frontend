@@ -122,17 +122,17 @@ export interface IToAttacth {
 }
 
 export interface IFormTextValues {
-  name: string
-  about: string
-  clients: string
-  email: string
-  tel: string
-  fs: string
-  inst: string
-  linkedin: string
-  behance: string
-  vk: string
-  tg: string
-  pin: string
-  tw: string
+  name?: string
+  about?: string
+  clients?: string
+  email?: string
+  tel?: string
+  fs?: string
+  inst?: string
+  linkedin?: string
+  behance?: string
+  vk?: string
+  tg?: string
+  pin?: string
+  tw?: string
 }

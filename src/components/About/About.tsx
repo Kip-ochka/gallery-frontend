@@ -19,33 +19,32 @@ function About() {
   const token = localStorage.getItem('token')
   const dispatch = useAppDispatch()
   const [redacted, setRedacted] = useState(false)
-  const checkData = () => {
-    if (!aboutMe) {
+  const { values, handleChange, setValues } = useForm(defaultValues)
+  const checkData = (data: any) => {
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
       return defaultValues
     } else {
       return {
-        name: aboutMe.name,
-        about: aboutMe.about,
-        clients: aboutMe.clients,
-        email: aboutMe.email,
-        tel: aboutMe.tel,
-        fs: aboutMe.fs,
-        inst: aboutMe.inst,
-        linkedin: aboutMe.linkedin,
-        behance: aboutMe.behance,
-        vk: aboutMe.vk,
-        tg: aboutMe.tg,
-        pin: aboutMe.pin,
-        tw: aboutMe.tw,
+        name: data.name,
+        about: data.about,
+        clients: data.clients,
+        email: data.email,
+        tel: data.tel,
+        fs: data.fs,
+        inst: data.inst,
+        linkedin: data.linkedin,
+        behance: data.behance,
+        vk: data.vk,
+        tg: data.tg,
+        pin: data.pin,
+        tw: data.tw,
       }
     }
   }
 
-  const { values, handleChange, setValues } = useForm(checkData())
   const handleAboutMeUpdate = (values: IFormTextValues, token: string) => {
-    const json = JSON.stringify(values)
     if (token) {
-      dispatch(setAboutMe({ token, textValue: json }))
+      dispatch(setAboutMe({ token, textValue: values }))
         .then(unwrapResult)
         .then(() => {
           setRedacted(false)
@@ -54,9 +53,13 @@ function About() {
   }
   useEffect(() => {
     dispatch(getAbout()).then((data) => {
-      setValues(data.payload)
+      if (data.payload === null) {
+        setValues(defaultValues)
+      } else {
+        setValues(data.payload)
+      }
     })
-  }, [dispatch, setValues])
+  }, [dispatch])
 
   return (
     <section className="about">
@@ -174,7 +177,7 @@ function About() {
           </div>
         ) : aboutLoading ? null : (
           <div className="about__wrapper">
-            <h1 className="about__author-name">{values.name}</h1>
+            <h1 className="about__author-name">{aboutMe?.name}</h1>
             <div className="about__title-wrapper">
               <h2 className="about__title">About</h2>
               {isLogged ? (
@@ -186,17 +189,17 @@ function About() {
                 />
               ) : null}
             </div>
-            <p className="about__description">{values.about}</p>
+            <p className="about__description">{aboutMe?.about}</p>
             <div>
               <h3 className="about__subtitle">CLIENTS</h3>
-              <p className="about__clients-descriptiob">{values.clients}</p>
+              <p className="about__clients-descriptiob">{aboutMe?.clients}</p>
             </div>
             <ul className="about__contacts-list">
               <li className="about__contacts-item">
                 <p className="about__contacts-title">
                   E-mail.
                   <span className="about__contacts-email-adress">
-                    {values.email}
+                    {aboutMe?.email}
                   </span>
                 </p>
               </li>
@@ -204,33 +207,37 @@ function About() {
                 <p className="about__contacts-title">
                   Tel.
                   <span className="about__contacts-telephone-number">
-                    {values.tel}
+                    {aboutMe?.tel}
                   </span>
                 </p>
               </li>
             </ul>
             <ul className="social-network">
               {icons.map((item, index) => {
-                if (values[`${item.link}` as keyof typeof values] !== '') {
-                  return (
-                    <li className="social-newtwork__item" key={index}>
-                      <a
-                        href={values[`${item.link}` as keyof typeof values]}
-                        className="social-network__link"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <img
-                          src={item.icon}
-                          alt={`${item.link}`}
-                          className="social-network__icon"
-                        />
-                      </a>
-                    </li>
-                  )
-                } else {
-                  return null
-                }
+                if (aboutMe !== null)
+                  if (
+                    aboutMe[`${item.link}` as keyof typeof aboutMe] !== '' &&
+                    aboutMe[`${item.link}` as keyof typeof aboutMe]
+                  ) {
+                    return (
+                      <li className="social-newtwork__item" key={index}>
+                        <a
+                          href={aboutMe[`${item.link}` as keyof typeof aboutMe]}
+                          className="social-network__link"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <img
+                            src={item.icon}
+                            alt={`${item.link}`}
+                            className="social-network__icon"
+                          />
+                        </a>
+                      </li>
+                    )
+                  } else {
+                    return null
+                  }
               })}
             </ul>
           </div>
