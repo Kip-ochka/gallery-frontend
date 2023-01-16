@@ -60,7 +60,6 @@ function TagInterface() {
                   const matched = tags.filter((tag) => {
                     return tag.tag === textValue
                   })
-                  console.log(matched)
                   if (matched.length !== 1 && textValue.length > 0) {
                     const obj = { token: token, name: textValue }
                     await dispatch(fetchPostTag(obj))
