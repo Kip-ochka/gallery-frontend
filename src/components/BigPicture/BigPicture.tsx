@@ -51,8 +51,12 @@ export default function BigPicture(props: bigPictureProps) {
   const keyNavigation = (e: KeyboardEvent) => {
     if (e.key === 'ArrowRight') {
       incrementIndex()
+      console.log(currentIndex)
+      console.log(photoToRender)
     } else if (e.key === 'ArrowLeft') {
       decrementIndex()
+      console.log(currentIndex)
+      console.log(photoToRender)
     }
   }
   useEffect(() => {
@@ -84,7 +88,7 @@ export default function BigPicture(props: bigPictureProps) {
     dispatch(addTagToImage({ image: photoToRender, tag, token }))
     e.target.value = ''
   }
-
+  console.log(currentIndex)
   return (
     <div className="big-picture">
       {removeMode && (
@@ -97,87 +101,81 @@ export default function BigPicture(props: bigPictureProps) {
         onClick={decrementIndex}
         className="big-picture__button big-picture__button_left"
       ></button>
-      <div className="big-picture__photo-container">
-        {editMode && (
-          <div className="big-picture__edit-container">
-            <p className="big-picture__edit-heading">Добавленные теги</p>
-            {photoToRender.tags.map((t: ITag) => (
-              <TagItem
-                key={t.tagId}
-                tagItem={t}
-                onRemoveTag={submitDeleteTag}
-              />
-            ))}
-            <AddTag
-              availiableTags={tags.filter(
-                (t) => !photoToRender.tags.some((tt) => tt.tagId === t.tagId)
-              )}
-              onChange={submitAddTag}
+      {editMode && (
+        <div className="big-picture__edit-container">
+          <p className="big-picture__edit-heading">Добавленные теги</p>
+          {photoToRender.tags.map((t: ITag) => (
+            <TagItem key={t.tagId} tagItem={t} onRemoveTag={submitDeleteTag} />
+          ))}
+          <AddTag
+            availiableTags={tags.filter(
+              (t) => !photoToRender.tags.some((tt) => tt.tagId === t.tagId)
+            )}
+            onChange={submitAddTag}
+          />
+          <div className="big-picture__add-tag-container">
+            <input
+              placeholder="Создать тег..."
+              className="big-picture__add-tag-input"
+              type="text"
+              name="newTagName"
+              id="newTagName"
+              value={newTagName}
+              onChange={(e) => setNewTagName(e.target.value)}
             />
-            <div className="big-picture__add-tag-container">
-              <input
-                placeholder="Создать тег..."
-                className="big-picture__add-tag-input"
-                type="text"
-                name="newTagName"
-                id="newTagName"
-                value={newTagName}
-                onChange={(e) => setNewTagName(e.target.value)}
-              />
-              <button
-                className="big-picture__add-tag-btn"
-                onClick={() => {
-                  if (!token) return
-                  dispatch(fetchPostTag({ token, name: newTagName }))
-                  setNewTagName('')
-                }}
-              >
-                <img
-                  src={addIcon}
-                  alt="Добавить новый тег."
-                  className="big-picture__add-tag-btn-icon"
-                />
-              </button>
-            </div>
-          </div>
-        )}
-        {isLogged && (
-          <div className="big-picture__buttons-container">
             <button
-              className="big-picture__edit-block-button big-picture__edit-block-button_type_edit"
+              className="big-picture__add-tag-btn"
               onClick={() => {
-                setEditMode(!editMode)
-                setRemoveMode(false)
+                if (!token) return
+                dispatch(fetchPostTag({ token, name: newTagName }))
+                setNewTagName('')
               }}
             >
               <img
-                src={editMode ? backIcon : editIcon}
-                alt="Редактировать фотокарточку"
-                className="big-picture__edit-block-icon"
-              />
-            </button>
-            <button
-              className="big-picture__edit-block-button big-picture__edit-block-button_type_remove"
-              onClick={() => {
-                setRemoveMode(true)
-                setEditMode(false)
-              }}
-            >
-              <img
-                src={removeIcon}
-                alt="Удалить фотокарточку"
-                className="big-picture__edit-block-icon"
+                src={addIcon}
+                alt="Добавить новый тег."
+                className="big-picture__add-tag-btn-icon"
               />
             </button>
           </div>
-        )}
-        <img
-          src={BIG_SIZE + photoToRender.image}
-          alt="Фото."
-          className="big-picture__photo"
-          onClick={onClose}
-        />
-      </div>
+        </div>
+      )}
+      {isLogged && (
+        <div className="big-picture__buttons-container">
+          <button
+            className="big-picture__edit-block-button big-picture__edit-block-button_type_edit"
+            onClick={() => {
+              setEditMode(!editMode)
+              setRemoveMode(false)
+            }}
+          >
+            <img
+              src={editMode ? backIcon : editIcon}
+              alt="Редактировать фотокарточку"
+              className="big-picture__edit-block-icon"
+            />
+          </button>
+          <button
+            className="big-picture__edit-block-button big-picture__edit-block-button_type_remove"
+            onClick={() => {
+              setRemoveMode(true)
+              setEditMode(false)
+            }}
+          >
+            <img
+              src={removeIcon}
+              alt="Удалить фотокарточку"
+              className="big-picture__edit-block-icon"
+            />
+          </button>
+        </div>
+      )}
+      <img
+        src={BIG_SIZE + photoToRender.image}
+        alt="Фото."
+        className="big-picture__photo"
+        onClick={onClose}
+      />
       <button
         className="big-picture__button big-picture__button_right"
         onClick={incrementIndex}

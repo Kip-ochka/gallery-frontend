@@ -3,9 +3,8 @@
   padding: 30px 0;
   width: 100%;
   max-height: 90vh;
-  display: grid;
-  grid-template-columns: 1fr fit-content(80%) 1fr;
-  grid-template-rows: minmax(200px, 1fr);
+  display: flex;
+  position: relative;
   justify-content: center;
   align-content: center;
   // overflow: hidden;
@@ -21,15 +20,22 @@
   // @include clickable;
   // width: 100%;
   max-height: 100%;
-  flex: 1 1;
+  width: 80vw;
+  position: relative;
   cursor: url('../../img/Reduce.svg'), pointer;
 }
 .big-picture__button {
   @include clickable;
   &_left {
+    z-index: 1;
+    width: 100%;
+    min-width: 10vw;
     cursor: url('../../img/nav_left.svg'), pointer;
   }
   &_right {
+    z-index: 1;
+    width: 100%;
+    min-width: 10vw;
     cursor: url('../../img/nav_right.svg'), pointer;
   }
 }
@@ -39,6 +45,7 @@
 }
 .big-picture__buttons-container {
   padding: 10px;
+  z-index: 2;
   position: absolute;
   top: 40px;
   right: 30px;
@@ -59,13 +66,13 @@
 }
 
 .big-picture__edit-container {
-  padding: 10px;
   z-index: 2;
+  padding: 10px;
   position: absolute;
   display: flex;
   flex-direction: column;
-  left: 30px;
-  top: 40px;
+  right: 30px;
+  top: 110px;
   background-color: rgb(237, 231, 231);
   border-radius: 5px;
   gap: 5px;
