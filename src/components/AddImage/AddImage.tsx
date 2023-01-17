@@ -12,7 +12,6 @@ function AddImage() {
   const [file, setFile] = useState<File[]>()
   const [fileUrl, setFileUrl] = useState<IFileUrl>({})
   const token = localStorage.getItem('token')
-  const [error, setError] = useState('')
   const dispatch = useAppDispatch()
   const { addedTags } = useAppSelector((state) => state.tagInterface)
   const getFileName = () => {

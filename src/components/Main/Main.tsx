@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 
-import { useAppSelector, useAppDispatch } from '../../utils/hooks/reduxHooks'
+import { useAppSelector } from '../../utils/hooks/reduxHooks'
 import About from '../About/About'
 import AddImage from '../AddImage/AddImage'
 import NavBar from '../NavBar/NavBar'
@@ -8,11 +8,9 @@ import PhotoGallery from '../PhotoGallery/PhotoGallery'
 import './Main.scss'
 import ProtectedRoute from '../../hok/ProtectedRoute'
 import EditSectionsPage from '../EditSectionsPage/EditSectionsPage'
-import EditTagsPage from '../EditTagsPage/EditTagsPage'
 import NotFound from '../NotFound/NotFound'
 
 export default function Main() {
-  const dispatch = useAppDispatch()
   const adminData = useAppSelector((state) => state.admin)
 
   return (

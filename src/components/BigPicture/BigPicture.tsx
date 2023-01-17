@@ -1,4 +1,4 @@
-import { IPhoto, ITag } from '../../types/models'
+import { ITag } from '../../types/models'
 import { BIG_SIZE } from '../../utils/imageSizesLink'
 import './BigPicture.scss'
 import { useEffect, useState } from 'react'
@@ -10,7 +10,6 @@ import {
   getImages,
   removeTagFromImage,
 } from '../../store/imageSlice'
-import { AppDispatch } from '../../store'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import TagItem from '../TagItem/TagItem'
@@ -44,30 +43,30 @@ export default function BigPicture(props: bigPictureProps) {
     if (currentIndex <= 1) return
     setCurrentIndex((prev) => prev - 1)
   }
+
   const incrementIndex = () => {
     if (currentIndex >= images.images.length) return
     setCurrentIndex((prev) => prev + 1)
   }
+
   const keyNavigation = (e: KeyboardEvent) => {
     if (e.key === 'ArrowRight') {
       incrementIndex()
-      console.log(currentIndex)
-      console.log(photoToRender)
     } else if (e.key === 'ArrowLeft') {
       decrementIndex()
-      console.log(currentIndex)
-      console.log(photoToRender)
     }
   }
+
   useEffect(() => {
     document.addEventListener('keyup', keyNavigation)
     return () => {
       document.removeEventListener('keyup', keyNavigation)
     }
-  }, [])
+  }, [currentIndex])
+
   useEffect(() => {
     dispatch(getImages({ sectionId: chosenSectionId }))
-  }, [tags])
+  }, [tags, dispatch])
 
   useEffect(() => {
     setEditMode(false)
@@ -78,17 +77,19 @@ export default function BigPicture(props: bigPictureProps) {
     dispatch(deleteImage({ image: photoToRender, token }))
     onClose()
   }
+
   const submitDeleteTag = (tag: ITag) => {
     if (!token) return
     dispatch(removeTagFromImage({ image: photoToRender, token, tag }))
   }
+
   const submitAddTag = (e: { target: { value: string } }) => {
     const tag = tags.find((t) => t.tag === e.target.value)
     if (!tag || !token) return
     dispatch(addTagToImage({ image: photoToRender, tag, token }))
     e.target.value = ''
   }
-  console.log(currentIndex)
+
   return (
     <div className="big-picture">
       {removeMode && (

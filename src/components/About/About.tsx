@@ -20,27 +20,6 @@ function About() {
   const dispatch = useAppDispatch()
   const [redacted, setRedacted] = useState(false)
   const { values, handleChange, setValues } = useForm(defaultValues)
-  const checkData = (data: any) => {
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      return defaultValues
-    } else {
-      return {
-        name: data.name,
-        about: data.about,
-        clients: data.clients,
-        email: data.email,
-        tel: data.tel,
-        fs: data.fs,
-        inst: data.inst,
-        linkedin: data.linkedin,
-        behance: data.behance,
-        vk: data.vk,
-        tg: data.tg,
-        pin: data.pin,
-        tw: data.tw,
-      }
-    }
-  }
 
   const handleAboutMeUpdate = (values: IFormTextValues, token: string) => {
     if (token) {
@@ -214,7 +193,7 @@ function About() {
             </ul>
             <ul className="social-network">
               {icons.map((item, index) => {
-                if (aboutMe !== null)
+                if (aboutMe !== null) {
                   if (
                     aboutMe[`${item.link}` as keyof typeof aboutMe] !== '' &&
                     aboutMe[`${item.link}` as keyof typeof aboutMe]
@@ -238,6 +217,8 @@ function About() {
                   } else {
                     return null
                   }
+                }
+                return null
               })}
             </ul>
           </div>

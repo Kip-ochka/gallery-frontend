@@ -14,7 +14,7 @@ function TagInterface() {
   const [isCreateNewTag, setIsCreateNewTag] = useState(false)
   const [textValue, setTextValue] = useState('')
   const dispatch = useAppDispatch()
-  const { tagsToAdd, addedTags, loading, error, tags } = useAppSelector(
+  const { tagsToAdd, addedTags, error, tags } = useAppSelector(
     (state) => state.tagInterface
   )
   const token = localStorage.getItem('token')
@@ -35,7 +35,7 @@ function TagInterface() {
           }}
         >
           Создать новый тег
-          <img src={plusIcon} />
+          <img src={plusIcon} alt="+" />
         </button>
         {isCreateNewTag ? (
           <div className="tags__input-wrapper">
@@ -70,7 +70,7 @@ function TagInterface() {
                   }
                 }}
               >
-                <img src={saveIcon} />
+                <img src={saveIcon} alt="SAVE" />
               </button>
               <button
                 className="tags__button-icon tags__button-icon_cancel"
@@ -79,7 +79,7 @@ function TagInterface() {
                   setIsCreateNewTag(false)
                 }}
               >
-                <img src={cancelIcon} />
+                <img src={cancelIcon} alt="CANCEL" />
               </button>
             </div>
           </div>
@@ -88,21 +88,17 @@ function TagInterface() {
       <div className="tags__list-wrapper">
         <p className="tags__list-title">Все теги</p>
         <ul className="tags__list">
-          {loading ? (
-            <p>Preloader</p>
-          ) : (
-            tagsToAdd.map((item) => {
-              return (
-                <Tag
-                  key={item.tagId}
-                  tag={item.tag}
-                  tagId={item.tagId}
-                  onClick={moveTagToAdded}
-                  type={'toAdd'}
-                />
-              )
-            })
-          )}
+          {tagsToAdd.map((item) => {
+            return (
+              <Tag
+                key={item.tagId}
+                tag={item.tag}
+                tagId={item.tagId}
+                onClick={moveTagToAdded}
+                type={'toAdd'}
+              />
+            )
+          })}
         </ul>
       </div>
       <div className="tags__list-wrapper">

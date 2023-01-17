@@ -15,12 +15,11 @@ import AddTag from '../AddTag/AddTag'
 
 export default function SectionItem(props: { sectionItem: Section }) {
   const { sectionItem } = props
-  const { section, sectionId } = sectionItem
+  const { section } = sectionItem
   const [currentSectionName, setCurrentSectionName] = useState<string>(section)
   const [editMode, setEditMode] = useState(false)
   const { tags } = useAppSelector((state) => state.tagInterface)
   const dispatch = useAppDispatch()
-  const [rerender, setRerender] = useState(false)
   const token = localStorage.getItem('token')
   useEffect(() => {
     dispatch(getSections())

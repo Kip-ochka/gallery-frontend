@@ -5,11 +5,12 @@ import { IPhoto } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import BigPicture from '../BigPicture/BigPicture'
 import PhotoCard from '../PhotoCard/PhotoCard'
+import Preloader from '../Preloader/Preloader'
 import './PhotoGallery.scss'
 
 function PhotoGallery() {
   const dispatch = useAppDispatch()
-  const { images } = useAppSelector((state) => state.images)
+  const { images, loading } = useAppSelector((state) => state.images)
   const { chosenSectionId } = useParams()
   const [previewIndex, setPreviewIndex] = useState<null | number>(null)
 
@@ -20,8 +21,10 @@ function PhotoGallery() {
 
   return !previewIndex ? (
     <section className="photos">
-      {false ? (
-        <div>Loading...</div>
+      {loading ? (
+        <div className="photos__preloader-wrapper">
+          <Preloader />
+        </div>
       ) : (
         <ul className="photos__wrapper">
           {images.map((image: IPhoto) => {

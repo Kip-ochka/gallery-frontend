@@ -6,6 +6,12 @@
   padding: 0 60px;
   display: flex;
   flex-direction: column;
+  &__preloader-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   @media (max-width: 800px) {
     padding: 0 30px;
   }

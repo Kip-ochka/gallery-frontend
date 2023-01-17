@@ -10,13 +10,14 @@ import Main from '../Main/Main'
 import './App.scss'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { getSections } from '../../store/sectionsSlice'
+import Preloader from '../Preloader/Preloader'
 function App() {
   const { loading, isLogged } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
   useEffect(() => {
     const token = localStorage.getItem('token')
     dispatch(checkAuth(token))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(getSections())
@@ -26,7 +27,9 @@ function App() {
   return (
     <div className="page">
       {loading ? (
-        <p>loading...</p>
+        <div className="page__preloader-wrapper">
+          <Preloader />
+        </div>
       ) : (
         <Routes>
           <Route

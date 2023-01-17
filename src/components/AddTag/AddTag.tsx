@@ -11,18 +11,18 @@ export default function AddTag(props: AddTagProps) {
 
   if (availiableTags.length > 0) {
     return (
-      <select className='add-tag__select' onChange={onChange}>
-        <option value='' className='add-tag__text'>
+      <select className="add-tag__select" onChange={onChange}>
+        <option value="" className="add-tag__text">
           Выберите тег
         </option>
         {availiableTags.map((e) => (
-          <option value={e.tag} key={e.tagId} className='add-tag__text'>
+          <option value={e.tag} key={e.tagId} className="add-tag__text">
             {e.tag}
           </option>
         ))}
       </select>
     )
   } else {
-    return <p className='add-tag__text'>Нет доступных тегов</p>
+    return <p className="add-tag__text">Нет доступных тегов</p>
   }
 }
