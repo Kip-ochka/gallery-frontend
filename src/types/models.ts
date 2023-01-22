@@ -80,6 +80,7 @@ export interface IAdminStateInterface {
   loading: boolean
   aboutLoading: boolean
   aboutError: null | string
+  avatar: string
 }
 
 export type Section = {

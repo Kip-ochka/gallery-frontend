@@ -13,7 +13,7 @@ import {
 } from '../../utils/initalConstansForAbout'
 
 function About() {
-  const { aboutMe, isLogged, aboutLoading } = useAppSelector(
+  const { aboutMe, isLogged, aboutLoading, avatar } = useAppSelector(
     (state) => state.admin
   )
   const token = localStorage.getItem('token')
@@ -29,12 +29,19 @@ function About() {
         .then(unwrapResult)
         .then(() => {
           setRedacted(false)
+          setFile(undefined)
+          setFileUrl({})
         })
     }
   }
   const handelAvatarUpdate = (data: IUpdateAvatar) => {
     if (data.file) {
-      dispatch(updateAvatar({ file: data.file, token: data.token }))
+      dispatch(updateAvatar({ file: data.file, token: data.token })).then(
+        () => {
+          setFile(undefined)
+          setFileUrl({})
+        }
+      )
     }
   }
 
@@ -58,11 +65,7 @@ function About() {
             <DragFile setFile={setFile} setFileUrl={setFileUrl} />
           )
         ) : (
-          <img
-            src={`http://localhost:5000/static/images/avatar/avatar.jpg?`}
-            alt="Фотография автора"
-            className="about__photo"
-          />
+          <img src={avatar} alt="Фотография автора" className="about__photo" />
         )}
 
         {redacted ? (
@@ -173,6 +176,8 @@ function About() {
                 className="about__form-button about__form-button_cancel"
                 onClick={() => {
                   setRedacted((v) => !v)
+                  setFile(undefined)
+                  setFileUrl({})
                 }}
               >
                 Отмена

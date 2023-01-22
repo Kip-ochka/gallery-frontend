@@ -30,13 +30,19 @@ export const getImages = createAsyncThunk(
 
 export const addImage = createAsyncThunk(
   'images/addImage',
-  async ({ toSend }: { toSend: File }, { rejectWithValue }) => {
+  async (
+    { toSend, token }: { toSend: File; token: string },
+    { rejectWithValue }
+  ) => {
     const fd = new FormData()
     fd.append('upload_image', toSend)
-    const response = await fetch(`http://localhost:5000/images`, {
-      method: 'POST',
-      body: fd,
-    })
+    const response = await fetch(
+      `http://localhost:5000/images?token=${token}`,
+      {
+        method: 'POST',
+        body: fd,
+      }
+    )
     if (response.ok) {
       const res = await response.json()
       return res

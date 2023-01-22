@@ -1,10 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { fstat } from 'fs'
-import {
-  IAdminStateInterface,
-  IsetAboutMe,
-  IUpdateAvatar,
-} from '../types/models'
+import { IAdminStateInterface, IUpdateAvatar } from '../types/models'
 
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
@@ -47,15 +42,16 @@ export const checkAuth = createAsyncThunk<string, string | null>(
 
 export const getAbout = createAsyncThunk(
   'admin/about',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     const response = await fetch('http://localhost:5000/about', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
     if (response.ok) {
       const data = await response.json()
-      const admin = JSON.parse(data.Admin.aboutMe)
-      return admin
+      dispatch(setAvatar(data.Admin.avatar))
+      const aboutMe = JSON.parse(data.Admin.aboutMe)
+      return aboutMe
     } else {
       rejectWithValue(response.statusText)
     }
@@ -79,7 +75,7 @@ export const setAboutMe = createAsyncThunk(
 )
 export const updateAvatar = createAsyncThunk(
   'admin/update-avatar',
-  async ({ file, token }: IUpdateAvatar) => {
+  async ({ file, token }: IUpdateAvatar, { rejectWithValue, dispatch }) => {
     const fd = new FormData()
     fd.append('upload_image', file[0])
     const response = await fetch(
@@ -89,7 +85,12 @@ export const updateAvatar = createAsyncThunk(
         body: fd,
       }
     )
-    console.log(response)
+    if (response.ok) {
+      dispatch(setAvatar(await response.json()))
+      return await response.json()
+    } else {
+      rejectWithValue(response.statusText)
+    }
   }
 )
 const adminSlice = createSlice({
@@ -102,10 +103,14 @@ const adminSlice = createSlice({
     loading: true,
     aboutLoading: false,
     aboutError: null,
+    avatar: '',
   } as IAdminStateInterface,
   reducers: {
     logout: (state) => {
       state.isLogged = false
+    },
+    setAvatar: (state, action) => {
+      state.avatar = `http://localhost:5000/static/images/avatar/${action.payload} `
     },
   },
   extraReducers: (builder) => {
@@ -166,5 +171,5 @@ const adminSlice = createSlice({
       })
   },
 })
-export const { logout } = adminSlice.actions
+export const { logout, setAvatar } = adminSlice.actions
 export default adminSlice.reducer

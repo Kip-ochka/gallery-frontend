@@ -25,7 +25,7 @@ function AddImage() {
   const addImageToServer = () => {
     const toSend = file![0]
     if (typeof token === 'string' && token) {
-      dispatch(addImage({ toSend }))
+      dispatch(addImage({ toSend, token }))
         .then(unwrapResult)
         .then(async (data) => {
           const allPromices = await returnTagsPromise(data.imageId)
