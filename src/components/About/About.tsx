@@ -1,8 +1,8 @@
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
-import userPhoto from '../../img/user-photo.png'
-import { getAbout, setAboutMe } from '../../store/adminSlice'
-import { IFormTextValues } from '../../types/models'
+import DragFile from '../DragFile/DragFile'
+import { getAbout, setAboutMe, updateAvatar } from '../../store/adminSlice'
+import { IFileUrl, IFormTextValues, IUpdateAvatar } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './About.scss'
 import { useForm } from '../../utils/hooks/useForm'
@@ -19,6 +19,8 @@ function About() {
   const token = localStorage.getItem('token')
   const dispatch = useAppDispatch()
   const [redacted, setRedacted] = useState(false)
+  const [file, setFile] = useState<File[]>()
+  const [fileUrl, setFileUrl] = useState<IFileUrl>({})
   const { values, handleChange, setValues } = useForm(defaultValues)
 
   const handleAboutMeUpdate = (values: IFormTextValues, token: string) => {
@@ -30,6 +32,12 @@ function About() {
         })
     }
   }
+  const handelAvatarUpdate = (data: IUpdateAvatar) => {
+    if (data.file) {
+      dispatch(updateAvatar({ file: data.file, token: data.token }))
+    }
+  }
+
   useEffect(() => {
     dispatch(getAbout()).then((data) => {
       if (data.payload === null) {
@@ -43,7 +51,20 @@ function About() {
   return (
     <section className="about">
       <div className="about__container">
-        <img src={userPhoto} alt="Фотография автора" className="about__photo" />
+        {redacted ? (
+          file ? (
+            <img src={fileUrl.url} alt="avatar" />
+          ) : (
+            <DragFile setFile={setFile} setFileUrl={setFileUrl} />
+          )
+        ) : (
+          <img
+            src={`http://localhost:5000/static/images/avatar/avatar.jpg?`}
+            alt="Фотография автора"
+            className="about__photo"
+          />
+        )}
+
         {redacted ? (
           <div className="about__grid-column">
             <form className="about__form">
@@ -139,6 +160,10 @@ function About() {
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault()
+
+                  if (file && token) {
+                    handelAvatarUpdate({ file, token })
+                  }
                   handleAboutMeUpdate(values, token!)
                 }}
               >

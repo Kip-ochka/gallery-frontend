@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { IAdminStateInterface, IsetAboutMe } from '../types/models'
+import { fstat } from 'fs'
+import {
+  IAdminStateInterface,
+  IsetAboutMe,
+  IUpdateAvatar,
+} from '../types/models'
 
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
@@ -72,7 +77,21 @@ export const setAboutMe = createAsyncThunk(
     return toResponse.textValue
   }
 )
-
+export const updateAvatar = createAsyncThunk(
+  'admin/update-avatar',
+  async ({ file, token }: IUpdateAvatar) => {
+    const fd = new FormData()
+    fd.append('upload_image', file[0])
+    const response = await fetch(
+      `http://localhost:5000/about/pp?token=${token}`,
+      {
+        method: 'PUT',
+        body: fd,
+      }
+    )
+    console.log(response)
+  }
+)
 const adminSlice = createSlice({
   name: 'admin',
   initialState: {

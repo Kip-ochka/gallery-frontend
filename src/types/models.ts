@@ -136,3 +136,8 @@ export interface IFormTextValues {
   pin?: string
   tw?: string
 }
+
+export interface IUpdateAvatar {
+  file: File[]
+  token: string
+}
