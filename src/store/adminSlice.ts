@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IAdminStateInterface, IUpdateAvatar } from '../types/models'
+import { BASE_URL } from '../utils/constants'
 
 export const adminAuth = createAsyncThunk<string, string>(
   'admin/auth',
   async (payload: string) => {
-    const response = await fetch('http://localhost:5000/admin/auth', {
+    const response = await fetch(`${BASE_URL}admin/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -24,7 +25,7 @@ export const checkAuth = createAsyncThunk<string, string | null>(
   'admin/check',
   async (arg) => {
     if (typeof arg === 'string') {
-      const response = await fetch('http://localhost:5000/admin/token', {
+      const response = await fetch(`${BASE_URL}admin/token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: arg }),
@@ -43,7 +44,7 @@ export const checkAuth = createAsyncThunk<string, string | null>(
 export const getAbout = createAsyncThunk(
   'admin/about',
   async (_, { rejectWithValue, dispatch }) => {
-    const response = await fetch('http://localhost:5000/about', {
+    const response = await fetch(`${BASE_URL}about`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     })
@@ -62,7 +63,7 @@ export const setAboutMe = createAsyncThunk(
   'admin/set-about',
   async (toResponse: { token: string; textValue: any }) => {
     const json = JSON.stringify(toResponse.textValue)
-    await fetch('http://localhost:5000/about', {
+    await fetch(`${BASE_URL}about`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -78,13 +79,10 @@ export const updateAvatar = createAsyncThunk(
   async ({ file, token }: IUpdateAvatar, { rejectWithValue, dispatch }) => {
     const fd = new FormData()
     fd.append('upload_image', file[0])
-    const response = await fetch(
-      `http://localhost:5000/about/pp?token=${token}`,
-      {
-        method: 'PUT',
-        body: fd,
-      }
-    )
+    const response = await fetch(`${BASE_URL}about/pp?token=${token}`, {
+      method: 'PUT',
+      body: fd,
+    })
     if (response.ok) {
       dispatch(setAvatar(await response.json()))
       return await response.json()
@@ -110,7 +108,7 @@ const adminSlice = createSlice({
       state.isLogged = false
     },
     setAvatar: (state, action) => {
-      state.avatar = `http://localhost:5000/static/images/avatar/${action.payload} `
+      state.avatar = `${BASE_URL}static/images/avatar/${action.payload} `
     },
   },
   extraReducers: (builder) => {
@@ -132,12 +130,13 @@ const adminSlice = createSlice({
         state.authError = `${error.name}: ${error.message}`
       })
       .addCase(checkAuth.pending, (state) => {
+        state.isLogged = false
         state.loading = true
         state.error = null
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        state.loading = false
         state.isLogged = true
+        state.loading = false
       })
       .addCase(checkAuth.rejected, (state, { error }) => {
         state.loading = false

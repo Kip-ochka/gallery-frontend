@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProtectedRoute from '../../hok/ProtectedRoute'
 import { checkAuth } from '../../store/adminSlice'
@@ -8,25 +8,28 @@ import AuthPage from '../AuthPage/AuthPage'
 import Header from '../Header/Header'
 import Main from '../Main/Main'
 import './App.scss'
-import { unwrapResult } from '@reduxjs/toolkit'
 import { getSections } from '../../store/sectionsSlice'
 import Preloader from '../Preloader/Preloader'
+
 function App() {
-  const { loading, isLogged } = useAppSelector((state) => state.admin)
+  const [load, setIsLoad] = useState(true)
+  const { isLogged } = useAppSelector((state) => state.admin)
   const dispatch = useAppDispatch()
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    dispatch(checkAuth(token))
-  }, [dispatch])
 
   useEffect(() => {
-    dispatch(getSections())
-    dispatch(fetchGetTags()).then(unwrapResult)
-  }, [dispatch])
+    const token = localStorage.getItem('token')
+    Promise.all([
+      dispatch(checkAuth(token)),
+      dispatch(getSections()),
+      dispatch(fetchGetTags()),
+    ]).then(() => {
+      setIsLoad(false)
+    })
+  }, [])
 
   return (
     <div className="page">
-      {loading ? (
+      {load ? (
         <div className="page__preloader-wrapper">
           <Preloader />
         </div>

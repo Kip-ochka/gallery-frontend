@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAppDispatch } from '../../utils/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import './TagItem.scss'
 import removeButtonIcon from '../../img/remove-tag.png'
 import detachTagIcon from '../../img/detach-tag.png'
@@ -13,6 +13,7 @@ type TagItemProps = {
 }
 
 export default function TagItem(props: TagItemProps) {
+  const { tags } = useAppSelector((state) => state.tagInterface)
   const { tagItem, onRemoveTag, odd } = props
   const { tag, tagId } = tagItem
   const [currentTagText, setCurrentTagText] = useState<string>(tag)
@@ -31,8 +32,14 @@ export default function TagItem(props: TagItemProps) {
           onChange={(e) => setCurrentTagText(e.target.value)}
           onBlur={() => {
             if (!token) return
-            dispatch(fetchChangeTag({ token, tagId, tag: currentTagText }))
-            setEditMode(false)
+            const matched = tags.filter((tag) => {
+              return tag.tag === currentTagText
+            })
+            if (matched.length !== 1 && currentTagText.trim().length > 0) {
+              const obj = { token: token, tagId, tag: currentTagText }
+              dispatch(fetchChangeTag(obj))
+              setEditMode(false)
+            }
           }}
         />
       ) : (

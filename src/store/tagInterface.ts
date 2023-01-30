@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IPostTag, ITag, ITagsState, IToAttacth } from '../types/models'
+import { BASE_URL } from '../utils/constants'
 
 export const fetchGetTags = createAsyncThunk('tag/getTags', async () => {
-  const res = await fetch(`http://localhost:5000/tags`)
+  const res = await fetch(`${BASE_URL}tags`)
   return res.json()
 })
 
@@ -10,7 +11,7 @@ export const fetchPostTag = createAsyncThunk<ITag, IPostTag>(
   'tag/postTag',
   async ({ token, name }) => {
     if (typeof token === 'string') {
-      const res = await fetch(`http://localhost:5000/tags?tag_name=${name}`, {
+      const res = await fetch(`${BASE_URL}tags?tag_name=${name}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: token }),
@@ -30,7 +31,7 @@ export const fetchPostTag = createAsyncThunk<ITag, IPostTag>(
 export const fetchDeleteTag = createAsyncThunk(
   'tag/deleteTag',
   async (arg: { token: string; tagId: number; tag: string }) => {
-    const res = await fetch(`http://localhost:5000/tags/${arg.tagId}`, {
+    const res = await fetch(`${BASE_URL}tags/${arg.tagId}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: arg.token }),
@@ -47,7 +48,7 @@ export const fetchChangeTag = createAsyncThunk(
   'tag/changeTag',
   async (arg: { token: string; tagId: number; tag: string }) => {
     const res = await fetch(
-      `http://localhost:5000/tags/${arg.tagId}?edited_name=${arg.tag}`,
+      `${BASE_URL}tags/${arg.tagId}?edited_name=${arg.tag}`,
       {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -67,7 +68,7 @@ export const attachTag = createAsyncThunk(
   async ({ path, itemId, tagId, token }: IToAttacth) => {
     const pathItem = path.slice(0, -1)
     const response = await fetch(
-      `http://localhost:5000/${path}/${itemId}/tags/${tagId}?${pathItem}Id=${itemId}&tagId=${tagId}`,
+      `${BASE_URL}${path}/${itemId}/tags/${tagId}?${pathItem}Id=${itemId}&tagId=${tagId}`,
       {
         method: 'POST',
         headers: {

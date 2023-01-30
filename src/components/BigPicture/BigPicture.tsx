@@ -128,8 +128,14 @@ export default function BigPicture(props: bigPictureProps) {
               className="big-picture__add-tag-btn"
               onClick={() => {
                 if (!token) return
-                dispatch(fetchPostTag({ token, name: newTagName }))
-                setNewTagName('')
+                const matched = tags.filter((tag) => {
+                  return tag.tag === newTagName
+                })
+                if (matched.length !== 1 && newTagName.trim().length > 0) {
+                  const obj = { token: token, name: newTagName }
+                  dispatch(fetchPostTag(obj))
+                  setNewTagName('')
+                }
               }}
             >
               <img

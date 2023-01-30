@@ -52,6 +52,7 @@ function About() {
       } else {
         setValues(data.payload)
       }
+      console.log(data.payload)
     })
   }, [dispatch])
 

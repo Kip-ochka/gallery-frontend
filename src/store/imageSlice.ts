@@ -1,23 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IImages, IPhoto, ITag } from '../types/models'
+import { BASE_URL } from '../utils/constants'
 
 export const getImages = createAsyncThunk(
   'images/get-images',
   async (sectionId: { sectionId: undefined | string }, { rejectWithValue }) => {
     if (typeof sectionId.sectionId === 'string') {
-      const res = await fetch(
-        `http://localhost:5000/sections/${sectionId.sectionId}`,
-        {
-          method: 'GET',
-        }
-      )
+      const res = await fetch(`${BASE_URL}sections/${sectionId.sectionId}`, {
+        method: 'GET',
+      })
       if (res.ok) {
         const data = await res.json()
         return data
       }
       return rejectWithValue(res.statusText)
     }
-    const res = await fetch(`http://localhost:5000/images`, {
+    const res = await fetch(`${BASE_URL}images`, {
       method: 'GET',
     })
     if (res.ok) {
@@ -36,13 +34,10 @@ export const addImage = createAsyncThunk(
   ) => {
     const fd = new FormData()
     fd.append('upload_image', toSend)
-    const response = await fetch(
-      `http://localhost:5000/images?token=${token}`,
-      {
-        method: 'POST',
-        body: fd,
-      }
-    )
+    const response = await fetch(`${BASE_URL}images?token=${token}`, {
+      method: 'POST',
+      body: fd,
+    })
     if (response.ok) {
       const res = await response.json()
       return res
@@ -60,14 +55,11 @@ export const deleteImage = createAsyncThunk<
   'images/deleteImage',
   async ({ image, token }, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/images/${image.imageId}`,
-        {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
-        }
-      )
+      const response = await fetch(`${BASE_URL}images/${image.imageId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      })
       if (!response.ok) {
         throw new Error('Ошибка сервера при попытке удаления фото')
       }
@@ -86,7 +78,7 @@ export const addTagToImage = createAsyncThunk<
   async ({ image, tag, token }, { dispatch, rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/images/${image.imageId}/tags/${tag.tagId}`,
+        `${BASE_URL}images/${image.imageId}/tags/${tag.tagId}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -111,7 +103,7 @@ export const removeTagFromImage = createAsyncThunk<
   async ({ image, tag, token }, { dispatch, rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/images/${image.imageId}/tags/${tag.tagId}`,
+        `${BASE_URL}images/${image.imageId}/tags/${tag.tagId}`,
         {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
