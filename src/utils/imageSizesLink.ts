@@ -1,2 +1,4 @@
-export const SMALL_SIZE = 'http://localhost:5000/static/images/previews/'
-export const BIG_SIZE = 'http://localhost:5000/static/images/full_size/'
+import { BASE_URL } from './constants'
+
+export const SMALL_SIZE = `${BASE_URL}static/images/previews/`
+export const BIG_SIZE = `${BASE_URL}static/images/full_size/`
