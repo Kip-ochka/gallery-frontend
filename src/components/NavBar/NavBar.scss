@@ -1,11 +1,11 @@
 @import '../../commonStyles/commonStyles.scss';
 
 .navbar {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  // position: relative;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: flex-start;
   &__hidden-element {
     display: none;
   }
@@ -24,14 +24,39 @@
     @include clickable;
   }
   &__content {
+    padding-top: 5em;
     position: sticky;
-    top: 30vh;
+    top: 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 30px;
+    overflow-y: auto;
+    // max-height: 500px;
+
+    &::-webkit-scrollbar {
+      /* — это фон самого скроллбара. */
+      background: none;
+      width: 10px;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-button {
+      /* — кнопки направления на полосе прокрутки. */
+      display: none;
+    }
+    &::-webkit-scrollbar-track {
+      /* — пустое пространство под индикатором прокрутки. */
+      background-color: transparent;
+      cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb {
+      /* — индикатор прокрутки, перетаскиваемый элемент. */
+      background-color: rgba(147, 242, 245, 0.5);
+      cursor: pointer;
+      border-radius: 5px;
+    }
   }
   &__main-section {
     @include clickable;
