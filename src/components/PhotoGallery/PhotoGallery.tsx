@@ -19,14 +19,18 @@ function PhotoGallery() {
     setPreviewIndex(null)
   }, [chosenSectionId, dispatch])
 
-  return !previewIndex ? (
-    <section className="photos">
+  return images.length === 0 ? (
+    <p className='photos__no-photo-message'>
+      В этом разделе пока нет фотографий...
+    </p>
+  ) : !previewIndex ? (
+    <section className='photos'>
       {loading ? (
-        <div className="photos__preloader-wrapper">
+        <div className='photos__preloader-wrapper'>
           <Preloader />
         </div>
       ) : (
-        <ul className="photos__wrapper">
+        <ul className='photos__wrapper'>
           {images.map((image: IPhoto) => {
             return (
               <PhotoCard
