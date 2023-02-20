@@ -42,9 +42,7 @@ export default function Header() {
           >
             Выйти
           </button>
-        ) : (
-          <AccountButton />
-        )}
+        ) : null}
       </div>
     </header>
   )

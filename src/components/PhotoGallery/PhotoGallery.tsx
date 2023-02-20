@@ -13,24 +13,24 @@ function PhotoGallery() {
   const { images, loading } = useAppSelector((state) => state.images)
   const { chosenSectionId } = useParams()
   const [previewIndex, setPreviewIndex] = useState<null | number>(null)
-
+  console.log(images)
   useEffect(() => {
     dispatch(getImages({ sectionId: chosenSectionId }))
     setPreviewIndex(null)
   }, [chosenSectionId, dispatch])
 
   return images.length === 0 ? (
-    <p className='photos__no-photo-message'>
+    <p className="photos__no-photo-message">
       В этом разделе пока нет фотографий...
     </p>
   ) : !previewIndex ? (
-    <section className='photos'>
+    <section className="photos">
       {loading ? (
-        <div className='photos__preloader-wrapper'>
+        <div className="photos__preloader-wrapper">
           <Preloader />
         </div>
       ) : (
-        <ul className='photos__wrapper'>
+        <ul className="photos__wrapper">
           {images.map((image: IPhoto) => {
             return (
               <PhotoCard

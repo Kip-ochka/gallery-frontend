@@ -164,7 +164,6 @@ function About() {
                 type="submit"
                 onClick={(e) => {
                   e.preventDefault()
-
                   if (file && token) {
                     handelAvatarUpdate({ file, token })
                   }
@@ -200,27 +199,33 @@ function About() {
               ) : null}
             </div>
             <p className="about__description">{aboutMe?.about}</p>
-            <div>
-              <h3 className="about__subtitle">CLIENTS</h3>
-              <p className="about__clients-descriptiob">{aboutMe?.clients}</p>
-            </div>
+            {aboutMe?.clients !== '' && (
+              <div>
+                <h3 className="about__subtitle">CLIENTS</h3>
+                <p className="about__clients-descriptiob">{aboutMe?.clients}</p>
+              </div>
+            )}
             <ul className="about__contacts-list">
-              <li className="about__contacts-item">
-                <p className="about__contacts-title">
-                  E-mail.
-                  <span className="about__contacts-email-adress">
-                    {aboutMe?.email}
-                  </span>
-                </p>
-              </li>
-              <li className="about__contacts-item">
-                <p className="about__contacts-title">
-                  Tel.
-                  <span className="about__contacts-telephone-number">
-                    {aboutMe?.tel}
-                  </span>
-                </p>
-              </li>
+              {aboutMe?.email !== '' && (
+                <li className="about__contacts-item">
+                  <p className="about__contacts-title">
+                    E-mail.
+                    <span className="about__contacts-email-adress">
+                      {aboutMe?.email}
+                    </span>
+                  </p>
+                </li>
+              )}
+              {aboutMe?.tel !== '' && (
+                <li className="about__contacts-item">
+                  <p className="about__contacts-title">
+                    Tel.
+                    <span className="about__contacts-telephone-number">
+                      {aboutMe?.tel}
+                    </span>
+                  </p>
+                </li>
+              )}
             </ul>
             <ul className="social-network">
               {icons.map((item, index) => {

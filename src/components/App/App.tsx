@@ -10,6 +10,7 @@ import Main from '../Main/Main'
 import './App.scss'
 import { getSections } from '../../store/sectionsSlice'
 import Preloader from '../Preloader/Preloader'
+import { SECRET_PATH } from '../../utils/constants'
 
 function App() {
   const [load, setIsLoad] = useState(true)
@@ -36,7 +37,7 @@ function App() {
       ) : (
         <Routes>
           <Route
-            path="/auth"
+            path={`${SECRET_PATH}`}
             element={
               <ProtectedRoute component={AuthPage} condition={!isLogged} />
             }
