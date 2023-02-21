@@ -9,20 +9,29 @@ import './Main.scss'
 import ProtectedRoute from '../../hok/ProtectedRoute'
 import EditSectionsPage from '../EditSectionsPage/EditSectionsPage'
 import NotFound from '../NotFound/NotFound'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export default function Main() {
   const adminData = useAppSelector((state) => state.admin)
+  const sectionsData = useAppSelector((state) => state.sections)
+  const navigate = useNavigate()
+  type NavigateType = typeof navigate
+
+  useEffect(() => {
+    navigate(`/sections/${sectionsData.sections[0].sectionId}`)
+  }, [])
 
   return (
-    <main className="main">
+    <main className='main'>
       <NavBar />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
         <Route path={'/sections/:chosenSectionId'} element={<PhotoGallery />} />
-        <Route path="/about" element={<About />} />
+        <Route path='/about' element={<About />} />
 
         <Route
-          path="/add-image"
+          path='/add-image'
           element={
             <ProtectedRoute
               component={AddImage}
@@ -37,7 +46,7 @@ export default function Main() {
           }
         /> */}
         <Route
-          path="/edit-sections"
+          path='/edit-sections'
           element={
             <ProtectedRoute
               component={EditSectionsPage}
@@ -45,7 +54,7 @@ export default function Main() {
             />
           }
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </main>
   )
