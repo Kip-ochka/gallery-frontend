@@ -1,22 +1,11 @@
 @import '../../commonStyles/commonStyles.scss';
 
 .photo {
-  height: 40vh;
   flex-grow: 1;
-  @media (max-aspect-ratio: 1/1) {
-    & {
-      height: 30vh;
-    }
-  }
-  @media (max-height: 540px) {
-    & {
-      height: 50vh;
-    }
-  }
+
   &__image {
     // @include clickable;
     cursor: url('../../img/extend_icon.svg'), pointer;
-    border-radius: 8px;
     height: 100%;
     min-width: 100%;
     object-fit: cover;
@@ -24,18 +13,18 @@
   }
 }
 
-@media (max-aspect-ratio: 1/1) and (max-width: 540px) {
-  .photos__wrapper {
-    flex-direction: row;
-  }
-
-  .photo {
-    height: auto;
-    width: 100%;
-  }
-  .photo__image {
-    width: 100%;
-    max-height: 75vh;
-    min-width: 0;
-  }
-}
+//@media (max-aspect-ratio: 1/1) and (max-width: 540px) {
+//  .photos__wrapper {
+//    flex-direction: row;
+//  }
+//
+//  .photo {
+//    height: auto;
+//    width: 100%;
+//  }
+//  .photo__image {
+//    width: 100%;
+//    max-height: 75vh;
+//    min-width: 0;
+//  }
+//}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { getImages } from '../../store/imageSlice'
+import { chunkImages, getImages } from '../../store/imageSlice'
 import { IPhoto } from '../../types/models'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import BigPicture from '../BigPicture/BigPicture'
@@ -10,12 +10,15 @@ import './PhotoGallery.scss'
 
 function PhotoGallery() {
   const dispatch = useAppDispatch()
-  const { images, loading } = useAppSelector((state) => state.images)
+  const { images, loading, chunks } = useAppSelector((state) => state.images)
   const { chosenSectionId } = useParams()
   const [previewIndex, setPreviewIndex] = useState<null | number>(null)
-  console.log(images)
+
   useEffect(() => {
-    dispatch(getImages({ sectionId: chosenSectionId }))
+    const width = window.innerWidth
+    dispatch(getImages({ sectionId: chosenSectionId })).then(() => {
+      dispatch(chunkImages(width))
+    })
     setPreviewIndex(null)
   }, [chosenSectionId, dispatch])
 
@@ -31,15 +34,27 @@ function PhotoGallery() {
         </div>
       ) : (
         <ul className="photos__wrapper">
-          {images.map((image: IPhoto) => {
+          {chunks.map((list, index) => {
             return (
-              <PhotoCard
-                key={image.imageId}
-                image={image.image}
-                onClick={() => {
-                  setPreviewIndex(images.indexOf(image) + 1)
-                }}
-              />
+              <li key={index}>
+                <ul className="photos__list">
+                  {list.map((photo) => {
+                    return (
+                      <PhotoCard
+                        image={photo.image}
+                        onClick={() => {
+                          setPreviewIndex(
+                            images.findIndex(
+                              (image) => image.imageId === photo.imageId
+                            ) + 1
+                          )
+                        }}
+                        key={photo.imageId}
+                      />
+                    )
+                  })}
+                </ul>
+              </li>
             )
           })}
         </ul>
@@ -54,3 +69,15 @@ function PhotoGallery() {
 }
 
 export default PhotoGallery
+
+//{images.map((image: IPhoto) => {
+//  return (
+//    <PhotoCard
+//      key={image.imageId}
+//      image={image.image}
+//      onClick={() => {
+//        setPreviewIndex(images.indexOf(image) + 1)
+//      }}
+//    />
+//  )
+//})}

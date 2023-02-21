@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { IImages, IPhoto, ITag } from '../types/models'
 import { BASE_URL } from '../utils/constants'
+import chunkify, { divideImagesArray } from '../utils/divideImagesArray'
 
 export const getImages = createAsyncThunk(
   'images/get-images',
@@ -128,8 +129,15 @@ const imagesSlice = createSlice({
     getImagesError: null,
     file: undefined,
     fileUrl: '',
+    chunks: [],
   } as IImages,
-  reducers: {},
+  reducers: {
+    chunkImages: (state, action) => {
+      const number = divideImagesArray(action.payload)
+      console.log(number)
+      state.chunks = chunkify(state.images, number, true)
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getImages.pending, (state) => {
@@ -194,5 +202,5 @@ const imagesSlice = createSlice({
       })
   },
 })
-
+export const { chunkImages } = imagesSlice.actions
 export default imagesSlice.reducer

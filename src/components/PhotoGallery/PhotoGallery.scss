@@ -5,18 +5,17 @@
   width: 100%;
   display: flex;
   padding: 0;
-  gap: 10px;
 
   &__wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  &__list {
     display: flex;
-    flex: 1;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-
-    &:last-child {
-      flex-grow: 10;
-    }
+    flex-direction: column;
+    gap: 20px;
   }
   &__preloader-wrapper {
     width: 100%;
@@ -27,5 +26,16 @@
     align-items: center;
     font-size: 22px;
     font-style: italic;
+  }
+  @media screen and (max-width: 880px) {
+    &__wrapper {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media screen and (max-width: 550px) {
+    &__wrapper {
+      grid-template-columns: 1fr;
+    }
   }
 }
