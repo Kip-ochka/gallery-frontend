@@ -19,19 +19,23 @@ export default function Main() {
   type NavigateType = typeof navigate
 
   useEffect(() => {
-    navigate(`/sections/${sectionsData.sections[0].sectionId}`)
+    if (sectionsData.sections[0]?.sectionId) {
+      navigate(`/sections/${sectionsData.sections[0].sectionId}`)
+    } else {
+      navigate(`/`)
+    }
   }, [])
 
   return (
-    <main className='main'>
+    <main className="main">
       <NavBar />
       <Routes>
         <Route path={'/'} element={<PhotoGallery />} />
         <Route path={'/sections/:chosenSectionId'} element={<PhotoGallery />} />
-        <Route path='/about' element={<About />} />
+        <Route path="/about" element={<About />} />
 
         <Route
-          path='/add-image'
+          path="/add-image"
           element={
             <ProtectedRoute
               component={AddImage}
@@ -46,7 +50,7 @@ export default function Main() {
           }
         /> */}
         <Route
-          path='/edit-sections'
+          path="/edit-sections"
           element={
             <ProtectedRoute
               component={EditSectionsPage}
@@ -54,7 +58,7 @@ export default function Main() {
             />
           }
         />
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </main>
   )

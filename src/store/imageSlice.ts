@@ -134,7 +134,6 @@ const imagesSlice = createSlice({
   reducers: {
     chunkImages: (state, action) => {
       const number = divideImagesArray(action.payload)
-      console.log(number)
       state.chunks = chunkify(state.images, number, true)
     },
   },

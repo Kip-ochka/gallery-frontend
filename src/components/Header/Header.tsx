@@ -20,10 +20,10 @@ export default function Header() {
   const closeBurger = () => {
     setBurgerIsOpen(false)
   }
-
+  const sectionsData = useAppSelector((state) => state.sections)
   return (
     <header className="header">
-      <Link to="/">
+      <Link to={`${`/sections/${sectionsData.sections[0]?.sectionId}`}`}>
         <img src={logo} alt={'лого'} className="header__logo" />
       </Link>
       <button
