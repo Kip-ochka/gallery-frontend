@@ -12,10 +12,10 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
 
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className='navbar__content'>
-        <div className='navbar__container'>
+      <div className="navbar__content">
+        <div className="navbar__container">
           <NavLink
-            to='/'
+            to="/"
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -28,18 +28,18 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
               to={`/sections/${e.sectionId}`}
               onClick={onClose}
               key={e.sectionId}
-              className='navbar__main-section'
+              className="navbar__main-section"
             >
               {e.section}
             </NavLink>
           ))}
         </div>
-        <NavLink to='/about' onClick={onClose} className='navbar__main-section'>
+        <NavLink to="/about" onClick={onClose} className="navbar__main-section">
           Об Авторе
         </NavLink>
-        <div className='navbar__container'>
+        <div className="navbar__container">
           <NavLink
-            to='/add-image'
+            to="/add-image"
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -48,7 +48,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             Добавить фото
           </NavLink>
           <NavLink
-            to='/edit-sections'
+            to="/edit-sections"
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -57,10 +57,10 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             Редактировать секции
           </NavLink>
         </div>
-        <div className='navbar__hidden-element'>
+        <div className="navbar__hidden-element">
           {isLogged ? (
             <button
-              className='navbar__logout-button'
+              className="navbar__logout-button"
               onClick={() => {
                 dispatch(logout())
                 localStorage.clear()
@@ -68,9 +68,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             >
               Выйти
             </button>
-          ) : (
-            <AccountButton />
-          )}
+          ) : null}
         </div>
       </div>
     </aside>
