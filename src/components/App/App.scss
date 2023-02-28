@@ -1,8 +1,13 @@
 @import '../../commonStyles/commonStyles.scss';
 
-.page {
+.root {
   min-height: 100vh;
+  display: flex;
+}
+
+.page {
   width: 100%;
+  min-height: 100%;
   padding: 0 30px;
   display: flex;
   flex-direction: column;

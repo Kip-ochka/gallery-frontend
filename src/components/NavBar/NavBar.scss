@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   &__hidden-element {
     display: none;
   }
@@ -24,7 +24,6 @@
     @include clickable;
   }
   &__content {
-    padding-top: 5em;
     position: sticky;
     top: 0;
     width: 100%;
@@ -34,6 +33,7 @@
     justify-content: center;
     gap: 30px;
     overflow-y: auto;
+    height: calc(100vh - 70px);
     // max-height: 500px;
 
     &::-webkit-scrollbar {
