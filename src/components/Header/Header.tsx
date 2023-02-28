@@ -24,7 +24,9 @@ export default function Header() {
   return (
     <header className="header">
       <Link to={`${`/sections/${sectionsData.sections[0]?.sectionId}`}`}>
-        <img src={logo} alt={'лого'} className="header__logo" />
+        <div className="header__logo">
+          <img src={logo} alt={'лого'} className="header__logo" />
+        </div>
       </Link>
       <button
         onClick={toggleBurgerButton}

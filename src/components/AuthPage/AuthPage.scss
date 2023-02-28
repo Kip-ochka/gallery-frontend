@@ -41,6 +41,8 @@
   }
   &__logo {
     @include clickable;
+    width: 44px;
+    height: 44px;
   }
   &__form {
     position: relative;

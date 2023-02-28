@@ -27,7 +27,9 @@ function AuthPage() {
       <div className="auth__content">
         <div className="auth__title-wrapper">
           <Link to="/">
-            <img src={logo} alt="Logo" className="auth__logo" />
+            <div className="auth__logo">
+              <img src={logo} alt="Logo" className="auth__logo" />
+            </div>
           </Link>
           <h1 className="auth__title">Добро пожаловать!</h1>
         </div>
