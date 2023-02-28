@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './AuthPage.scss'
-import logo from '../../img/logo.svg'
+import logo from '../../img/logo/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
 import { adminAuth } from '../../store/adminSlice'

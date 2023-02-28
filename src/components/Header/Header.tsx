@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../../img/logo.svg'
+import logo from '../../img/logo/logo.svg'
+
 import { logout } from '../../store/adminSlice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import AccountButton from '../AccountButton/AccountButton'
 import NavBar from '../NavBar/NavBar'
 import './Header.scss'
 export default function Header() {
