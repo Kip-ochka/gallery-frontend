@@ -168,7 +168,8 @@
       // background-color: lightgray;
       background-color: #fff;
       height: 100vh;
-      width: fit-content;
+      min-width: 250px;
+      width: 30%;
       flex-direction: column;
       padding: 5vh 10px;
       & > .navbar__main-section,
@@ -193,7 +194,7 @@
   @media screen and (max-width: 400px) {
     width: 100%;
     &__content {
-      width: 100%;
+      min-width: 200px;
     }
     &__main-section {
       font-size: 15px;
