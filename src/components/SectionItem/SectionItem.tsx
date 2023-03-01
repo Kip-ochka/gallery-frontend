@@ -48,6 +48,8 @@ export default function SectionItem(props: { sectionItem: Section }) {
           <input
             autoFocus
             type="text"
+            minLength={1}
+            maxLength={30}
             className="section-item__input"
             value={currentSectionName}
             onChange={(e) => setCurrentSectionName(e.target.value)}
