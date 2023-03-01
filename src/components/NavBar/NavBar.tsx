@@ -10,8 +10,19 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
   const dispatch = useAppDispatch();
 
   return (
-    <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className='navbar__content'>
+    <aside
+      className={`navbar ${isOpen && 'navbar_opened'}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClose && onClose();
+      }}
+    >
+      <div
+        className='navbar__content'
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <div className='navbar__container'>
           <NavLink
             to='/'
