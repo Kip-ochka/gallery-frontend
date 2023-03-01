@@ -7,7 +7,7 @@
   grid-template-columns: fit-content(30%) 1fr;
   gap: 30px;
   padding: 0;
-  // min-height: 80vh;
+  min-height: calc(100vh - 70px);
 
   @media screen and (max-width: 1024px) {
     // min-height: 100%;
