@@ -1,21 +1,20 @@
-import './NavBar.scss'
-import { NavLink } from 'react-router-dom'
-import AccountButton from '../AccountButton/AccountButton'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks'
-import { INavBarProps, Section } from '../../types/models'
-import { logout } from '../../store/adminSlice'
+import './NavBar.scss';
+import { NavLink } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
+import { INavBarProps } from '../../types/models';
+import { logout } from '../../store/adminSlice';
 
 function NavBar({ isOpen, onClose }: INavBarProps) {
-  const { isLogged } = useAppSelector((state) => state.admin)
-  const { sections } = useAppSelector((state) => state.sections)
-  const dispatch = useAppDispatch()
+  const { isLogged } = useAppSelector((state) => state.admin);
+  const { sections } = useAppSelector((state) => state.sections);
+  const dispatch = useAppDispatch();
 
   return (
     <aside className={`navbar ${isOpen && 'navbar_opened'}`}>
-      <div className="navbar__content">
-        <div className="navbar__container">
+      <div className='navbar__content'>
+        <div className='navbar__container'>
           <NavLink
-            to="/"
+            to='/'
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -28,18 +27,18 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
               to={`/sections/${e.sectionId}`}
               onClick={onClose}
               key={e.sectionId}
-              className="navbar__main-section"
+              className='navbar__main-section'
             >
               {e.section}
             </NavLink>
           ))}
         </div>
-        <NavLink to="/about" onClick={onClose} className="navbar__main-section">
+        <NavLink to='/about' onClick={onClose} className='navbar__main-section'>
           Об Авторе
         </NavLink>
-        <div className="navbar__container">
+        <div className='navbar__container'>
           <NavLink
-            to="/add-image"
+            to='/add-image'
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -48,7 +47,7 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             Добавить фото
           </NavLink>
           <NavLink
-            to="/edit-sections"
+            to='/edit-sections'
             className={`navbar__main-section ${
               !isLogged && 'navbar__main-section_state_hidden'
             }`}
@@ -57,13 +56,13 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
             Редактировать секции
           </NavLink>
         </div>
-        <div className="navbar__hidden-element">
+        <div className='navbar__hidden-element'>
           {isLogged ? (
             <button
-              className="navbar__logout-button"
+              className='navbar__logout-button'
               onClick={() => {
-                dispatch(logout())
-                localStorage.clear()
+                dispatch(logout());
+                localStorage.clear();
               }}
             >
               Выйти
@@ -72,6 +71,6 @@ function NavBar({ isOpen, onClose }: INavBarProps) {
         </div>
       </div>
     </aside>
-  )
+  );
 }
-export default NavBar
+export default NavBar;
