@@ -155,7 +155,6 @@
     display: none;
     top: 0px;
     right: 0px;
-
     &__hidden-element {
       display: flex;
     }
@@ -169,13 +168,14 @@
       background-color: #fff;
       height: 100vh;
       min-width: 250px;
-      width: 30%;
+      width: fit-content;
       flex-direction: column;
       padding: 5vh 10px;
       & > .navbar__main-section,
       & > .navbar__container {
         transform: unset;
       }
+      margin-top: 0;
     }
     &__container {
       width: 100%;
@@ -195,6 +195,7 @@
     width: 100%;
     &__content {
       min-width: 200px;
+      width: 100%;
     }
     &__main-section {
       font-size: 15px;
